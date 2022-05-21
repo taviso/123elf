@@ -1,7 +1,7 @@
 BFD_INP_TARGET = coff-i386
 BFD_OUT_TARGET = coff-i386
 OBJCOPY_FLAGS  = --wildcard --localize-symbols=localize.lst --globalize-symbols=globalize.lst --redefine-syms=redefine.lst --weaken-symbols=weaken.lst
-CFLAGS  = -lc -m32 -ggdb3 -O0 -Wno-multichar -fno-stack-protector
+CFLAGS  = -lc -m32 -ggdb3 -O0 -fno-stack-protector
 ASFLAGS = --32
 LDFLAGS = $(CFLAGS) -B. -Wl,-b,coff-i386 -no-pie
 LDLIBS = -lncurses
@@ -42,13 +42,14 @@ orig/123.o:
 123.o: UNDEF_SYMBOLS+=__unix_environ __wrap_lic_init
 123.o: orig/123.o | coffsyrup redefine.lst globalize.lst localize.lst weaken.lst forceplt.s
 	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) $< $@
-	./coffsyrup $@ $(@:.o=.tmp.o) $(UNDEF_SYMBOLS) $$(awk '/@plt/ {print substr($$2,0,length($$2) - 4)}' forceplt.s)
+	coffsyrup $@ $(@:.o=.tmp.o) $(UNDEF_SYMBOLS) $$(awk '/@plt/ {print substr($$2,0,length($$2) - 4)}' forceplt.s)
 	mv $(@:.o=.tmp.o) $@
 
 dl_init.o: orig/dl_init.o
 	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) $< $@
 
-123: 123.o dl_init.o main.o forceplt.o wrappers.o patch.o
+123: 123.o dl_init.o main.o wrappers.o patch.o | forceplt.o
+	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
 clean:
 	rm -f *.o 123 coffsyrup
