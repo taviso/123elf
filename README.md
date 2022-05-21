@@ -2,7 +2,7 @@
 
 This is a native port of Lotus 1-2-3 version 3 to Linux. This is possible
 because the official Lotus 1-2-3 for UNIX port used a technique called [partial
-linking](https://sourceware.org/binutils/docs-2.38/ld/Options.html#:~:text=This%20is%20often%20called%20partial%20linking.), which can be modified to support new platforms.
+linking](https://sourceware.org/binutils/docs-2.38/ld/Options.html#:~:text=This%20is%20often%20called%20partial%20linking.) to workaround a technical limitation in early UNIX systems. Surprisingly, that can be used to modify it to support new platforms.
 
 There's an article documenting how this is possible
 [here](https://lock.cmpxchg8b.com/linux123.html).
@@ -28,26 +28,25 @@ the build directory and run `extract.sh`.
 
 Finally, just run `make`.
 
-#### Ubuntu
+#### Packages
 
-> Note: Ubuntu does not enable `coff-i386` support in it's binutils package, so
-> you need to build your own copy, follow the instructions below.
+The following packages are required
 
-The following packages are required:
-
-    - build-essential
-    - gcc-multilib
-    - lib32ncurses-dev
+| Ubuntu              | Fedora              |
+| ------------------- | ------------------- |
+| build-essential     | glibc-devel.i686    |
+| gcc-multilib        | libgcc.i686         |
+| lib32ncurses-dev    | ncurses-static.i686 |
 
 ### Binutils
 
-If you want to build binutils just for this purpose, just pass
-`--enable-targets=all` to configure.
+Unfortunately, most distributions do not enable `coff-i386` support in binutils.
 
-If you don't want to override your system binutils, copy the new `objcopy`,
-`objdump` and `ld-new` into the build directory.
+It's very easy to enable it yourself, download binutils and configure it with `--enable-targets=all`.
 
-> Important: `ld` must be called `real-ld` or gcc won't use it (I don't know why).
+You need `objcopy` and `objdump` from the `binutils` directory, and `ld-new` from the `ld` directory. Copy those binarues into the 123elf build directory.
+
+> Important: `ld` must be renamed `real-ld` or gcc won't use it (I don't know why).
 
 Now run `PATH=.:$PATH make`, and it should work.
 
