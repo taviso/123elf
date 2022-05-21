@@ -6,3 +6,12 @@ fclose
 fseek
 fgetc
 close_range
+fputc
+fgetgrent
+fgetpwent
+popen
+pclose
+fdopen
+fprintf
+fscanf
+freopen

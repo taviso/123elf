@@ -1,9 +1,9 @@
 BFD_INP_TARGET = coff-i386
 BFD_OUT_TARGET = coff-i386
 OBJCOPY_FLAGS  = --wildcard --localize-symbols=localize.lst --globalize-symbols=globalize.lst --redefine-syms=redefine.lst --weaken-symbols=weaken.lst
-CFLAGS  = -m32 -ggdb3 -O0 -Wno-multichar -fno-stack-protector
+CFLAGS  = -lc -m32 -ggdb3 -O0 -Wno-multichar -fno-stack-protector
 ASFLAGS = --32
-LDFLAGS = $(CFLAGS) -B. -Wl,-b,coff-i386
+LDFLAGS = $(CFLAGS) -B. -Wl,-b,coff-i386 -no-pie
 LDLIBS = -lncurses
 PATH := .:$(PATH)
 
@@ -26,7 +26,6 @@ check:
 
 # Functions that are not compatible from UNIX<=>Linux that we need to fixup.
 UNDEF_SYMBOLS=__unix_ioctl       \
-              __unix_signal      \
               __unix_open        \
               __unix_stat        \
               __unix_uname       \

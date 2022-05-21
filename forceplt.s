@@ -226,3 +226,13 @@ __require_ref:
     call    tgetnum@plt
     call    tgoto@plt
     call    tputs@plt
+    call    tempnam@plt
+    call    tmpfile@plt
+    call    tmpnam@plt
+    call    chown@plt
+    call    gtty@plt
+    call    stty@plt
+    call    msgctl@plt
+    call    semctl@plt
+    call    shmctl@plt
+

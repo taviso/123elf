@@ -8,7 +8,6 @@ COLS __unix_COLS
 #
 # Incompatible libc calls.
 errno __unix_errno
-signal __unix_signal
 stat __unix_stat
 fstat __unix_fstat
 open __unix_open

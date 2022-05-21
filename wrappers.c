@@ -53,8 +53,6 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
 {
     struct termios tio = {0};
 
-    fprintf(stderr, "ioctl(%d, %#x);\n", fd, request);
-
     if (argp == NULL) {
         return -1;
     }
@@ -104,7 +102,6 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
 
 int __unix_fcntl(int fd, int cmd, ...)
 {
-    fprintf(stderr, "fcntl(%d, %#x);\n", fd, cmd);
     switch (cmd) {
         case F_SETLK:
             return 0;
@@ -112,13 +109,6 @@ int __unix_fcntl(int fd, int cmd, ...)
             fprintf(stderr, "fcntl: unknown request\n");
     }
     return -1;
-}
-
-
-void * __unix_signal(int signum, void *handler)
-{
-    fprintf(stderr, "signal(%u, %p);\n", signum, handler);
-    return signal(signum, handler);
 }
 
 struct unixstat {
@@ -133,8 +123,6 @@ int __unix_stat(const char *pathname, struct unixstat *statbuf)
 {
     struct stat buf;
 
-    fprintf(stderr, "stat(%s, %p);\n", pathname, statbuf);
-
     if (stat(pathname, &buf) != 0)
         return -1;
 
@@ -147,8 +135,6 @@ int __unix_fstat(int fd, struct unixstat *statbuf)
 {
     struct stat buf;
 
-    fprintf(stderr, "fstat(%d, %p);\n", fd, statbuf);
-
     if (fstat(fd, &buf) != 0)
         return -1;
 
@@ -159,8 +145,6 @@ int __unix_fstat(int fd, struct unixstat *statbuf)
 
 int __unix_open(const char *pathname, int flags, mode_t mode)
 {
-    fprintf(stderr, "open(\"%s\", %#x, %o);\n", pathname, flags, mode);
-
     switch (flags) {
         case 0x001: return open(pathname, O_WRONLY);
         case 0x101: return open(pathname, O_CREAT | O_WRONLY, mode);
@@ -177,7 +161,6 @@ int __unix_open(const char *pathname, int flags, mode_t mode)
 int __unix_uname(char *sysname)
 {
     struct utsname name;
-    fprintf(stderr, "uname(%p);\n", sysname);
     if (uname(&name) != 0) {
         return -1;
     }
@@ -188,7 +171,6 @@ int __unix_uname(char *sysname)
 int __unix_times(void *buffer)
 {
     struct tms buf;
-    fprintf(stderr, "times(%p);\n", buffer);
     // Note: 123 only cares about the return code.
     return times(&buf);
 }
@@ -198,7 +180,6 @@ int __unix_times(void *buffer)
 #define FP_387 3
 int __unix_sysi86(int cmd, uint32_t *result)
 {
-    fprintf(stderr, "sysi86(%d, %p);\n", cmd, result);
     // This is used to check for x87 support, nothing else is supported.
     if (cmd != SI86FPHW)
         return -1;
