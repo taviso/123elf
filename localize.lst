@@ -15,3 +15,5 @@ fdopen
 fprintf
 fscanf
 freopen
+sys_errlist
+sys_nerr
