@@ -35,8 +35,8 @@ UNDEF_SYMBOLS=__unix_ioctl       \
               __unix_fcntl
 
 orig/123.o:
-	echo You need to run the extract.sh script to get the 1-2-3 files.
-	false
+	@echo You need to run the extract.sh script to get the 1-2-3 files.
+	@false
 
 # Functions that should be compatible, but 123 does something weird.
 123.o: UNDEF_SYMBOLS+=__unix_environ __wrap_lic_init
