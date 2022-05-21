@@ -44,11 +44,11 @@ Unfortunately, most distributions do not enable `coff-i386` support in binutils.
 
 It's very easy to enable it yourself, download [binutils](https://www.gnu.org/software/binutils/) and configure it with `--enable-targets=all`.
 
-You need `objcopy` and `objdump` from the `binutils` directory, and `ld-new` from the `ld` directory. Copy those binarues into the 123elf build directory.
+You need `objcopy` and `objdump` from the `binutils` directory, and `ld-new` from the `ld` directory. Copy those binaries into the 123elf build directory.
 
 > Important: `ld` must be renamed `real-ld` or gcc won't use it (I don't know why).
 
-Now run `PATH=.:$PATH make`, and it should work.
+The Makefile should automatically use the new binaries, and continue to build.
 
 ## Running
 
