@@ -1,7 +1,7 @@
 # Lotus 1-2-3 for Linux
 
 This is a native port of Lotus 1-2-3 version 3 to Linux. This is possible
-because the official Lotus 1-2-3 for UNIX used a technique called [partial
+because the official Lotus 1-2-3 for UNIX port used a technique called [partial
 linking](https://sourceware.org/binutils/docs-2.38/ld/Options.html#:~:text=This%20is%20often%20called%20partial%20linking.), which can be modified to support new platforms.
 
 There's an article documenting how this is possible
