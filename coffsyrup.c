@@ -140,7 +140,7 @@ int main(int argc, char **argv)
         }
 
         if (symtab[i].e_numaux > 1 || i + symtab[i].e_numaux > hdr.f_nsyms) {
-            errx(EXIT_FAILURE, "The number of auxilliary entries (%u) was illegal.", symtab[i].e_numaux);
+            errx(EXIT_FAILURE, "The number of auxiliary entries (%u) was illegal.", symtab[i].e_numaux);
         }
 
         if (!symtab[i].e.e.e_zeroes && symtab[i].e.e.e_offset > strtabsz) {
@@ -164,9 +164,9 @@ int main(int argc, char **argv)
 
         // XXX: Note the ++i, this must be last in the loop!!!
         if (symtab[i].e_numaux) {
-            // Read in any auxilliary entry.
+            // Read in any auxiliary entry.
             if (fread(&symtab[++i], sizeof *symtab, 1, infile) != 1) {
-                err(EXIT_FAILURE, "Failed to read auxilliary entry.");
+                err(EXIT_FAILURE, "Failed to read auxiliary entry.");
             }
         }
     }
@@ -233,7 +233,7 @@ int main(int argc, char **argv)
             }
 
             if (rel->r_symndx > hdr.f_nsyms) {
-                errx(EXIT_FAILURE, "A relocation references a non-existant symbol %u.", rel->r_symndx);
+                errx(EXIT_FAILURE, "A relocation references a non-existent symbol %u.", rel->r_symndx);
             }
 
             if (rel->r_vaddr < scn[i].s_vaddr || rel->r_vaddr > scn[i].s_vaddr + scn[i].s_size) {
