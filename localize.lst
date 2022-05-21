@@ -1,0 +1,7 @@
+fopen
+fread
+fflush
+fgets
+fclose
+fseek
+fgetc

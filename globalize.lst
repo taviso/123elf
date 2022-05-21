@@ -1,0 +1,17 @@
+lexit
+read_setup_file
+get_number
+read_startup_ri_file
+get_info
+get_dirname
+scr_status_to_errcode
+getseq
+syserrclr
+getshort
+getlong
+keyreader
+set_raw_mode
+input_task
+waiting_for_chunk
+get_kfun
+repaint
