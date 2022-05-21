@@ -11,6 +11,7 @@ if ! test -f 123UNIX1.IMG   \
        -a -f 123UNIX4.IMG   \
        -a -f 123UNIX5.IMG; then
     printf "You need to download the original 1-2-3 UNIX IMG files.\n" 1>&2
+    printf "They are available here: https://archive.org/download/123-unix\n" 1>&2
     exit 1
 fi
 
