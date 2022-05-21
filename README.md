@@ -48,7 +48,7 @@ There's no need to install it, just build it with `make`.
 
 When that's complete, copy `objcopy` and `objdump` from the `binutils` directory, and `ld-new` from the `ld` directory to `123elf` directory.
 
-> Important: `ld-new` must be renamed `real-ld` or gcc won't use it (I don't know why).
+> Important: Remember to rename `ld-new` to `ld`.
 
 The Makefile should automatically use the new binaries, and continue to build.
 
