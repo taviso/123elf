@@ -19,7 +19,6 @@ __require_ref:
     call    clearerr@plt
     call    clock@plt
     call    closedir@plt
-    call    close_range@plt
     call    copysign@plt
     call    creat@plt
     call    ctermid@plt

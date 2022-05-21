@@ -5,3 +5,4 @@ fgets
 fclose
 fseek
 fgetc
+close_range

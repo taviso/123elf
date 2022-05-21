@@ -2,3 +2,9 @@ root
 orig
 *.IMG
 real-ld
+objcopy
+objdump
+*.o
+*.sw?
+coffsyrup
+123
