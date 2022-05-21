@@ -11,6 +11,8 @@ There's an article documenting how this is possible
 
 ## Building
 
+### Dependencies
+
 First, you need a version of binutils that is compiled with `coff-i386` target
 support. You can check like this:
 
@@ -26,13 +28,24 @@ the build directory and run `extract.sh`.
 
 Finally, just run `make`.
 
+#### Ubuntu
+
+> Note: Ubuntu does not enable `coff-i386` support in it's binutils package, so
+> you need to build your own copy, follow the instructions below.
+
+The following packages are required:
+
+    - build-essential
+    - gcc-multilib
+    - lib32ncurses-dev
+
 ### Binutils
 
 If you want to build binutils just for this purpose, just pass
 `--enable-targets=all` to configure.
 
 If you don't want to override your system binutils, copy the new `objcopy`,
-`objdump` and `ld` into the build directory.
+`objdump` and `ld-new` into the build directory.
 
 > Important: `ld` must be called `real-ld` or gcc won't use it (I don't know why).
 
