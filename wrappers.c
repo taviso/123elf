@@ -55,6 +55,10 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
 
     fprintf(stderr, "ioctl(%d, %#x);\n", fd, request);
 
+    if (argp == NULL) {
+        return -1;
+    }
+
     switch (request) {
         case TCSETS:
             if (tcgetattr(fd, &tio) != 0) {
