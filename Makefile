@@ -1,7 +1,7 @@
 BFD_INP_TARGET = coff-i386
 BFD_OUT_TARGET = coff-i386
 OBJCOPY_FLAGS  = --wildcard --localize-symbols=localize.lst --globalize-symbols=globalize.lst --redefine-syms=redefine.lst --weaken-symbols=weaken.lst
-CFLAGS  = -m32 -ggdb3 -O0 -Wno-multichar
+CFLAGS  = -m32 -ggdb3 -O0 -Wno-multichar -fno-stack-protector
 ASFLAGS = --32
 LDFLAGS = $(CFLAGS) -B. -Wl,-b,coff-i386
 LDLIBS = -lncurses
