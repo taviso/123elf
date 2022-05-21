@@ -46,7 +46,7 @@ It's very easy to enable it yourself, download [binutils](https://www.gnu.org/so
 
 You need `objcopy` and `objdump` from the `binutils` directory, and `ld-new` from the `ld` directory. Copy those binaries into the 123elf build directory.
 
-> Important: `ld` must be renamed `real-ld` or gcc won't use it (I don't know why).
+> Important: `ld-new` must be renamed `real-ld` or gcc won't use it (I don't know why).
 
 The Makefile should automatically use the new binaries, and continue to build.
 
