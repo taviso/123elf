@@ -56,3 +56,19 @@ The Makefile should automatically use the new binaries, and continue to build.
 
 Copy the file `l123set.cf` to `~/.l123set`, and run `./123`.
 
+### Getting Started
+
+- There is a man page in `./root/lotus/man/man1/123.1`, and a full manual available online [here](https://archive.org/details/lotus-1-2-3-release-3.1-reference/Lotus%201-2-3%20Release%203.1%20-%20Tutorial).
+
+> Note: You use use the `/` key to open the 123 menu!
+
+If you've used any spreadsheet before, you should be able to get started
+quickly. Functions use `@` instead of `=`, but the common functions like
+`@SUM`, `@AVG`, `@INDEX`, and even `@HLOOKUP` all work as you would expect.
+
+## Bugs
+
+- The keyboard map seems to be incomplete - probably a termcap issue?
+- Graphs don't work yet (I'm working on it!).
+- Printing doesn't work yet.
+- File an issue if you notice something, there are probably lots of minor issues that can be fixed!
