@@ -22,6 +22,8 @@ $ objdump --info | grep coff-i386
 
 > Note: Most distributions do not enable this for some reason.
 
+Run the included `binutils.sh` to download and compile a version of binutils known to work for this.
+
 Secondly, you need a copy of Lotus 1-2-3 for UNIX, you can download it
 [here](https://archive.org/details/123-unix). Just place the raw disk images in 
 the build directory and run `extract.sh`.
