@@ -1,14 +1,24 @@
+## Lotus 1-2-3 root
 root
+
+## original .o files
 orig
+
+## original archive images
 *.IMG
-real-ld
-objcopy
-objdump
+
+## generated binary/objects
 *.o
 *.sw?
 coffsyrup
 123
+
+## from custom binutils builds
 ld
+objcopy
+objdump
+real-ld
+
 binutils-*
 drawtest
 *.a
