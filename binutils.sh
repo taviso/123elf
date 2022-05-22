@@ -1,9 +1,15 @@
 #!/bin/bash
 
-BINUTILS_XZ=binutils-2.34.tar.xz 
+BINUTILS_XZ=binutils-2.38.tar.xz 
 BINUTILS_DIR=`basename $BINUTILS_XZ .tar.xz`
 BINUTILS_URL=https://ftp.gnu.org/gnu/binutils/$BINUTILS_XZ
 ORIG_PWD=`pwd`
+
+if [ "$1" = "clean" ]; then
+   rm -fv objcopy objdump ld $BINUTILS_XZ
+   rm -rfv $BINUTILS_DIR
+   exit
+fi
 
 if [ ! -f "$BINUTILS_XZ" ]; then
    wget "$BINUTILS_URL"
