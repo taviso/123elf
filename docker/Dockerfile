@@ -4,8 +4,9 @@ FROM ubuntu:$UBUNTU_VERSION
 
 MAINTAINER gdm85@users.noreply.github.com
 
+ARG DEPS=lib32ncurses-dev
 RUN export DEBIAN_FRONTEND=noninteractive && export TERM=xterm && apt-get update && \
-        apt-get install -y build-essential gcc-multilib lib32ncurses-dev cpio file \
+        apt-get install -y build-essential gcc-multilib $DEPS cpio file \
         wget texinfo && \
 	rm -rf /var/lib/apt/lists/*
 
