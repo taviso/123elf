@@ -34,11 +34,11 @@ Finally, just run `make`.
 
 The following packages are required
 
-| Ubuntu              | Fedora              |
-| ------------------- | ------------------- |
-| build-essential     | glibc-devel.i686    |
-| gcc-multilib        | libgcc.i686         |
-| lib32ncurses-dev    | ncurses-static.i686 |
+| Ubuntu              | Fedora              | Debian (bookworm)
+| ------------------- | ------------------- | -------------------
+| build-essential     | glibc-devel.i686    | build-essential
+| gcc-multilib        | libgcc.i686         | gcc-multilib
+| lib32ncurses-dev    | ncurses-static.i686 | lib32ncurses-dev
 
 ### Binutils
 
