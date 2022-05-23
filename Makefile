@@ -7,7 +7,7 @@ LDFLAGS = $(CFLAGS) -B. -Wl,-b,coff-i386 -no-pie
 LDLIBS = -lncurses -ltinfo
 PATH := .:$(PATH)
 prefix ?= /
-bindir = ${prefix}usr/local/bin
+bindir ?= ${prefix}usr/local/bin
 sharedir = ${prefix}usr/local/share/lotus
 profiledir = ${prefix}etc/profile.d
 
@@ -62,7 +62,8 @@ install:
 	install -Dm 755 123 ${sharedir}/123
 	install -Dm 755 run.sh ${bindir}/123
 	mkdir -p ${profiledir}
-	echo export LOTUS_HOME="${sharedir}" > ${profiledir}/lotus
+	echo export LOTUS_HOME="${sharedir}" > ${profiledir}/lotus.sh
+	chmod +x ${profiledir}/lotus.sh
 
 uninstall:
 	rm -r ${sharedir}
