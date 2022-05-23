@@ -16,22 +16,7 @@ times __unix_times
 sysi86 __unix_sysi86
 ioctl __unix_ioctl
 fcntl __unix_fcntl
-# Let lotus use its own stdio routines, but hide them from our native code.
-# Of course, these map down to systemcalls eventually which we will handle.
-#fopen __unix_fopen
-#fread __unix_fread
-#fflush __unix_fflush
-#fgets __unix_fgets
-#fclose __unix_fclose
-#fseek __unix_fseek
-#
-# System calls to translate.
-#fork __unix_fork
-#close __unix_close
-#brk __unix_brk
-#getuid __unix_getuid
-#pipe __unix_pipe
-#ioctl __unix_ioctl
+read __unix_read
 #
 # Lotus routines we need to patch.
 lic_init __wrap_lic_init

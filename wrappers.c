@@ -175,6 +175,39 @@ int __unix_times(void *buffer)
     return times(&buf);
 }
 
+int __unix_read(int fd, void *buf, size_t count)
+{
+    // We can do any necessary keyboard translation here.
+    if (fd == STDIN_FILENO && count == 1 && isatty(fd)) {
+        char key;
+        int result;
+
+        // Do the actual read.
+        result = read(fd, &key, 1);
+
+        // Just pass through any error or timeout.
+        if (result != 1)
+            return result;
+
+        // Now we can apply any fixups.
+        switch (key) {
+            // Apparently UNIX does not handle DEL characters reliably,
+            // something to do with the console driver.
+            //
+            // Lets map it to backspace instead.
+            case 0x7f: key = '\b';
+                       break;
+        }
+
+        // Copy the updated result over.
+        memcpy(buf, &key, 1);
+
+        // All done.
+        return result;
+    }
+    return read(fd, buf, count);
+}
+
 
 #define SI86FPHW 40
 #define FP_387 3

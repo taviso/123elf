@@ -32,6 +32,7 @@ UNDEF_SYMBOLS=__unix_ioctl       \
               __unix_times       \
               __unix_sysi86      \
               __unix_fstat       \
+              __unix_read        \
               __unix_fcntl
 
 orig/123.o:
