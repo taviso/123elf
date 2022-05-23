@@ -72,7 +72,7 @@ quickly. Functions use `@` instead of `=`, but the common functions like
 
 ## Bugs
 
-- The keyboard map seems to be incomplete - probably a termcap issue?
+- ~~The keyboard map seems to be incomplete~~ This seems to be working in xterm, please test other terminals!
 - Graphs don't work yet (I'm working on it!).
 - Printing doesn't work yet.
 - File an issue if you notice something, there are probably lots of minor issues that can be fixed!
