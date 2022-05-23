@@ -6,6 +6,10 @@ ASFLAGS = --32
 LDFLAGS = $(CFLAGS) -B. -Wl,-b,coff-i386 -no-pie
 LDLIBS = -lncurses -ltinfo
 PATH := .:$(PATH)
+prefix ?= /
+bindir = ${prefix}usr/local/bin
+sharedir = ${prefix}usr/local/share/lotus
+profiledir = ${prefix}etc/profile.d
 
 define BFD_TARGET_ERROR
 Your version of binutils was compiled without coff-i386 target support.
@@ -51,6 +55,19 @@ dl_init.o: orig/dl_init.o
 
 123: 123.o dl_init.o main.o wrappers.o patch.o | forceplt.o
 	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -o $@ $(LDLIBS)
+
+install:
+	mkdir -p ${bindir} ${sharedir}/bin
+	cp -r ./root ${sharedir}
+	install -Dm 755 123 ${sharedir}/123
+	install -Dm 755 run.sh ${bindir}/123
+	mkdir -p ${profiledir}
+	echo export LOTUS_HOME="${sharedir}" > ${profiledir}/lotus
+
+uninstall:
+	rm -r ${sharedir}
+	rm ${bindir}/123
+	rm ${profiledir}/lotus
 
 clean:
 	rm -f *.o 123 coffsyrup
