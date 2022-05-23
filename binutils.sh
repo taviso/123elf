@@ -34,7 +34,7 @@ fi
 if [ ! -x "$BINUTILS_DIR/binutils/objcopy" ]; then
    cd $BINUTILS_DIR
    ./configure --enable-targets=all
-   make
+   make -j$(nproc)
 fi
 cd $ORIG_PWD
 
