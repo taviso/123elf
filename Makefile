@@ -4,7 +4,7 @@ OBJCOPY_FLAGS  = --wildcard --localize-symbols=localize.lst --globalize-symbols=
 CFLAGS  = -lc -m32 -ggdb3 -O0 -fno-stack-protector
 ASFLAGS = --32
 LDFLAGS = $(CFLAGS) -B. -Wl,-b,coff-i386 -no-pie
-LDLIBS = -lncurses
+LDLIBS = -lncurses -ltinfo
 PATH := .:$(PATH)
 
 define BFD_TARGET_ERROR
