@@ -56,6 +56,21 @@ When that's complete, copy `objcopy` and `objdump` from the `binutils` directory
 
 The Makefile should automatically use the new binaries, and continue to build.
 
+## Installing
+
+Run `make install`
+By default it will install to /usr/local
+In case you want to change the base dir run `make prefix=path install`
+In case you want to change the bindir you can append `bindir=path` (e.g. `make bindir=usr`)
+
+It will install:
+ - the shared files of the lotus installation to the shared folder 
+ - The relinked binary
+ - A shim to run Lotus on the bin folder
+
+*Observerd limitation: when checking pathing it seems to access some file in the shared folder which make it appeared as if it stuck when it try to change it*
+
+
 ## Running
 
 Copy the file `l123set.cf` to `~/.l123set`, and run `./123`.
