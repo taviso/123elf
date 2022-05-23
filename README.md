@@ -1,7 +1,7 @@
 # Lotus 1-2-3 for Linux
 
-This is a native port of Lotus 1-2-3 version 3 to Linux. This is possible
-because the official Lotus 1-2-3 for UNIX port used a technique called [partial
+This is a native port of Lotus 1-2-3 Release 3 to Linux. This is possible
+because Lotus 1-2-3 for UNIX SystemV used a trick called [partial
 linking](https://sourceware.org/binutils/docs-2.38/ld/Options.html#:~:text=This%20is%20often%20called%20partial%20linking.) to workaround a technical limitation in early UNIX systems. Surprisingly, that can be used to modify it to support new platforms.
 
 There's an article documenting how this is possible
@@ -44,6 +44,8 @@ Unfortunately, most distributions do not enable `coff-i386` support in binutils.
 
 It's very easy to enable it yourself, download [binutils](https://www.gnu.org/software/binutils/) and configure it with `--enable-targets=all`.
 
+> Note: binutils-2.38 is known to work, some earlier versions have been found to not work.
+
 There's no need to install it, just build it with `make`.
 
 When that's complete, copy `objcopy` and `objdump` from the `binutils` directory, and `ld-new` from the `ld` directory to `123elf` directory.
@@ -59,6 +61,8 @@ Copy the file `l123set.cf` to `~/.l123set`, and run `./123`.
 ### Getting Started
 
 - There is a man page in `./root/lotus/man/man1/123.1`, and a full manual available online [here](https://archive.org/details/lotus-1-2-3-release-3.1-reference/Lotus%201-2-3%20Release%203.1%20-%20Tutorial).
+
+Lotus 1-2-3 has context sensitive online help, you can press `F1` at most times to see some hints.
 
 > Note: You use use the `/` key to open the 123 menu!
 
