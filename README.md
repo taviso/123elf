@@ -72,6 +72,31 @@ If you've used any spreadsheet before, you should be able to get started
 quickly. Functions use `@` instead of `=`, but the common functions like
 `@SUM`, `@AVG`, `@INDEX`, and even `@HLOOKUP` all work as you would expect.
 
+## FAQ
+
+- Q. When I start 123, it says "Error reading file", is this a bug?
+
+If you press `F1` when you see that error, Lotus explains that you *must*
+specify a file. By default, it will try to open `~/auto123.wk3` or whatever
+file you specified on the commandline with `-w`.
+
+If you want to get rid of the error, just save a blank spreadsheet there.
+You can also change where it looks for the autorun files, use `/Worksheet
+Global Default Dir` and then `Update` to save your settings.
+
+If you just want to try Lotus out, you can try one of the sample files, e.g.
+
+```
+$ ./123 -w -w "$PWD/root/lotus/123.v10/smpfiles/income.wk3"
+```
+
+- Q. How do I quit 123?
+
+If the status indicator in the top right says `READY`, try `/Quit Yes`.
+
+If it doesn't say `READY` (it might say `ERROR`, `HELP` `POINT`, `MENU` or
+something else), try hitting `Esc` until it goes back to `READY`.
+
 ## Bugs
 
 - ~~The keyboard map seems to be incomplete~~ This seems to be working in xterm, please test other terminals!

@@ -1,4 +1,3 @@
-#define _FILE_OFFSET_BITS 64
 #include <stdlib.h>
 #include <assert.h>
 #include <stdarg.h>
@@ -18,6 +17,8 @@
 #include <sys/times.h>
 #include <sys/ioctl.h>
 
+#include "filemap.h"
+
 #pragma pack(push, 1)
 struct unixtermios {
     uint16_t    c_iflag;
@@ -28,6 +29,9 @@ struct unixtermios {
     uint8_t     c_cc[8];
 };
 #pragma pack(pop)
+
+#define SI86FPHW 40
+#define FP_387 3
 
 #define UNIX_VMIN 4
 #define UNIX_VTIME 3
@@ -120,15 +124,33 @@ struct unixstat {
     uint32_t    st_size;
 };
 
+#define UNIX_S_IFBLK 0x6000
+#define UNIX_S_IFREG 0x8000
+#define UNIX_S_IFLNK 0xA000
+#define UNIX_S_IFDIR 0x4000
+
 int __unix_stat(const char *pathname, struct unixstat *statbuf)
 {
     struct stat buf;
+
+    // This routine can change filenames to make them more suitable for Linux.
+    pathname = map_unix_pathname(pathname);
 
     if (stat(pathname, &buf) != 0)
         return -1;
 
     statbuf->st_size = buf.st_size;
-    statbuf->st_mode = buf.st_mode;
+    statbuf->st_mode = buf.st_mode & 0x1FF;
+
+    switch (buf.st_mode & S_IFMT) {
+        case S_IFREG: statbuf->st_mode |= UNIX_S_IFREG; break;
+        case S_IFDIR: statbuf->st_mode |= UNIX_S_IFDIR; break;
+        case S_IFLNK: statbuf->st_mode |= UNIX_S_IFLNK; break;
+        case S_IFBLK: statbuf->st_mode |= UNIX_S_IFBLK; break;
+        default:
+            err(EXIT_FAILURE, "Faield to translate filetype for %s.", pathname);
+    }
+
     return 0;
 }
 
@@ -146,11 +168,14 @@ int __unix_fstat(int fd, struct unixstat *statbuf)
 
 int __unix_open(const char *pathname, int flags, mode_t mode)
 {
+    // This routine can change filenames to make them more suitable for Linux.
+    pathname = map_unix_pathname(pathname);
+
     switch (flags) {
-        case 0x001: return open(pathname, O_WRONLY);
-        case 0x101: return open(pathname, O_CREAT | O_WRONLY, mode);
-        case 0x102: return open(pathname, O_CREAT | O_RDWR, mode);
         case 0x000: return open(pathname, O_RDONLY);
+        case 0x001: return open(pathname, O_WRONLY);
+        case 0x102: return open(pathname, O_CREAT | O_RDWR, mode);
+        case 0x101: return open(pathname, O_CREAT | O_WRONLY, mode);
         case 0x109: return open(pathname, O_CREAT | O_WRONLY | O_APPEND, mode);
         case 0x302: return open(pathname, O_CREAT | O_TRUNC | O_RDWR, mode);
         default:
@@ -209,9 +234,6 @@ int __unix_read(int fd, void *buf, size_t count)
     return read(fd, buf, count);
 }
 
-
-#define SI86FPHW 40
-#define FP_387 3
 int __unix_sysi86(int cmd, uint32_t *result)
 {
     // This is used to check for x87 support, nothing else is supported.
@@ -220,4 +242,11 @@ int __unix_sysi86(int cmd, uint32_t *result)
 
     *result = FP_387;
     return 0;
+}
+
+int __unix_access(const char *pathname, int mode)
+{
+    // The mode definitions is compatible with Linux, but we might want to
+    // adjust pathnames.
+    return access(map_unix_pathname(pathname), mode);
 }

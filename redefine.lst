@@ -1,8 +1,7 @@
 #
 # Magic symbols
-_start __unix__start
 main __unix_main
-environ __unix_environ
+# Incompatible variables
 LINES __unix_LINES
 COLS __unix_COLS
 #
@@ -17,6 +16,4 @@ sysi86 __unix_sysi86
 ioctl __unix_ioctl
 fcntl __unix_fcntl
 read __unix_read
-#
-# Lotus routines we need to patch.
-lic_init __wrap_lic_init
+access __unix_access
