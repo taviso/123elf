@@ -66,7 +66,7 @@ In case you want to change the bindir you can append `bindir=path` (e.g. `make b
 It will install:
  - the shared files of the lotus installation to the shared folder 
  - The relinked binary
- - A shim to run Lotus on the bin folder
+ - A shim to run Lotus on the system bin folder  based on the envrionemnt variable `LOTUS_HOME`
 
 *Observerd limitation: when checking pathing it seems to access some file in the shared folder which make it appeared as if it stuck when it try to change it*
 
