@@ -90,8 +90,9 @@ something else), try hitting `Esc` until it goes back to `READY`.
 
 ## Security
 
-By default, 123 allows Autoexec macros in worksheets. Macros can contain shell
-commands, read and write arbitrary files, load plugins and so on.
+By default, 123 allows Autoexec macros in worksheets. Lotus macros are very
+powerful, and can run shell commands, read and write arbitrary files, load
+plugins and so on.
 
 However, you can disable Autoexec macros via `/Worksheet Global Default Autoexec`.
 
@@ -101,7 +102,8 @@ If you disable Autoexec then in *theory* it's safe to open untrusted
 worksheets -- ***but*** this software hasn't been maintained for over 30 years,
 and may contain security bugs!
 
-I can patch bugs using `coffsyrup` by redirecting unsafe functions to new
-versions, so I will make a best effort to fix vulnerabilities if you
+I can fix bugs with `coffsyrup`, by redirecting unsafe functions to new
+safe versions, so I will make a best effort to fix vulnerabilities if you
 [report](https://github.com/taviso/123elf/issues) them!
+
 
