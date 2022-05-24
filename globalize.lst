@@ -15,3 +15,5 @@ input_task
 waiting_for_chunk
 get_kfun
 repaint
+filerange_lock_unlock
+file_lock

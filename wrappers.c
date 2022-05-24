@@ -10,6 +10,7 @@
 #include <curses.h>
 #include <termios.h>
 #include <signal.h>
+#include <errno.h>
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -18,6 +19,9 @@
 #include <sys/ioctl.h>
 
 #include "filemap.h"
+
+// The Lotus view of errno.
+extern int __unix_errno;
 
 #pragma pack(push, 1)
 struct unixtermios {
@@ -34,7 +38,7 @@ struct unixtermios {
 #define FP_387 3
 
 #define UNIX_VMIN 4
-#define UNIX_VTIME 3
+#define UNIX_VTIME 5
 
 static struct termios original;
 
@@ -86,11 +90,6 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
             if (tcsetattr(fd, TCSANOW, &tio) != 0) {
                 err(EXIT_FAILURE, "Failed to translate ioctl() to tcsetattr()");
             }
-
-            // Check if that worked
-            if (tcgetattr(fd, &tio) != 0) {
-                err(EXIT_FAILURE, "Failed to translate ioctl() to tcgetattr()");
-            }
             return 0;
         case TCGETS:
             if (tcgetattr(fd, &tio) != 0) {
@@ -102,25 +101,70 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
         default:
             fprintf(stderr, "ioctl: unknown request\n");
     }
+    __unix_errno = errno;
     return -1;
 }
 
-int __unix_fcntl(int fd, int cmd, ...)
+struct unixflock {
+    uint16_t    l_type;
+    uint16_t    l_whence;
+    uint32_t    l_start;
+    uint32_t    l_len;
+    uint32_t    l_sysid;
+    uint16_t    l_pid;
+    uint32_t    l_pad[4];
+};
+
+int __unix_fcntl(int fd, int cmd, void *arg)
 {
+    static int unix_cmd_table[32] = {
+        [3] = F_GETFL,
+        [4] = F_SETFL,
+        [5] = F_GETLK,
+        [6] = F_SETLK,
+        [7] = F_SETLKW,
+    };
+    static int unix_lck_table[] = {
+        [1] = F_RDLCK,
+        [2] = F_WRLCK,
+        [3] = F_UNLCK,
+    };
+
+    // Translate command from UNIX to Linux.
+    cmd = unix_cmd_table[cmd];
+
     switch (cmd) {
-        case F_SETLK:
-            return 0;
+        case F_SETLK: {
+            struct unixflock *ufl = arg;
+            struct flock lfl = {0};
+
+            // Translate the lock structure over.
+            lfl.l_type = unix_lck_table[ufl->l_type];
+            lfl.l_start = ufl->l_start;
+            lfl.l_len = ufl->l_len;
+            lfl.l_whence = ufl->l_whence;
+
+            if (fcntl(fd, cmd, &lfl) == 0) {
+                return 0;
+            }
+            __unix_errno = errno;
+            return -1;
+        }
         default:
-            fprintf(stderr, "fcntl: unknown request\n");
+            err(EXIT_FAILURE, "fcntl: unknown cmd requested.\n");
     }
     return -1;
 }
 
 struct unixstat {
-    uint32_t    field_0;
-    uint32_t    st_mode;
-    uint32_t    field_8;
-    uint32_t    field_C;
+    uint16_t    st_dev;
+    uint16_t    st_ino;
+    uint16_t    st_mode;
+    uint16_t    st_nlink;
+    uint16_t    st_uid;
+    uint16_t    st_gid;
+    uint16_t    st_rdev;
+    uint16_t    pad;
     uint32_t    st_size;
 };
 
@@ -129,6 +173,31 @@ struct unixstat {
 #define UNIX_S_IFLNK 0xA000
 #define UNIX_S_IFDIR 0x4000
 
+static int translate_linux_stat(struct stat *linuxstat, struct unixstat *unixstat)
+{
+    memset(unixstat, 0, sizeof *unixstat);
+    unixstat->st_dev = linuxstat->st_dev;
+    unixstat->st_ino = linuxstat->st_ino;
+    unixstat->st_nlink = linuxstat->st_nlink;
+    unixstat->st_mode = linuxstat->st_mode & 0x1FF;
+    unixstat->st_uid = linuxstat->st_uid;
+    unixstat->st_gid = linuxstat->st_gid;
+    unixstat->st_rdev = linuxstat->st_rdev;
+    unixstat->st_size = linuxstat->st_size;
+
+    switch (linuxstat->st_mode & S_IFMT) {
+        case S_IFREG: unixstat->st_mode |= UNIX_S_IFREG; break;
+        case S_IFDIR: unixstat->st_mode |= UNIX_S_IFDIR; break;
+        case S_IFLNK: unixstat->st_mode |= UNIX_S_IFLNK; break;
+        case S_IFBLK: unixstat->st_mode |= UNIX_S_IFBLK; break;
+        default:
+            warnx("Failed to translate filetype %#x.", linuxstat->st_mode);
+            return -1;
+    }
+
+    return 0;
+}
+
 int __unix_stat(const char *pathname, struct unixstat *statbuf)
 {
     struct stat buf;
@@ -136,34 +205,24 @@ int __unix_stat(const char *pathname, struct unixstat *statbuf)
     // This routine can change filenames to make them more suitable for Linux.
     pathname = map_unix_pathname(pathname);
 
-    if (stat(pathname, &buf) != 0)
+    if (stat(pathname, &buf) != 0) {
+        __unix_errno = errno;
         return -1;
-
-    statbuf->st_size = buf.st_size;
-    statbuf->st_mode = buf.st_mode & 0x1FF;
-
-    switch (buf.st_mode & S_IFMT) {
-        case S_IFREG: statbuf->st_mode |= UNIX_S_IFREG; break;
-        case S_IFDIR: statbuf->st_mode |= UNIX_S_IFDIR; break;
-        case S_IFLNK: statbuf->st_mode |= UNIX_S_IFLNK; break;
-        case S_IFBLK: statbuf->st_mode |= UNIX_S_IFBLK; break;
-        default:
-            err(EXIT_FAILURE, "Faield to translate filetype for %s.", pathname);
     }
 
-    return 0;
+    return translate_linux_stat(&buf, statbuf);
 }
 
 int __unix_fstat(int fd, struct unixstat *statbuf)
 {
     struct stat buf;
 
-    if (fstat(fd, &buf) != 0)
+    if (fstat(fd, &buf) != 0) {
+        __unix_errno = errno;
         return -1;
+    }
 
-    statbuf->st_size = buf.st_size;
-    statbuf->st_mode = buf.st_mode;
-    return 0;
+    return translate_linux_stat(&buf, statbuf);
 }
 
 int __unix_open(const char *pathname, int flags, mode_t mode)
@@ -203,17 +262,20 @@ int __unix_times(void *buffer)
 
 int __unix_read(int fd, void *buf, size_t count)
 {
+    int result;
+
     // We can do any necessary keyboard translation here.
     if (fd == STDIN_FILENO && count == 1 && isatty(fd)) {
         char key;
-        int result;
 
         // Do the actual read.
         result = read(fd, &key, 1);
 
         // Just pass through any error or timeout.
-        if (result != 1)
+        if (result != 1) {
+            __unix_errno = errno;
             return result;
+        }
 
         // Now we can apply any fixups.
         switch (key) {
@@ -231,7 +293,12 @@ int __unix_read(int fd, void *buf, size_t count)
         // All done.
         return result;
     }
-    return read(fd, buf, count);
+
+    result = read(fd, buf, count);
+
+    __unix_errno = errno;
+
+    return result;
 }
 
 int __unix_sysi86(int cmd, uint32_t *result)
@@ -248,5 +315,10 @@ int __unix_access(const char *pathname, int mode)
 {
     // The mode definitions is compatible with Linux, but we might want to
     // adjust pathnames.
-    return access(map_unix_pathname(pathname), mode);
+    if (access(map_unix_pathname(pathname), mode) != 0) {
+        __unix_errno = errno;
+        return -1;
+    }
+
+    return 0;
 }
