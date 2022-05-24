@@ -58,7 +58,7 @@ The Makefile should automatically use the new binaries, and continue to build.
 
 ## Running
 
-Copy the file `l123set.cf` to `~/.l123set`, and run `./123`.
+Just run `./123`.
 
 ### Getting Started
 
@@ -87,3 +87,22 @@ something else), try hitting `Esc` until it goes back to `READY`.
 - Graphs don't work yet (I'm working on it!).
 - Printing doesn't work yet.
 - File an issue if you notice something, there are probably lots of minor issues that can be fixed!
+
+## Security
+
+By default, 123 allows Autoexec macros in worksheets, so there is no security
+and you should not open untrusted files. In 1-2-3, macros can contain shell
+commands, read and write arbitrary files, load plugins and so on.
+
+You can disable Autoexec macros via `/Worksheet Global Default Autoexec`.
+
+> I am thinking of changing this default before we reach a first release!
+
+If you do disable Autoexec then in *theory* it's safe to open untrusted
+worksheets -- ***but*** this software hasn't been maintained for over 30 years,
+and is likely full of critical security bugs!
+
+I can patch bugs using `coffsyrup` to redirect unsafe functions to new
+versions, so I will make a best effort to fix bugs if you report them! (Just
+file an issue, no need for disclosure).
+
