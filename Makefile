@@ -9,6 +9,7 @@ PATH := .:$(PATH)
 prefix ?= /
 bindir ?= ${prefix}usr/local/bin
 sharedir = ${prefix}usr/local/share/lotus
+mandir ?= ${prefix}usr/local/share/man/man1
 profiledir = ${prefix}etc/profile.d
 
 define BFD_TARGET_ERROR
@@ -61,6 +62,7 @@ install:
 	cp -r ./root ${sharedir}
 	install -Dm 755 123 ${sharedir}/123
 	install -Dm 755 run.sh ${bindir}/123
+	install -Dm 644 root/lotus/man/man1/123.1 ${mandir}/123.1
 	mkdir -p ${profiledir}
 	echo export LOTUS_HOME="${sharedir}" > ${profiledir}/lotus.sh
 	chmod +x ${profiledir}/lotus.sh
