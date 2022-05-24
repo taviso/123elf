@@ -90,19 +90,18 @@ something else), try hitting `Esc` until it goes back to `READY`.
 
 ## Security
 
-By default, 123 allows Autoexec macros in worksheets, so there is no security
-and you should not open untrusted files. In 1-2-3, macros can contain shell
+By default, 123 allows Autoexec macros in worksheets. Macros can contain shell
 commands, read and write arbitrary files, load plugins and so on.
 
 However, you can disable Autoexec macros via `/Worksheet Global Default Autoexec`.
 
-> I am thinking of changing this default before we reach a first release!
+> I am thinking of changing this default before we reach a first release, see [#27](https://github.com/taviso/123elf/issues/27).
 
-If you do disable Autoexec then in *theory* it's safe to open untrusted
+If you disable Autoexec then in *theory* it's safe to open untrusted
 worksheets -- ***but*** this software hasn't been maintained for over 30 years,
 and is likely full of critical security bugs!
 
-I can patch bugs using `coffsyrup` to redirect unsafe functions to new
+I can patch bugs using `coffsyrup` by redirecting unsafe functions to new
 versions, so I will make a best effort to fix vulnerabilities if you
 [report](https://github.com/taviso/123elf/issues) them!
 
