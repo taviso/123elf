@@ -17,3 +17,4 @@ get_kfun
 repaint
 filerange_lock_unlock
 file_lock
+get_column_labels
