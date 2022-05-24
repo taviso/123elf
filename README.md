@@ -99,7 +99,7 @@ However, you can disable Autoexec macros via `/Worksheet Global Default Autoexec
 
 If you disable Autoexec then in *theory* it's safe to open untrusted
 worksheets -- ***but*** this software hasn't been maintained for over 30 years,
-and is likely full of critical security bugs!
+and may contain security bugs!
 
 I can patch bugs using `coffsyrup` by redirecting unsafe functions to new
 versions, so I will make a best effort to fix vulnerabilities if you
