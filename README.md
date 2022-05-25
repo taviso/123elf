@@ -58,7 +58,7 @@ The Makefile should automatically use the new binaries, and continue to build.
 
 ## Running
 
-Copy the file `l123set.cf` to `~/.l123set`, and run `./123`.
+Just run `./123`.
 
 ### Getting Started
 
@@ -87,3 +87,23 @@ something else), try hitting `Esc` until it goes back to `READY`.
 - Graphs don't work yet (I'm working on it!).
 - Printing doesn't work yet.
 - File an issue if you notice something, there are probably lots of minor issues that can be fixed!
+
+## Security
+
+By default, 123 allows Autoexec macros in worksheets. Lotus macros are very
+powerful, and can run shell commands, read and write arbitrary files, load
+plugins and so on.
+
+However, you can disable Autoexec macros via `/Worksheet Global Default Autoexec`.
+
+> I am thinking of changing this default before we reach a first release, see [#27](https://github.com/taviso/123elf/issues/27).
+
+If you disable Autoexec then in *theory* it's safe to open untrusted
+worksheets -- ***but*** this software hasn't been maintained for over 30 years,
+and may contain security bugs!
+
+I can fix bugs with `coffsyrup`, by redirecting unsafe functions to new
+safe versions, so I will make a best effort to fix vulnerabilities if you
+[report](https://github.com/taviso/123elf/issues) them!
+
+

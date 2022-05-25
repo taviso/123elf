@@ -238,8 +238,6 @@ tempnam
 tmpfile
 tmpnam
 chown
-gtty
-stty
 msgctl
 semctl
 shmctl
