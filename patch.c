@@ -67,3 +67,15 @@ int display_column_labels()
                        displayed_window[18] - 1);
     return x_disp_txt_write(displayed_window[21], buf, 0);
 }
+
+extern int print_banner();
+int banner_on()
+{
+    const char *opt = getenv("LOTUS_NO_BANNER");
+    if (opt && !strcmp(opt, "1"))
+        return 0;
+
+    print_banner();
+    sleep(5);
+    return 1;
+}

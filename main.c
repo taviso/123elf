@@ -11,6 +11,7 @@ int main(int argc, char **argv, char **envp)
     putenv("TERMINFO=/usr/share/terminfo/");
     putenv("LOTUS_OS_ENV=x");
     putenv("LOTUS_ESCAPE_TIMEOUT=10");
+    putenv("LOTUS_NO_BANNER=1");
     setenv("TMPDIR", "/tmp", 0);
 
     setchrclass("ascii");

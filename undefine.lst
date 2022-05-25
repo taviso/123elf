@@ -249,3 +249,4 @@ load_printer_drivers
 close_printer_drivers
 read_print_config_dir
 display_column_labels
+banner_on
