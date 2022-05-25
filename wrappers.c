@@ -134,6 +134,48 @@ int __unix_fcntl(int fd, int cmd, void *arg)
     cmd = unix_cmd_table[cmd];
 
     switch (cmd) {
+        case F_GETFL: {
+            int linuxflags = fcntl(fd, cmd);
+            int unixflags  = 0;
+
+            // Pass through errno.
+            __unix_errno = errno;
+
+            if (linuxflags == -1)
+                return -1;
+
+            // I think these are all the flags 123 uses.
+            if (linuxflags & O_WRONLY)
+                unixflags |= 1;
+            if (linuxflags & O_RDWR)
+                unixflags |= 2;
+            if (linuxflags & O_NONBLOCK)
+                unixflags |= 4;
+            if (linuxflags & O_APPEND)
+                unixflags |= 8;
+            if (linuxflags & O_CREAT)
+                unixflags |= 0x100;
+
+            return unixflags;
+        }
+        case F_SETFL: {
+            int unixflags  = cmd;
+            int linuxflags = 0;
+
+            // I think these are the only flags you can change.
+            if (unixflags & 4)
+                linuxflags |= O_NONBLOCK;
+            if (linuxflags & 8)
+                linuxflags |= O_APPEND;
+
+            if (fcntl(fd, cmd, &linuxflags) == 0) {
+                return 0;
+            }
+
+            __unix_errno = errno;
+
+            return -1;
+        }
         case F_SETLK: {
             struct unixflock *ufl = arg;
             struct flock lfl = {0};
@@ -151,7 +193,7 @@ int __unix_fcntl(int fd, int cmd, void *arg)
             return -1;
         }
         default:
-            err(EXIT_FAILURE, "fcntl: unknown cmd requested.\n");
+            err(EXIT_FAILURE, "fcntl: unknown cmd %u requested.\n", cmd);
     }
     return -1;
 }
