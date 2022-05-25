@@ -84,7 +84,7 @@ something else), try hitting `Esc` until it goes back to `READY`.
 ## Bugs
 
 - ~~The keyboard map seems to be incomplete~~ This seems to be working in xterm, please test other terminals!
-- Graphs don't work yet (I'm working on it!).
+- Graphs don't work yet (we're working on it!, see [#5](https://github.com/taviso/123elf/issues/5)).
 - Printing doesn't work yet.
 - File an issue if you notice something, there are probably lots of minor issues that can be fixed!
 
@@ -102,8 +102,8 @@ If you disable Autoexec then in *theory* it's safe to open untrusted
 worksheets -- ***but*** this software hasn't been maintained for over 30 years,
 and may contain security bugs!
 
-I can fix bugs with `coffsyrup`, by redirecting unsafe functions to new
-safe versions, so I will make a best effort to fix vulnerabilities if you
-[report](https://github.com/taviso/123elf/issues) them!
+We can fix bugs with `coffsyrup`, by redirecting unsafe functions to new
+safe versions, so we will make a best effort to fix vulnerabilities if you
+[report](https://github.com/taviso/123elf/issues/new) them!
 
 
