@@ -208,6 +208,9 @@ struct unixstat {
     uint16_t    st_rdev;
     uint16_t    pad;
     uint32_t    st_size;
+    uint32_t    st_atime;
+    uint32_t    st_mtime;
+    uint32_t    st_ctime;
 };
 
 #define UNIX_S_IFBLK 0x6000
@@ -226,6 +229,9 @@ static int translate_linux_stat(struct stat *linuxstat, struct unixstat *unixsta
     unixstat->st_gid = linuxstat->st_gid;
     unixstat->st_rdev = linuxstat->st_rdev;
     unixstat->st_size = linuxstat->st_size;
+    unixstat->st_atime =  linuxstat->st_atim.tv_sec;
+    unixstat->st_mtime =  linuxstat->st_mtim.tv_sec;
+    unixstat->st_ctime =  linuxstat->st_ctim.tv_sec;
 
     switch (linuxstat->st_mode & S_IFMT) {
         case S_IFREG: unixstat->st_mode |= UNIX_S_IFREG; break;
