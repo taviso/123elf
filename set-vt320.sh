@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Key redefinition for DEC VT320
 # for changing multiple-sheets file
