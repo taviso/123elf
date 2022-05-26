@@ -3,6 +3,10 @@
 #include <string.h>
 #include <curses.h>
 
+#include "lotdefs.h"
+#include "lottypes.h"
+#include "lotfuncs.h"
+
 extern int __unix_main(int argc, char **argv, char **envp);
 extern int setchrclass(const char *class);
 

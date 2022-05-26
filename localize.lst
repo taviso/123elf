@@ -19,3 +19,13 @@ sys_errlist
 sys_nerr
 gtty
 stty
+initscr
+refresh
+getch
+endwin
+wmove
+waddch
+wclear
+wrefresh
+LINES
+COLS

@@ -15,6 +15,8 @@
 #include <sys/utsname.h>
 
 #include "lotdefs.h"
+#include "lottypes.h"
+#include "lotfuncs.h"
 
 int lic_init(void)
 {

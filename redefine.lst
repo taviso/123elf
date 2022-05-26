@@ -1,10 +1,6 @@
 #
 # Magic symbols
 main __unix_main
-# Incompatible variables
-LINES __unix_LINES
-COLS __unix_COLS
-#
 # Incompatible libc calls.
 errno __unix_errno
 stat __unix_stat
