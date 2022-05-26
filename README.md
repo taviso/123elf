@@ -9,6 +9,18 @@ There's an article documenting how this is possible
 
 ![Lotus 1-2-3 for Linux](https://lock.cmpxchg8b.com/img/123linux.png)
 
+# Keybindings for real DEC VT320 terminal
+
+If you use a physical DEC VT320 terminal it should be useful to launch `set-vt320.sh` script for enabling these keys to go back and forth through sheets in a multi-sheet file. These are the redefined keys:
+
+- **SHIFT + F19**: go to the next sheet (equivalent to **CTRL + PgUp** on PC)
+- **SHIFT + F20**: go to the previous sheet (equivalent to **CTRL + PgDn** on PC)
+
+To enable this, just launch on the terminal:
+```
+./set-vt320.sh
+```
+
 ## Building
 
 ### Dependencies
