@@ -84,7 +84,7 @@ something else), try hitting `Esc` until it goes back to `READY`.
 ## Bugs
 
 - ~~The keyboard map seems to be incomplete~~ This seems to be working in xterm, please test other terminals!
-- Graphs don't work yet (we're working on it!, see [#5](https://github.com/taviso/123elf/issues/5)).
+- ~~Graphs don't work yet~~ (Partially working!, see [#5](https://github.com/taviso/123elf/issues/5)).
 - Printing doesn't work yet.
 - File an issue if you notice something, there are probably lots of minor issues that can be fixed!
 
