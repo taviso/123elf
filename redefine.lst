@@ -12,5 +12,6 @@ ioctl __unix_ioctl
 fcntl __unix_fcntl
 read __unix_read
 access __unix_access
+readdir __unix_readdir
 # Difficult symbol names.
 banner_printed.0 banner_printed

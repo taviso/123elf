@@ -11,6 +11,7 @@
 #include <termios.h>
 #include <signal.h>
 #include <errno.h>
+#include <dirent.h>
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -369,4 +370,41 @@ int __unix_access(const char *pathname, int mode)
     }
 
     return 0;
+}
+
+#pragma pack(push, 1)
+struct unixdirent {
+    uint16_t    d_ino;
+    uint32_t    d_off;
+    uint16_t    d_reclen;
+    uint16_t    d_type;
+    char        d_name[256];
+};
+#pragma pack(pop)
+
+int __unix_readdir(DIR *dirp)
+{
+
+    struct dirent *lent;
+    static struct unixdirent uent;
+
+    // Reset errno so that end of stream and error can be distinguished.
+    errno = 0;
+
+    // We reuse the same static dirent, so reset it here.
+    memset(&uent, 0, sizeof uent);
+
+    // Fetch the real entry, and translate it to the UNIX format.
+    if ((lent = readdir(dirp))) {
+        uent.d_ino = lent->d_ino;
+        uent.d_off = lent->d_off;
+        uent.d_reclen = lent->d_reclen;
+        uent.d_type = lent->d_type;
+        strncpy(uent.d_name, lent->d_name, sizeof uent.d_name);
+        return &uent;
+    }
+
+    // Error, or end of stream, pass through errno.
+    __unix_errno = errno;
+    return NULL;
 }

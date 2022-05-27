@@ -62,6 +62,7 @@ int main(int argc, char **argv, char **envp)
             case 'b': banner_printed = false;
                       hide_option_from_lotus(&argc, argv);
                       break;
+            case '?':
             case 'h': atexit(print_help);
                       break;
         }
