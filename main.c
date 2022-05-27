@@ -15,7 +15,7 @@ extern int setchrclass(const char *class);
 
 static void hide_option_from_lotus(int *argc, char **argv) {
     // We can't remove options like -xyz or -zparam.
-    if (argv[optind][0] != '-' || argv[optind][2] != '\0') {
+    if (argv[optind] && (argv[optind][0] != '-' || argv[optind][2] != '\0')) {
         errx(EXIT_FAILURE, "Options cannot be combined.");
     }
 
