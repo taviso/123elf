@@ -382,7 +382,7 @@ struct unixdirent {
 };
 #pragma pack(pop)
 
-int __unix_readdir(DIR *dirp)
+struct unixdirent * __unix_readdir(DIR *dirp)
 {
 
     struct dirent *lent;
