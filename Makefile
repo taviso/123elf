@@ -40,10 +40,14 @@ dl_init.o: orig/dl_init.o
 ttydraw/ttydraw.a:
 	make -C ttydraw
 
-123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o | ttydraw/ttydraw.a forceplt.o
-	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^  -Wl,--whole-archive,ttydraw/ttydraw.a,--no-whole-archive -o $@ $(LDLIBS)
+atfuncs/atfuncs.a:
+	make -C atfuncs
+
+123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
+	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -Wl,--whole-archive,ttydraw/ttydraw.a,atfuncs/atfuncs.a,--no-whole-archive -o $@ $(LDLIBS)
 
 clean:
 	rm -f *.o 123 coffsyrup
 	rm -f vgcore.* core.* core
 	make -C ttydraw clean
+	make -C atfuncs clean

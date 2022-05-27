@@ -43,3 +43,7 @@ opcodes
 MapX
 MapY
 banner_printed
+at_date
+encode_date
+check_three_numbers
+get_integer

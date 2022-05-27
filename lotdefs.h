@@ -80,4 +80,9 @@ extern int MapX(uint16_t);
 extern int MapY(uint16_t);
 
 extern uint16_t banner_printed;
+
+extern int16_t encode_date(int16_t *datenums);
+extern int16_t get_integer();
+extern int16_t check_three_numbers();
+
 #endif
