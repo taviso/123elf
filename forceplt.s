@@ -228,3 +228,4 @@ __require_ref:
     call    shmctl@plt
     call    fstat64@plt
     call    stat64@plt
+    call    atexit@plt

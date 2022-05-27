@@ -1,4 +1,3 @@
-#
 # Magic symbols
 main __unix_main
 # Incompatible libc calls.
@@ -13,3 +12,5 @@ ioctl __unix_ioctl
 fcntl __unix_fcntl
 read __unix_read
 access __unix_access
+# Difficult symbol names.
+banner_printed.0 banner_printed

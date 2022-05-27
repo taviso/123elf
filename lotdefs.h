@@ -78,4 +78,6 @@ extern void *dliclose;
 
 extern int MapX(uint16_t);
 extern int MapY(uint16_t);
+
+extern uint16_t banner_printed;
 #endif
