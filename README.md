@@ -11,16 +11,11 @@ There's an article documenting how this is possible
 
 # Keybindings for real DEC VT320 terminal
 
-If you use a physical DEC VT320 terminal it should be useful to launch `set-vt320.sh` script for enabling these keys to go back and forth through sheets in a multi-sheet file. These are the redefined keys:
+If you use a physical DEC VT320 there will be a remapping for some function keys to enable the navigation through multiple-sheet files. These are remapped keys:
 
 - **SHIFT + F20**: go to the next sheet (equivalent to **CTRL + PgUp** on PC)
 - **SHIFT + F19**: go to the previous sheet (equivalent to **CTRL + PgDn** on PC)
 - **SHIFT + F11**: equivalent to **ESC**
-
-To enable this, just launch on the terminal:
-```
-./set-vt320.sh
-```
 
 ## Building
 
