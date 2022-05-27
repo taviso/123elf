@@ -29,3 +29,13 @@ wclear
 wrefresh
 LINES
 COLS
+getmsg
+putmsg
+stime
+opterr
+optind
+optopt
+optarg
+getopt
+tmpnam
+tempnam
