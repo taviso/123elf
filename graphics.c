@@ -144,7 +144,7 @@ static void tty_disp_info(struct DISPLAYINFO *dpyinfo)
     dpyinfo->graph_rows = LINES;
     dpyinfo->graph_col_res = 1;
     dpyinfo->graph_row_res = 1;
-    dpyinfo->view_set_size = 100;
+    dpyinfo->view_set_size = 178;
     dpyinfo->iscolor = true;
     dpyinfo->sep_graph_win = false;
 }
