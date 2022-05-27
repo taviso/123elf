@@ -33,7 +33,6 @@ __require_ref:
     call    endgrent@plt
     call    endpwent@plt
     call    endutent@plt
-    call    environ@plt
     call    erand48@plt
     call    execle@plt
     call    execl@plt
@@ -116,10 +115,6 @@ __require_ref:
     call    nrand48@plt
     call    opendir@plt
     call    open@plt
-    call    optarg@plt
-    call    opterr@plt
-    call    optind@plt
-    call    optopt@plt
     call    pause@plt
     call    perror@plt
     call    poll@plt
@@ -226,12 +221,11 @@ __require_ref:
     call    tgetnum@plt
     call    tgoto@plt
     call    tputs@plt
-    call    tempnam@plt
     call    tmpfile@plt
-    call    tmpnam@plt
     call    chown@plt
     call    msgctl@plt
     call    semctl@plt
     call    shmctl@plt
     call    fstat64@plt
     call    stat64@plt
+    call    atexit@plt

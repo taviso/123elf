@@ -9,6 +9,7 @@ __unix_times
 __unix_read
 __unix_sysi86
 __unix_access
+__unix_readdir
 a64l
 abort
 abs
