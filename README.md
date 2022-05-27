@@ -62,15 +62,15 @@ Just run `./123`.
 
 ### Getting Started
 
-- There is a man page in `./root/lotus/man/man1/123.1`, and a full manual available online [here](https://archive.org/details/lotus-1-2-3-release-3.1-reference/Lotus%201-2-3%20Release%203.1%20-%20Tutorial).
+There is a quick start guide in the wiki [here](https://github.com/taviso/123elf/wiki/Getting-Started), and the full manual can be seen here [here](https://archive.org/details/lotus-1-2-3-release-3.1-reference/Lotus%201-2-3%20Release%203.1%20-%20Tutorial).
 
-Lotus 1-2-3 has context sensitive online help, you can press `F1` at most times to see some hints.
+There is a man page in `./root/lotus/man/man1/123.1` that describes the command line options.
 
-> Note: You use use the `/` key to open the 123 menu!
+Lotus 1-2-3 has context sensitive online help, you can press <kbd>F1</kbd> at most times to see some hints.
 
-If you've used any spreadsheet before, you should be able to get started
-quickly. Functions use `@` instead of `=`, but the common functions like
-`@SUM`, `@AVG`, `@INDEX`, and even `@HLOOKUP` all work as you would expect.
+> Note: You use the <kbd>/</kbd> key to open the 123 menu!
+
+If you've used any spreadsheet before, you should be able to get started quickly. Functions use `@` instead of `=`, but the common functions like `@SUM`, `@AVG`, `@INDEX`, and even `@HLOOKUP` all work as you would expect.
 
 ## FAQ
 
