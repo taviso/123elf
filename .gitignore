@@ -10,3 +10,5 @@ coffsyrup
 123
 ld
 binutils-*
+drawtest
+*.a
