@@ -1,22 +1,23 @@
-#!/bin/bash
+#!/bin/sh
 
-BINUTILS_XZ=binutils-2.38.tar.xz 
-BINUTILS_DIR=`basename $BINUTILS_XZ .tar.xz`
-BINUTILS_URL=https://ftp.gnu.org/gnu/binutils/$BINUTILS_XZ
-ORIG_PWD=`pwd`
+BINUTILS_DL="https://ftp.gnu.org/gnu/binutils"
+BINUTILS_XZ="binutils-2.38.tar.xz"
+BINUTILS_DIR="$(basename $BINUTILS_XZ .tar.xz)"
+BINUTILS_URL="$BINUTILS_DL/$BINUTILS_XZ"
+ORIG_DIR="$(pwd)"
 
 # Help text.
-if [ "$1" = "-h" ]; then
-   echo "Usage: $0 [clean]"
-   echo
-   echo "Specify \"clean\" to remove binutils, otherwise it will be downloaded and built."
-   exit
+if [ "$1" = '-h' ]; then
+   echo >&2 "Usage: $0 [clean]"
+   echo >&2
+   echo >&2 'Specify "clean" to remove binutils, otherwise it will be downloaded and built.'
+   exit 1
 fi
 
 # Optional cleanup if requested.
-if [ "$1" = "clean" ]; then
-   rm -fv objcopy objdump ld $BINUTILS_XZ
-   rm -rfv $BINUTILS_DIR
+if [ "$1" = 'clean' ]; then
+   rm -fv objcopy objdump ld "$BINUTILS_XZ"
+   rm -rfv "$BINUTILS_DIR"
    exit
 fi
 
@@ -27,23 +28,22 @@ fi
 
 # Extract binutils.
 if [ ! -d "$BINUTILS_DIR" ]; then
-   tar -xvf "$BINUTILS_XZ"
+   tar xvf "$BINUTILS_XZ"
 fi
 
 # Compile binutils.
 if [ ! -x "$BINUTILS_DIR/binutils/objcopy" ]; then
-   cd $BINUTILS_DIR
+   cd "$BINUTILS_DIR"
    ./configure --enable-targets=all
    make -j$(nproc)
 fi
-cd $ORIG_PWD
 
-# Copy compiled binaries to current directory.
-for b in $BINUTILS_DIR/binutils/{objcopy,objdump} $BINUTILS_DIR/ld/ld-new; do
-   DEST_NAME=`basename $b | sed 's/-new//g'`
+# Copy compiled binaries to working directory.
+copy() {
+   test ! -x "$2" && cp -v "$1" "$2"
+}
 
-   if [ ! -x $DEST_NAME ]; then
-      cp -v "$b" "$DEST_NAME"
-   fi
-done
-
+cd "$ORIG_DIR"
+copy "$BINUTILS_DIR/binutils/objcopy" objcopy
+copy "$BINUTILS_DIR/binutils/objdump" objdump
+copy "$BINUTILS_DIR/ld/ld-new" ld
