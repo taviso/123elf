@@ -1,7 +1,7 @@
 CPPFLAGS=-I.
 CFLAGS=-m32 -ggdb3 -O0 -fno-stack-protector
 LDFLAGS=$(CFLAGS)
-LDLIBS=-lncurses
+LDLIBS=-lncurses -ltinfo
 
 .PHONY: clean
 
