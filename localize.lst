@@ -1,3 +1,10 @@
+# vim: set ft=conf:
+#
+# Note: blank lines are not permitted.
+#
+# These are symbols that 123.o exports that should not be visible to other
+# code, such as statically linked libc functions.
+#
 fopen
 fread
 fflush

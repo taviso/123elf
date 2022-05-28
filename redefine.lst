@@ -2,6 +2,9 @@
 #
 # Note: blank lines are not permitted.
 #
+# These symbols should be renamed because they clash with other symbols, or we
+# want to install wrappers.
+#
 # Magic symbols that we want to provide.
 main __unix_main
 errno __unix_errno
@@ -18,8 +21,8 @@ read __unix_read
 access __unix_access
 readdir __unix_readdir
 # 1-2-3 often uses memcpy with overlapping ranges. This was a bug even on UNIX,
-# but somehow worked due to implementation quirks. This will cause a minor
-# performance penalty, but avoid these hard to track down bugs, see issue #45
+# but worked due to implementation quirks. This will cause a minor performance
+# penalty, but avoid these hard to track down bugs, see issue #45.
 memcpy memmove
 # Difficult symbol names.
 banner_printed.0 banner_printed

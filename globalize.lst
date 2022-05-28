@@ -1,3 +1,13 @@
+# vim: set ft=conf:
+#
+# Note: blank lines are not permitted.
+#
+# These are symbols that are not visible, but should be so that we
+# can call them from our code.
+#
+# It is also useful to sometimes list symbols here you want gdb to be able to
+# see when debugging.
+#
 lexit
 read_setup_file
 get_number
