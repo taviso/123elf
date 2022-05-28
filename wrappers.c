@@ -260,6 +260,9 @@ int __unix_stat(const char *pathname, struct unixstat *statbuf)
         return -1;
     }
 
+    // Reset errno
+    __unix_errno = 0;
+
     return translate_linux_stat(&buf, statbuf);
 }
 
