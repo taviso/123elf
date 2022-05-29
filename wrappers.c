@@ -163,7 +163,7 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
         case 0x4B01:    // Unknown?
             break;
         default:
-            warnx("ioctl: unknown request %#x", request);
+            warnx("ioctl: unknown request %#lx", request);
     }
     __unix_errno = errno;
     return -1;
