@@ -19,27 +19,14 @@
 #include <sys/times.h>
 #include <sys/ioctl.h>
 
+#include "unixterm.h"
 #include "filemap.h"
 
 // The Lotus view of errno.
 extern int __unix_errno;
 
-#pragma pack(push, 1)
-struct unixtermios {
-    uint16_t    c_iflag;
-    uint16_t    c_oflag;
-    uint16_t    c_cflag;
-    uint16_t    c_lflag;
-    char        c_line;
-    uint8_t     c_cc[8];
-};
-#pragma pack(pop)
-
 #define SI86FPHW 40
 #define FP_387 3
-
-#define UNIX_VMIN 4
-#define UNIX_VTIME 5
 
 static struct termios original;
 
@@ -59,48 +46,124 @@ void __attribute__((destructor)) fini_terminal_settings()
     }
 }
 
+static bool termios_wants_rawmode(const struct unixtermios *tio)
+{
+    // This flag is always cleared by set_raw_mode, so if it is set
+    // 123 cannot possibly want raw mode.
+    if ((tio->c_oflag & UNIX_TABDLY) != UNIX_TABDLY)
+        return false;
+
+    // This flag is always cleared by kbd_init, so if it's set lotus
+    // is not trying to request raw mode.
+    if ((tio->c_iflag & UNIX_ICRNL) != UNIX_ICRNL)
+        return false;
+
+    // This *does* look like it wants raw mode.
+    return true;
+}
+
+static void termios_set_flags(struct unixtermios *tio)
+{
+    // Set any flags we want to tell Lotus about it.
+
+    // Set our "magic" flags we use to detect what 123 is doing, see comments
+    // in termios_wants_rawmode.
+    tio->c_oflag |= UNIX_TABDLY;
+    tio->c_iflag |= UNIX_ICRNL;
+}
+
 int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
 {
+    int action;
+    static bool rawmode;
     struct termios tio = {0};
+    static struct termios restore = {0};
 
     if (argp == NULL) {
         return -1;
     }
 
+    // Assume changes should be immediate by default.
+    action = TCSANOW;
+
+    // Translating termios is really difficult, but 1-2-3 only wants to use a
+    // few features. It wasnts to enable and disable "raw" mode, and change
+    // VTIME and VMIN.
+    //
+    // We can tell what it wants to do by setting some magic flags we know it
+    // wants to change in each mode, UNIX_TABDLY and UNIX_ICRNL work.
     switch (request) {
+        case TCSETSW:
+            // Choose the right action.
+            action = TCSADRAIN;
+
+            // fallthrough
         case TCSETS:
+            // Fetch current attributes.
             if (tcgetattr(fd, &tio) != 0) {
                 err(EXIT_FAILURE, "Failed to translate ioctl() to tcgetattr()");
             }
 
-            // Lotus wants raw mode?
-            if ((argp->c_oflag & 0xE7FFu) == 0) {
-                cfmakeraw(&tio);
+            // Examine the flags to see if Lotus wants raw mode.
+            if (termios_wants_rawmode(argp)) {
+                // Check if we think we're in raw mode.
+                if (rawmode) {
+                    // We are, so set a non-raw mode.
+                    memcpy(&tio, &restore, sizeof tio);
+                }
 
-                // Okay, but nobody likes ignbrk
-                tio.c_iflag |= BRKINT | IGNBRK;
-                tio.c_lflag |= ISIG;
+                // We are no longer in rawmode.
+                rawmode = false;
             } else {
-                // I think it's trying to disable raw mode?
+                // Lotus wants raw mode, check if we think we're in raw mode.
+                if (rawmode == false) {
+                    // We are not currently raw, so backup the old settings.
+                    memcpy(&restore, &tio, sizeof tio);
+
+                    // Now make the terminal raw.
+                    cfmakeraw(&tio);
+
+                    // Okay, but nobody likes ignbrk
+                    tio.c_iflag |= BRKINT | IGNBRK;
+                    tio.c_lflag |= ISIG;
+                }
+
+                // Remember that we are in rawmode.
+                rawmode = true;
             }
 
             // Translate timeouts.
             tio.c_cc[VTIME] = argp->c_cc[UNIX_VTIME];
             tio.c_cc[VMIN] = argp->c_cc[UNIX_VMIN];
 
-            if (tcsetattr(fd, TCSANOW, &tio) != 0) {
+            // Install new attributes.
+            if (tcsetattr(fd, action, &tio) != 0) {
                 err(EXIT_FAILURE, "Failed to translate ioctl() to tcsetattr()");
             }
+
             return 0;
         case TCGETS:
+            // Fetch real attributes.
             if (tcgetattr(fd, &tio) != 0) {
                 err(EXIT_FAILURE, "Failed to translate ioctl() to tcgetattr()");
             }
+
+            // Initialize output in case 123 didn't.
+            memset(argp, 0, sizeof *argp);
+
+            // Translate VTIME and VMIN.
             argp->c_cc[UNIX_VTIME] = tio.c_cc[VTIME];
             argp->c_cc[UNIX_VMIN]  = tio.c_cc[VMIN];
+
+            // Set any flags we want to tell Lotus about.
+            termios_set_flags(argp);
             return 0;
+        case 0x7602:    // Unknown?
+        case 0x7603:    // Unknown?
+        case 0x4B01:    // Unknown?
+            break;
         default:
-            fprintf(stderr, "ioctl: unknown request\n");
+            warnx("ioctl: unknown request %#x", request);
     }
     __unix_errno = errno;
     return -1;
@@ -220,7 +283,7 @@ struct unixstat {
 #define UNIX_S_IFDIR 0x4000
 #define UNIX_S_IFCHR 0x2000
 
-static int translate_linux_stat(struct stat *linuxstat, struct unixstat *unixstat)
+static int translate_linux_stat(const struct stat *linuxstat, struct unixstat *unixstat)
 {
     memset(unixstat, 0, sizeof *unixstat);
     unixstat->st_dev = linuxstat->st_dev;
