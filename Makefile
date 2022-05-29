@@ -5,7 +5,7 @@ CFLAGS  = -lc -m32 -ggdb3 -O0 -fno-stack-protector
 CPPFLAGS = -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I ttydraw
 ASFLAGS = --32
 LDFLAGS = $(CFLAGS) -B. -Wl,-b,coff-i386 -no-pie
-LDLIBS = -lncurses -ltinfo
+LDLIBS = -lncurses -ltinfo -lm
 PATH := .:$(PATH)
 
 define BFD_TARGET_ERROR

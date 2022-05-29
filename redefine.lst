@@ -26,3 +26,13 @@ readdir __unix_readdir
 memcpy memmove
 # Difficult symbol names.
 banner_printed.0 banner_printed
+# 1-2-3 provides its own math functions. However, modern libm outperforms them.
+# Let's map them to libm counterparts.
+ksin sin
+kcos cos
+ktan tan
+katan2 atan2
+kasin asin
+kacos acos
+# drem is obsolete.
+drem remainder
