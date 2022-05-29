@@ -84,5 +84,8 @@ extern uint16_t banner_printed;
 extern int16_t encode_date(int16_t *datenums);
 extern int16_t get_integer();
 extern int16_t check_three_numbers();
+extern int undo_on_cmd();
+extern int undo_off_cmd();
+extern int reset_undo(int);
 
 #endif

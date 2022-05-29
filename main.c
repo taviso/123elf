@@ -33,6 +33,7 @@ static void print_help()
     // This is an atexit() routine that is called after 1-2-3 prints
     // it's own help, so we can append any flags we support.
     printf("        -b                      to enable banner\n");
+    printf("        -u                      to disable undo support\n");
 }
 
 int main(int argc, char **argv, char **envp)
@@ -57,9 +58,15 @@ int main(int argc, char **argv, char **envp)
     // Disable the banner by default, it can be re-enabled via -b.
     banner_printed = true;
 
-    while ((opt = getopt(argc, argv, "f:c:k:np:w:hb")) != -1) {
+    // Enable undo by default, you can disable it via -u.
+    reset_undo(1);
+
+    while ((opt = getopt(argc, argv, "f:c:k:np:w:hbu")) != -1) {
         switch (opt) {
             case 'b': banner_printed = false;
+                      hide_option_from_lotus(&argc, argv);
+                      break;
+            case 'u': undo_off_cmd();
                       hide_option_from_lotus(&argc, argv);
                       break;
             case '?':
