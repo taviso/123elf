@@ -9,7 +9,10 @@
 #include <err.h>
 #include <alloca.h>
 #include <curses.h>
+#include <termios.h>
+#include <spawn.h>
 
+#include <sys/wait.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/utsname.h>
@@ -68,4 +71,42 @@ int display_column_labels()
     x_disp_txt_set_pos(displayed_window[19],
                        displayed_window[18] - 1);
     return x_disp_txt_write(displayed_window[21], buf, 0);
+}
+
+extern char **environ;
+extern int redraw();
+int shell()
+{
+    pid_t pid;
+    char cmd[48], *shell;
+    char *argv[] = {"sh", "-c", cmd, NULL};
+    struct termios origin;
+
+    tcgetattr(STDIN_FILENO, &origin);
+
+    puts("\033[2J\033[H"); /* clear the screen */
+    printf("(Type 'exit' and press ENTER to return to 1-2-3)\n\n");
+    puts("\033[2;1H"); /* move to the next line */
+
+    // Catch SIGCHLD for retrieving exit status of child process
+    signal(SIGCHLD, SIG_DFL);
+
+    shell = getenv("SHELL");
+    if (!shell)
+        shell = "/bin/sh";
+    sprintf(cmd, "stty sane; tput cnorm; %s", shell);
+    int status = posix_spawn(&pid, "/bin/sh", NULL, NULL, argv, environ);
+    if (status == 0) {
+        do {
+          if (waitpid(pid, &status, 0) == -1) {
+              /* should not happen */
+              exit(1);
+          }
+        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
+    }
+
+    /* restore the screen */
+    tcsetattr(STDIN_FILENO, TCSANOW, &origin);
+    redraw();
+    return 0;
 }
