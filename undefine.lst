@@ -266,3 +266,5 @@ ceil
 fmod
 fabs
 kbd_term
+set_raw_mode
+unset_raw_mode

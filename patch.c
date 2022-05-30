@@ -23,7 +23,6 @@
 
 int lic_init(void)
 {
-    fprintf(stderr, "🏴‍☠️  license granted 🏴‍☠️\n");
     return 2;
 }
 
@@ -73,8 +72,22 @@ int display_column_labels()
     return x_disp_txt_write(displayed_window[21], buf, 0);
 }
 
-// We will handle restoring terminal bits.
+// This routine normally installs the original termios state but I would
+// rather handle that with ncurses, so we do nothing.
 void kbd_term()
 {
     return;
+}
+
+// Lotus uses SysV "raw" mode with a bunch of ioctls, but rather than trying
+// to translate termios structures, we can translate the intent by using
+// ncurses instead.
+int set_raw_mode()
+{
+    return 0;
+}
+
+int unset_raw_mode()
+{
+    return 0;
 }

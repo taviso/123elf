@@ -46,27 +46,6 @@ void __attribute__((destructor)) fini_terminal_settings()
     }
 }
 
-static bool termios_wants_rawmode(const struct unixtermios *tio)
-{
-    // This flag is always cleared by set_raw_mode, so if it is set
-    // 123 cannot possibly want raw mode.
-    if ((tio->c_oflag & UNIX_TABDLY) == UNIX_TABDLY)
-        return false;
-
-    // This *does* look like it wants raw mode.
-    return true;
-}
-
-static void termios_set_flags(struct unixtermios *tio)
-{
-    // Set any flags we want to tell Lotus about it.
-
-    // Set our "magic" flags we use to detect what 123 is doing, see comments
-    // in termios_wants_rawmode.
-    tio->c_oflag |= UNIX_TABDLY;
-    tio->c_iflag |= UNIX_ICRNL;
-}
-
 int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
 {
     int action;
@@ -84,9 +63,6 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
     // Translating termios is really difficult, but 1-2-3 only wants to use a
     // few features. It wasnts to enable and disable "raw" mode, and change
     // VTIME and VMIN.
-    //
-    // We can tell what it wants to do by setting some magic flags we know it
-    // wants to change in each mode, UNIX_TABDLY and UNIX_ICRNL work.
     switch (request) {
         case TCSETSW:
             // Choose the right action.
@@ -97,34 +73,6 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
             // Fetch current attributes.
             if (tcgetattr(fd, &tio) != 0) {
                 err(EXIT_FAILURE, "Failed to translate ioctl() to tcgetattr()");
-            }
-
-            // Examine the flags to see if Lotus wants raw mode.
-            if (termios_wants_rawmode(argp)) {
-                // Check if we think we're in raw mode.
-                if (rawmode) {
-                    // We are, so set a non-raw mode.
-                    memcpy(&tio, &restore, sizeof tio);
-                }
-
-                // We are no longer in rawmode.
-                rawmode = false;
-            } else {
-                // Lotus wants raw mode, check if we think we're in raw mode.
-                if (rawmode == false) {
-                    // We are not currently raw, so backup the old settings.
-                    memcpy(&restore, &tio, sizeof tio);
-
-                    // Now make the terminal raw.
-                    cfmakeraw(&tio);
-
-                    // Okay, but nobody likes ignbrk
-                    tio.c_iflag |= BRKINT | IGNBRK;
-                    tio.c_lflag |= ISIG;
-                }
-
-                // Remember that we are in rawmode.
-                rawmode = true;
             }
 
             // Translate timeouts.
@@ -150,8 +98,6 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
             argp->c_cc[UNIX_VTIME] = tio.c_cc[VTIME];
             argp->c_cc[UNIX_VMIN]  = tio.c_cc[VMIN];
 
-            // Set any flags we want to tell Lotus about.
-            termios_set_flags(argp);
             return 0;
         case 0x7602:    // Unknown?
         case 0x7603:    // Unknown?
