@@ -1,20 +1,15 @@
 #include <stdlib.h>
-#include <assert.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdint.h>
+#include <stdbool.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
 #include <err.h>
-#include <curses.h>
 #include <termios.h>
 #include <signal.h>
 #include <errno.h>
 #include <dirent.h>
 
 #include <sys/stat.h>
-#include <sys/types.h>
 #include <sys/utsname.h>
 #include <sys/times.h>
 #include <sys/ioctl.h>
