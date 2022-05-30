@@ -73,37 +73,8 @@ int display_column_labels()
     return x_disp_txt_write(displayed_window[21], buf, 0);
 }
 
-extern char **environ;
-extern int redraw();
-int shell()
+// We will handle restoring terminal bits.
+void kbd_term()
 {
-    pid_t pid;
-    char cmd[48], *shell;
-    char *argv[] = {"sh", "-c", cmd, NULL};
-    struct termios origin;
-
-    tcgetattr(STDIN_FILENO, &origin);
-
-    puts("\033[2J\033[H"); /* clear the screen */
-    printf("(Type 'exit' and press ENTER to return to 1-2-3)\n\n");
-    puts("\033[2;1H"); /* move to the next line */
-
-    shell = getenv("SHELL");
-    if (!shell)
-        shell = "/bin/sh";
-    sprintf(cmd, "stty sane; tput cnorm; %s", shell);
-    int status = posix_spawn(&pid, "/bin/sh", NULL, NULL, argv, environ);
-    if (status == 0) {
-        do {
-          if (waitpid(pid, &status, 0) == -1) {
-              /* should not happen */
-              exit(1);
-          }
-        } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-    }
-
-    /* restore the screen */
-    tcsetattr(STDIN_FILENO, TCSANOW, &origin);
-    redraw();
-    return 0;
+    return;
 }

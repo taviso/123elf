@@ -50,12 +50,7 @@ static bool termios_wants_rawmode(const struct unixtermios *tio)
 {
     // This flag is always cleared by set_raw_mode, so if it is set
     // 123 cannot possibly want raw mode.
-    if ((tio->c_oflag & UNIX_TABDLY) != UNIX_TABDLY)
-        return false;
-
-    // This flag is always cleared by kbd_init, so if it's set lotus
-    // is not trying to request raw mode.
-    if ((tio->c_iflag & UNIX_ICRNL) != UNIX_ICRNL)
+    if ((tio->c_oflag & UNIX_TABDLY) == UNIX_TABDLY)
         return false;
 
     // This *does* look like it wants raw mode.

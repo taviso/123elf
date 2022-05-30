@@ -267,4 +267,4 @@ floor
 ceil
 fmod
 fabs
-shell
+kbd_term

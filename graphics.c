@@ -252,8 +252,29 @@ static void draw_text_label()
     return;
 }
 
-//int tty_disp_close();
-//int tty_disp_close_retain_termcap();
+static void caca_disp_pre_system()
+{
+    if (display_turned_off)
+        return;
+
+    clear();
+    refresh();
+    curs_set(1);
+    reset_shell_mode();
+}
+
+static void caca_disp_post_system()
+{
+    if (display_turned_off)
+        return;
+
+    reset_prog_mode();
+    curs_set(0);
+    refresh();
+    erase_screen();
+    invalidate_screen();
+}
+
 int init_unix_display_code()
 {
     // The graph type should always be dumb.
@@ -288,19 +309,21 @@ int init_unix_display_code()
     x_disp_txt_clear = gen_disp_txt_clear;
     x_disp_txt_copy = gen_disp_txt_copy;
     x_disp_txt_curs_type = gen_disp_txt_curs_type;
+
     if (display_turned_off) {
-      x_disp_txt_curs_off = nullfunc;
-      x_disp_txt_curs_on = nullfunc;
-      x_disp_txt_unlock = nullfunc;
-      x_disp_pre_system = nullfunc;
-      x_disp_post_system = nullfunc;
+        x_disp_txt_curs_off = nullfunc;
+        x_disp_txt_curs_on = nullfunc;
+        x_disp_txt_unlock = nullfunc;
+        x_disp_pre_system = caca_disp_pre_system;
+        x_disp_post_system = caca_disp_post_system;
     } else {
-      x_disp_txt_curs_off = gen_disp_txt_curs_off;
-      x_disp_txt_curs_on = gen_disp_txt_curs_on;
-      x_disp_txt_unlock = gen_disp_txt_unlock;
-      x_disp_pre_system = tty_disp_pre_system;
-      x_disp_post_system = tty_disp_post_system;
+        x_disp_txt_curs_off = gen_disp_txt_curs_off;
+        x_disp_txt_curs_on = gen_disp_txt_curs_on;
+        x_disp_txt_unlock = gen_disp_txt_unlock;
+        x_disp_pre_system = caca_disp_pre_system;
+        x_disp_post_system = caca_disp_post_system;
     }
+
     x_disp_txt_fg_clear = gen_disp_txt_fg_clear;
     x_disp_txt_fit = gen_disp_txt_fit;
     x_disp_txt_lock = gen_disp_txt_lock;

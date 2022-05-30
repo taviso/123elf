@@ -61,8 +61,8 @@ extern void *x_disp_pre_system;
 extern void *x_disp_text;
 extern void *x_disp_txt_clear;
 extern void *x_disp_txt_copy;
-extern void *x_disp_txt_curs_off;
-extern void *x_disp_txt_curs_on;
+extern void (*x_disp_txt_curs_off)();
+extern void (*x_disp_txt_curs_on)();
 extern void *x_disp_txt_curs_type;
 extern void *x_disp_txt_fg_clear;
 extern void *x_disp_txt_fit;
@@ -87,5 +87,8 @@ extern int16_t check_three_numbers();
 extern int undo_on_cmd();
 extern int undo_off_cmd();
 extern int reset_undo(int);
+extern void full_redisplay();
+extern int erase_screen();
+extern int invalidate_screen();
 
 #endif
