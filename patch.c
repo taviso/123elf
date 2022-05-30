@@ -88,9 +88,6 @@ int shell()
     printf("(Type 'exit' and press ENTER to return to 1-2-3)\n\n");
     puts("\033[2;1H"); /* move to the next line */
 
-    // Catch SIGCHLD for retrieving exit status of child process
-    signal(SIGCHLD, SIG_DFL);
-
     shell = getenv("SHELL");
     if (!shell)
         shell = "/bin/sh";

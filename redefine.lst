@@ -20,6 +20,7 @@ fcntl __unix_fcntl
 read __unix_read
 access __unix_access
 readdir __unix_readdir
+signal __unix_signal
 # 1-2-3 often uses memcpy with overlapping ranges. This was a bug even on UNIX,
 # but worked due to implementation quirks. This will cause a minor performance
 # penalty, but avoid these hard to track down bugs, see issue #45.

@@ -10,6 +10,7 @@ __unix_read
 __unix_sysi86
 __unix_access
 __unix_readdir
+__unix_signal
 a64l
 abort
 abs
