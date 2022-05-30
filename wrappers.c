@@ -28,7 +28,7 @@ static struct termios original;
 void __attribute__((constructor)) init_terminal_settings()
 {
     // Make a backup of the terminal state to restore to later.
-    if (tcgetattr(STDIN_FILENO, &original) != 0) {
+    if (isatty(STDIN_FILENO) && tcgetattr(STDIN_FILENO, &original) != 0) {
         err(EXIT_FAILURE, "Failed to query terminal attributes.");
     }
 }
@@ -36,7 +36,7 @@ void __attribute__((constructor)) init_terminal_settings()
 void __attribute__((destructor)) fini_terminal_settings()
 {
     // Restore any terminal craziness that 123 left behind.
-    if (tcsetattr(STDIN_FILENO, TCSANOW, &original) != 0) {
+    if (isatty(STDIN_FILENO) && tcsetattr(STDIN_FILENO, TCSANOW, &original) != 0) {
         warn("Failed to restore terminal attributes, sorry!");
     }
 }
