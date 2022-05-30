@@ -97,6 +97,7 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
         case 0x7602:    // Unknown?
         case 0x7603:    // Unknown?
         case 0x4B01:    // Unknown?
+        case 0x4544:    // Unknown, 'DE'?
             break;
         default:
             warnx("ioctl: unknown request %#lx", request);
