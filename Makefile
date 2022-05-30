@@ -38,16 +38,16 @@ dl_init.o: orig/dl_init.o
 	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) $< $@
 
 ttydraw/ttydraw.a:
-	make -C ttydraw
+	$(MAKE) -C ttydraw
 
 atfuncs/atfuncs.a:
-	make -C atfuncs
+	$(MAKE) -C atfuncs
 
 123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
 	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -Wl,--whole-archive,ttydraw/ttydraw.a,atfuncs/atfuncs.a,--no-whole-archive -o $@ $(LDLIBS)
 
 clean:
-	rm -f *.o 123 coffsyrup
-	rm -f vgcore.* core.* core
-	make -C ttydraw clean
-	make -C atfuncs clean
+	$(RM) *.o 123 coffsyrup
+	$(RM) vgcore.* core.* core
+	$(MAKE) -C ttydraw clean
+	$(MAKE) -C atfuncs clean
