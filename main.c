@@ -4,6 +4,7 @@
 #include <string.h>
 #include <getopt.h>
 #include <unistd.h>
+#include <limits.h>
 #include <err.h>
 
 #include "lotdefs.h"
@@ -28,12 +29,38 @@ static void hide_option_from_lotus(int *argc, char **argv) {
             (--*argc - optind) * sizeof(*argv));
 }
 
+static void canonicalize_auto_worksheet(int *argc, char **argv)
+{
+    static char autofile[PATH_MAX];
+
+    if (realpath(optarg, autofile) == NULL) {
+        warn("Failed to canonicalize worksheet path.");
+        return;
+    }
+
+    // It's really hard to handlw -Ffoo
+    if (argv[optind - 1] != optarg) {
+        errx(EXIT_FAILURE, "Options and arguments cannot be combined.");
+    }
+
+    // Likewise, It's really hard to handlw -abcF foo
+    if (argv[optind - 2][0] != '-' || argv[optind - 2][2] != '\0') {
+        errx(EXIT_FAILURE, "Options cannot be combined.");
+    }
+
+    // Okay, replace it with a canonical path!
+    argv[optind - 1] = autofile;
+    argv[optind - 2] = "-w";
+}
+
 static void print_help()
 {
     // This is an atexit() routine that is called after 1-2-3 prints
     // it's own help, so we can append any flags we support.
     printf("        -b                      to enable banner\n");
     printf("        -u                      to disable undo support\n");
+    printf("        -F filename             to select an auto-file like -w, but filename\n");
+    printf("                                  does not have to be relative to default dir\n");
 }
 
 int main(int argc, char **argv, char **envp)
@@ -71,13 +98,15 @@ int main(int argc, char **argv, char **envp)
     // No need to close the printer driver, it is currently a noop.
     need_to_close = false;
 
-    while ((opt = getopt(argc, argv, "f:c:k:np:w:hbu")) != -1) {
+    while ((opt = getopt(argc, argv, "f:c:k:np:w:hbuF:")) != -1) {
         switch (opt) {
             case 'b': banner_printed = false;
                       hide_option_from_lotus(&argc, argv);
                       break;
             case 'u': undo_off_cmd();
                       hide_option_from_lotus(&argc, argv);
+                      break;
+            case 'F': canonicalize_auto_worksheet(&argc, argv);
                       break;
             case '?':
             case 'h': atexit(print_help);
