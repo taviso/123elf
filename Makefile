@@ -11,6 +11,7 @@ PATH := .:$(PATH)
 
 define BFD_TARGET_ERROR
 Your version of binutils was compiled without coff-i386 target support.
+You can try running ./binutils.sh to build a version that does support it.
 endef
 
 export BFD_TARGET_ERROR
