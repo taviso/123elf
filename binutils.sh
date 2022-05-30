@@ -6,6 +6,9 @@ BINUTILS_DIR="$(basename $BINUTILS_XZ .tar.xz)"
 BINUTILS_URL="$BINUTILS_DL/$BINUTILS_XZ"
 ORIG_DIR="$(pwd)"
 
+# Dont continue on error.
+set -e
+
 # Help text.
 if [ "$1" = '-h' ]; then
    echo >&2 "Usage: $0 [clean]"
@@ -28,14 +31,14 @@ fi
 
 # Extract binutils.
 if [ ! -d "$BINUTILS_DIR" ]; then
-   tar xvf "$BINUTILS_XZ"
+   tar xf "$BINUTILS_XZ"
 fi
 
 # Compile binutils.
 if [ ! -x "$BINUTILS_DIR/binutils/objcopy" ]; then
    cd "$BINUTILS_DIR"
    ./configure --enable-targets=all
-   make -j$(nproc)
+   make -j$(nproc) MAKEINFO=true
 fi
 
 # Copy compiled binaries to working directory.
