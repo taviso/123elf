@@ -1,6 +1,7 @@
 BFD_INP_TARGET = coff-i386
 BFD_OUT_TARGET = coff-i386
 OBJCOPY_FLAGS  = --wildcard --localize-symbols=localize.lst --globalize-symbols=globalize.lst --redefine-syms=redefine.lst
+OBJCOPY_FILES = localize.lst globalize.lst redefine.lst undefine.lst
 CFLAGS  = -lc -m32 -ggdb3 -O0 -fno-stack-protector
 CPPFLAGS = -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I ttydraw
 ASFLAGS = --32
@@ -29,7 +30,7 @@ orig/123.o:
 	@false
 
 # Functions that should be compatible, but 123 does something weird.
-123.o: orig/123.o | coffsyrup
+123.o: orig/123.o | coffsyrup $(OBJCOPY_FILES)
 	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) $< $@
 	coffsyrup $@ $(@:.o=.tmp.o) $$(cat undefine.lst)
 	mv $(@:.o=.tmp.o) $@
