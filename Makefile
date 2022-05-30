@@ -29,7 +29,7 @@ orig/123.o:
 	@false
 
 # Functions that should be compatible, but 123 does something weird.
-123.o: orig/123.o | coffsyrup $(OBJCOPY_FILES)
+123.o: orig/123.o $(OBJCOPY_FILES) | coffsyrup
 	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) $< $@
 	coffsyrup $@ $(@:.o=.tmp.o) $$(cat undefine.lst)
 	mv $(@:.o=.tmp.o) $@
