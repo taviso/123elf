@@ -99,7 +99,6 @@ lfind
 link
 localtime
 lockf
-longjmp
 lrand48
 lsearch
 lseek
@@ -159,7 +158,6 @@ semop
 setbuf
 setgid
 setgrent
-setjmp
 setpgrp
 setpwent
 setuid

@@ -88,7 +88,6 @@ __require_ref:
     call    link@plt
     call    localtime@plt
     call    lockf@plt
-    call    longjmp@plt
     call    lrand48@plt
     call    lsearch@plt
     call    lseek@plt
@@ -144,7 +143,6 @@ __require_ref:
     call    setbuf@plt
     call    setgid@plt
     call    setgrent@plt
-    call    setjmp@plt
     call    setpgrp@plt
     call    setpwent@plt
     call    setuid@plt
