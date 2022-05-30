@@ -22,8 +22,7 @@ all: check 123
 	@size 123
 
 check:
-	@objdump --info | egrep -q '^coff-i386$$' || echo "$$BFD_TARGET_ERROR"
-	@objdump --info | egrep -q '^coff-i386$$'
+	@objdump --info | egrep -q '^coff-i386$$' || (echo "$$BFD_TARGET_ERROR"; exit 1)
 
 orig/123.o:
 	@echo You need to run the extract.sh script to get the 1-2-3 files.
