@@ -1,21 +1,7 @@
-#include <stdlib.h>
-#include <assert.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <string.h>
-#include <err.h>
-#include <alloca.h>
 #include <curses.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sys/utsname.h>
 
 #include "lotdefs.h"
 #include "lottypes.h"
-#include "lotfuncs.h"
 #include "ttydraw.h"
 
 // The canvas used for drawing ascii-art graphics.
