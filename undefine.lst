@@ -79,6 +79,7 @@ getppid
 getpwent
 getpwnam
 getpwuid
+getuid
 getutent
 getutid
 getutline

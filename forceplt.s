@@ -55,6 +55,7 @@ __require_ref:
     call    getegid@plt
     call    getenv@plt
     call    geteuid@plt
+    call    getuid@plt
     call    getgid@plt
     call    getgrent@plt
     call    getgrgid@plt
