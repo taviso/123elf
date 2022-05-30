@@ -1,6 +1,8 @@
 #ifndef __UNIXTERM_H
 #define __UNIXTERM_H
 
+#include <stdint.h>
+
 #pragma pack(push, 1)
 struct unixtermios {
     uint16_t    c_iflag;
