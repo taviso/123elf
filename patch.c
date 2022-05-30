@@ -9,7 +9,10 @@
 #include <err.h>
 #include <alloca.h>
 #include <curses.h>
+#include <termios.h>
+#include <spawn.h>
 
+#include <sys/wait.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/utsname.h>
@@ -68,4 +71,10 @@ int display_column_labels()
     x_disp_txt_set_pos(displayed_window[19],
                        displayed_window[18] - 1);
     return x_disp_txt_write(displayed_window[21], buf, 0);
+}
+
+// We will handle restoring terminal bits.
+void kbd_term()
+{
+    return;
 }

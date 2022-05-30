@@ -50,12 +50,7 @@ static bool termios_wants_rawmode(const struct unixtermios *tio)
 {
     // This flag is always cleared by set_raw_mode, so if it is set
     // 123 cannot possibly want raw mode.
-    if ((tio->c_oflag & UNIX_TABDLY) != UNIX_TABDLY)
-        return false;
-
-    // This flag is always cleared by kbd_init, so if it's set lotus
-    // is not trying to request raw mode.
-    if ((tio->c_iflag & UNIX_ICRNL) != UNIX_ICRNL)
+    if ((tio->c_oflag & UNIX_TABDLY) == UNIX_TABDLY)
         return false;
 
     // This *does* look like it wants raw mode.
@@ -474,4 +469,44 @@ struct unixdirent * __unix_readdir(DIR *dirp)
     // Error, or end of stream, pass through errno.
     __unix_errno = errno;
     return NULL;
+}
+
+sighandler_t __unix_signal(int signum, sighandler_t handler)
+{
+    static int unix_sig_table[] = {
+        [7]  = -1,   // SIGEMT
+        [10] = SIGBUS,
+        [12] = SIGSYS,
+        [16] = SIGUSR1,
+        [17] = SIGUSR2,
+        [18] = SIGCHLD,
+        [19] = SIGPWR,
+        [20] = SIGWINCH,
+        [21] = SIGURG,
+        [22] = SIGPOLL,
+        [23] = SIGSTOP,
+        [24] = SIGTSTP,
+        [25] = SIGCONT,
+        [26] = SIGTTIN,
+        [27] = SIGTTOU,
+        [28] = SIGVTALRM,
+        [29] = SIGPROF,
+        [30] = SIGXCPU,
+        [31] = SIGXFSZ,
+        [32] = -1, // SIGWAITING
+        [33] = -1, // SIGLWP
+        [24] = -1, // SIGAIO
+    };
+
+    // Translate the signal number, 0 means no translation necessary.
+    if (unix_sig_table[signum] != 0) {
+        signum = unix_sig_table[signum];
+    }
+
+    // If this is -1, no such signal exists on Linux.
+    if (signum == -1) {
+        return SIG_ERR;
+    }
+
+    return signal(signum, handler);
 }
