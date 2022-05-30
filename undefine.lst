@@ -252,3 +252,17 @@ read_print_config_dir
 display_column_labels
 init_unix_display_code
 at_date
+sin
+cos
+tan
+tan2
+asin
+acos
+remainder
+sqrt
+log
+log10
+floor
+ceil
+fmod
+fabs

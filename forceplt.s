@@ -229,3 +229,17 @@ __require_ref:
     call    fstat64@plt
     call    stat64@plt
     call    atexit@plt
+    call    sin@plt
+    call    cos@plt
+    call    tan@plt
+    call    atan2@plt
+    call    asin@plt
+    call    acos@plt
+    call    remainder@plt
+    call    sqrt@plt
+    call    log@plt
+    call    log10@plt
+    call    floor@plt
+    call    ceil@plt
+    call    fmod@plt
+    call    fabs@plt
