@@ -4,6 +4,7 @@
 #include <string.h>
 #include <curses.h>
 #include <getopt.h>
+#include <unistd.h>
 #include <err.h>
 
 #include "lotdefs.h"
@@ -38,6 +39,7 @@ static void print_help()
 
 int main(int argc, char **argv, char **envp)
 {
+    char dumpfile[64];
     int opt;
 
     // The location of terminfo definitions.
@@ -52,6 +54,12 @@ int main(int argc, char **argv, char **envp)
 
     // This changes how some timeouts work, is this still necessary?
     setenv("LOTUS_OS_ENV", "xenix", 0);
+
+    // If you send lotus a SIGUSR1 (e.g. kill -USR1 $(pidof 123)), it will save
+    // a copy of the screen to the specified file. You can use this for automation
+    // or grabbing some figures over ssh from a session you left running.
+    snprintf(dumpfile, sizeof dumpfile, "123screen.%d.txt", getpid());
+    setenv("LOTUS_SCREEN_DUMP", dumpfile, 0);
 
     setchrclass("ascii");
 
