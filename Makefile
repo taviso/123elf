@@ -6,10 +6,11 @@ ASFLAGS = --32
 LDFLAGS = $(CFLAGS) -B. -Wl,-b,coff-i386 -no-pie
 LDLIBS = -lncurses -ltinfo
 PATH := .:$(PATH)
-prefix ?= /
-bindir ?= ${prefix}usr/local/bin
-sharedir = ${prefix}usr/local/share/lotus
-mandir ?= ${prefix}usr/local/share/man/man1
+DESTDIR ?= /
+prefix ?= ${DESTDIR}usr/local
+bindir ?= ${prefix}/bin
+sharedir = ${prefix}/share/lotus
+mandir ?= ${prefix}/share/man/man1
 profiledir = ${prefix}etc/profile.d
 
 define BFD_TARGET_ERROR
