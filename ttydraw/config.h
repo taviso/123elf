@@ -1,10 +1,10 @@
-#define inline
 #define EOVERFLOW E2BIG
 #define ENOSYS EINVAL
+
 #define HAVE_VSNPRINTF 1
+#define HAVE_ERRNO_H 1
+#define HAVE_HTONS 1
+#define HAVE_ARPA_INET_H 1
 
-#define __KERNEL__
-
-#include <stddef.h>
-
-#define abs(x) (((x) < 0) ? (x) * -1 : (x))
+/* Enable ELF visibility */
+#define CACA_ENABLE_VISIBILITY 1

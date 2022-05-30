@@ -1,5 +1,5 @@
 CPPFLAGS=-I.
-CFLAGS=-m32 -ggdb3 -O0 -fno-stack-protector
+CFLAGS=-m32 -ggdb3 -O0 -fno-stack-protector -fvisibility=hidden
 LDFLAGS=$(CFLAGS)
 LDLIBS=-lncurses -ltinfo
 

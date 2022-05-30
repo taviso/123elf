@@ -20,7 +20,9 @@
 
 #ifndef __CACA_H__
 #define __CACA_H__
-#include "cacatyp.h"
+
+#include <stdint.h>
+#include <sys/types.h>
 
 #undef __extern
 #if defined _DOXYGEN_SKIP_ME
