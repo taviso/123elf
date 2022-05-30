@@ -68,6 +68,9 @@ int main(int argc, char **argv, char **envp)
     // Enable undo by default, you can disable it via -u.
     reset_undo(1);
 
+    // No need to close the printer driver, it is currently a noop.
+    need_to_close = false;
+
     while ((opt = getopt(argc, argv, "f:c:k:np:w:hbu")) != -1) {
         switch (opt) {
             case 'b': banner_printed = false;

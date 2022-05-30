@@ -91,5 +91,6 @@ extern int reset_undo(int);
 extern void full_redisplay();
 extern int erase_screen();
 extern int invalidate_screen();
+extern int16_t need_to_close;
 
 #endif
