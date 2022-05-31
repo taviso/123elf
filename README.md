@@ -91,7 +91,7 @@ script.
 
 - ~~The keyboard map seems to be incomplete~~ This seems to be working in xterm, please test other terminals!
 - ~~Graphs don't work yet~~ (Partially working!, see [#5](https://github.com/taviso/123elf/issues/5)).
-- Printing doesn't work yet.
+- ~~Printing doesn't work yet~~ (Print to file works, print to lpr is being worked on, see [#50](https://github.com/taviso/123elf/issues/50)).
 - File an issue if you notice something, there are probably lots of minor issues that can be fixed!
 
 ## Security
