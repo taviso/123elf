@@ -37,8 +37,14 @@ fi
 # Compile binutils.
 if [ ! -x "$BINUTILS_DIR/binutils/objcopy" ]; then
    cd "$BINUTILS_DIR"
-   ./configure --enable-targets=all
-   make -j$(nproc) MAKEINFO=true
+   ./configure --enable-targets=i386-pc-elf32 \
+               --disable-gas                  \
+               --disable-libctf               \
+               --disable-plugins              \
+               --disable-gprof                \
+               --enable-compressed-debug-sections=none
+
+   make all-ld -j$(nproc) MAKEINFO=true
 fi
 
 # Copy compiled binaries to working directory.
