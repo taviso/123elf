@@ -34,11 +34,11 @@ Finally, just run `make`.
 
 The following packages are required
 
-| Ubuntu              | Fedora              | Debian (bookworm)
-| ------------------- | ------------------- | -------------------
-| build-essential     | glibc-devel.i686    | build-essential
-| gcc-multilib        | libgcc.i686         | gcc-multilib
-| lib32ncurses-dev    | ncurses-static.i686 | lib32ncurses-dev
+| Ubuntu              | Fedora              | Debian (bookworm)   | Ubuntu (bionic)
+| ------------------- | ------------------- | ------------------- | -------------------
+| build-essential     | glibc-devel.i686    | build-essential     | build-essential
+| gcc-multilib        | libgcc.i686         | gcc-multilib        | gcc-multilib
+| lib32ncurses-dev    | ncurses-static.i686 | lib32ncurses-dev    | libncurses-dev:i386
 
 ### Binutils
 
@@ -80,6 +80,12 @@ If the status indicator in the top right says `READY`, try `/Quit Yes`.
 
 If it doesn't say `READY` (it might say `ERROR`, `HELP` `POINT`, `MENU` or
 something else), try hitting `Esc` until it goes back to `READY`.
+
+- Q. I get the error 'invalid compressed data--code out of range'.
+
+You have a *very* old gzip with broken lzw/pack support. You can try running
+the `gzip.sh` script to build a more recent gzip, then rerun the extract
+script.
 
 ## Bugs
 

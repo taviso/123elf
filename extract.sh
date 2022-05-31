@@ -5,6 +5,9 @@
 
 LOTUS=root/lotus/123.v10
 
+# Use any tools placed in this directory first.
+export PATH=.:$PATH
+
 if ! test -f 123UNIX1.IMG   \
        -a -f 123UNIX2.IMG   \
        -a -f 123UNIX3.IMG   \
