@@ -5,6 +5,7 @@
 #include <getopt.h>
 #include <unistd.h>
 #include <limits.h>
+#include <alloca.h>
 #include <err.h>
 
 #include "lotdefs.h"
@@ -14,58 +15,45 @@
 extern int __unix_main(int argc, char **argv, char **envp);
 extern int setchrclass(const char *class);
 
-static void hide_option_from_lotus(int *argc, char **argv) {
-    // Now move optind back one position
-    --optind;
-
-    // We can't remove options like -xyz or -zparam.
-    if (argv[optind][0] != '-' || argv[optind][2] != '\0') {
-        errx(EXIT_FAILURE, "Options cannot be combined.");
-    }
-
-    // Copy remaining parameters down.
-    memmove(&argv[optind],
-            &argv[optind + 1],
-            (--*argc - optind) * sizeof(*argv));
-}
-
-static void canonicalize_auto_worksheet(int *argc, char **argv)
+static void canonicalize_auto_worksheet(int *argc, char **argv, const char *wkspath)
 {
     static char autofile[PATH_MAX];
 
-    if (realpath(optarg, autofile) == NULL) {
+    if (realpath(wkspath, autofile) == NULL) {
         warn("Failed to canonicalize worksheet path.");
         return;
     }
 
-    // It's really hard to handlw -Ffoo
-    if (argv[optind - 1] != optarg) {
-        errx(EXIT_FAILURE, "Options and arguments cannot be combined.");
-    }
-
-    // Likewise, It's really hard to handlw -abcF foo
-    if (argv[optind - 2][0] != '-' || argv[optind - 2][2] != '\0') {
-        errx(EXIT_FAILURE, "Options cannot be combined.");
+    if (access(autofile, F_OK) != 0) {
+        warn("The worksheet specified does not exist.");
+        return;
     }
 
     // Okay, replace it with a canonical path!
-    argv[optind - 1] = autofile;
-    argv[optind - 2] = "-w";
+    argv[(*argc)++] = "-w";
+    argv[(*argc)++] = autofile;
 }
 
+
+// This is an atexit() routine that is called after 1-2-3 prints
+// it's own help, so we can append any flags we support.
 static void print_help()
 {
-    // This is an atexit() routine that is called after 1-2-3 prints
-    // it's own help, so we can append any flags we support.
+    static int printed;
+
+    // This can happen if multiple invalid options are passed.
+    if (printed++)
+        return;
+
     printf("        -b                      to enable banner\n");
     printf("        -u                      to disable undo support\n");
-    printf("        -F filename             to select an auto-file like -w, but filename\n");
-    printf("                                  does not have to be relative to default dir\n");
 }
 
 int main(int argc, char **argv, char **envp)
 {
+    char **lotargv;
     char dumpfile[64];
+    int lotargc;
     int opt;
 
     // The location of terminfo definitions.
@@ -98,20 +86,68 @@ int main(int argc, char **argv, char **envp)
     // No need to close the printer driver, it is currently a noop.
     need_to_close = false;
 
-    while ((opt = getopt(argc, argv, "f:c:k:np:w:hbuF:")) != -1) {
+    // We always need at least two entries, for argv[0] and a terminator.
+    lotargc = 2;
+
+    // We need to do a first pass through the options to see how many there
+    // are.
+    while ((opt = getopt(argc, argv, "f:c:k:np:w:hbu")) != -1)
+        lotargc++;
+
+    // If there was a non-option parameter, we will inject a synthetic
+    // parameter.
+    if (argv[optind] != NULL)
+        lotargc += 2;
+
+    // Allocate the argument vector we're going to pass through to lotus.
+    lotargv = alloca(lotargc * sizeof(*argv));
+
+    // Now reset and copy the options over.
+    lotargc = 0;
+
+    // Reset optind to restart getopt();
+    optind = 1;
+
+    // The first argument is the same.
+    lotargv[lotargc++] = argv[0];
+
+    // This time we copy options over, remember to update optsting above if you
+    // change this. The first ':' simply prevents multiple error messages.
+    while ((opt = getopt(argc, argv, ":f:c:k:np:w:hbu")) != -1) {
+        // Here 'continue' means don't pass this option to Lotus and 'break'
+        // means pass it through verbatim.
         switch (opt) {
             case 'b': banner_printed = false;
-                      hide_option_from_lotus(&argc, argv);
-                      break;
+                      continue;
             case 'u': undo_off_cmd();
-                      hide_option_from_lotus(&argc, argv);
-                      break;
-            case 'F': canonicalize_auto_worksheet(&argc, argv);
-                      break;
+                      continue;
             case '?':
             case 'h': atexit(print_help);
                       break;
         }
+
+        // If we reach here, we want to pass this option through to
+        // Lotus verbatim.
+        lotargv[lotargc] = alloca(3);
+        lotargv[lotargc][0] = '-';
+        lotargv[lotargc][1] = opt;
+        lotargv[lotargc][2] = 0;
+        lotargc++;
+
+        // There may also be an argument.
+        if (optarg)
+            lotargv[lotargc++] = optarg;
+
     }
-    return __unix_main(argc, argv, envp);
+
+    // Lotus does not accept any non-options arguments. If you do provide
+    // one, we will try to translate it into a worksheet name.
+    if (argv[optind] != NULL) {
+        canonicalize_auto_worksheet(&lotargc, lotargv, argv[optind]);
+    }
+
+    // Always add a NULL terminator
+    lotargv[lotargc] = NULL;
+
+    return __unix_main(lotargc, lotargv, envp);
 }
