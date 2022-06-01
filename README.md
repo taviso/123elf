@@ -11,6 +11,24 @@ There's an article documenting how this is possible
 
 ## Building
 
+### With Docker/Podman
+
+If you have [Docker](https://www.docker.com/) or [Podman](https://podman.io/) installed you can run
+```sh
+./run-from-container.sh 20
+```
+
+And that script will automatically build Lotus 1-2-3 within a Ubuntu 20 container and then run it in another container.
+Other Ubuntu versions are supported (launch `./run-from-container.sh` without arguments to see which).
+
+You can also build the `123` binary only by using:
+
+```sh
+./build-from-host.sh 20
+```
+
+But the produced binary will not work if your host system libraries differ from the container.
+
 ### Dependencies
 
 First, you need a version of binutils that is compiled with `coff-i386` target
