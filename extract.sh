@@ -8,6 +8,9 @@ ROOT="${BASE}/root"
 ORIG="${BASE}/orig"
 LOTUS="${ROOT}/lotus/123.v10"
 
+CPIO="$(command -v cpio)"
+TAR="$(command -v tar)"
+
 if [ "$1" = 'clean' ]; then
     rm -rfv "${ROOT}" "${ORIG}"
     exit
@@ -29,23 +32,24 @@ fi
 mkdir "${ROOT}"
 mkdir "${ORIG}"
 
-echo "==> Extracting tar archive 123UNIX1.IMG"
 cd "${ROOT}"
-tar xf "${IMG}/123UNIX1.IMG"
-cd -
-
-cd "${ROOT}"
-for img in "${IMG}/123UNIX2.IMG" "${IMG}/123UNIX3.IMG" "${IMG}/123UNIX4.IMG" "${IMG}/123UNIX5.IMG"; do
-    echo "==> Extracting cpio archive $img"
-    cpio -id < "$img"
-done
-cd -
+echo "==> Extracting 123UNIX1.IMG tar archive"
+"${TAR}" xvf "${IMG}/123UNIX1.IMG"
+echo "==> Extracting 123UNIX2.IMG cpio archive"
+"${CPIO}" -idv < "${IMG}/123UNIX2.IMG"
+echo "==> Extracting 123UNIX3.IMG cpio archive"
+"${CPIO}" -idv < "${IMG}/123UNIX3.IMG"
+echo "==> Seeking into 123UNIX4.IMG to extract cpio archive"
+dd if="${IMG}/123UNIX4.IMG" skip=550536 bs=1 | "${CPIO}" -idv
+echo "==> Extracting 123UNIX5.IMG cpio archive"
+"${CPIO}" -idv < "${IMG}/123UNIX5.IMG"
+cd - > /dev/null
 
 echo "==> Uncompressing .z files"
 find "${ROOT}" -iname '*.z' -exec gunzip {} \;
 
 echo "==> Uncompressing and copying object files"
-cat "${LOTUS}"/sysV386/lib/123.o.z_? | gzip -d > "${ORIG}/123.o"
+cat "${LOTUS}"/sysV386/lib/123.o.z_1 "${LOTUS}"/sysV386/lib/123.o.z_2 | zcat > "${ORIG}/123.o"
 cp "${LOTUS}"/sysV386/lib/*.o "${ORIG}/"
 
 echo "==> Installing better keymaps"
