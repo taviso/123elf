@@ -46,7 +46,7 @@ echo "==> Extracting 123UNIX5.IMG cpio archive"
 cd - > /dev/null
 
 echo "==> Uncompressing .z files"
-find "${ROOT}" -iname '*.z' -exec gunzip {} \;
+find "${ROOT}" -iname '*.z' -exec gunzip --force {} \;
 
 echo "==> Uncompressing and copying object files"
 cat "${LOTUS}"/sysV386/lib/123.o.z_1 "${LOTUS}"/sysV386/lib/123.o.z_2 | zcat > "${ORIG}/123.o"

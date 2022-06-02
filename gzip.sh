@@ -21,7 +21,7 @@ fi
 
 # Optional cleanup if requested.
 if [ "$1" = 'clean' ]; then
-   rm -fv gzip gunzip "$GZIP_XZ"
+   rm -fv gzip gunzip zcat "$GZIP_XZ"
    rm -rfv "$GZIP_DIR"
    exit
 fi
@@ -51,3 +51,4 @@ copy() {
 cd "$ORIG_DIR"
 copy "$GZIP_DIR/gzip" gzip
 copy "$GZIP_DIR/gunzip" gunzip
+copy "$GZIP_DIR/zcat" zcat
