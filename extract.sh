@@ -62,3 +62,6 @@ fi
 
 echo "==> Copying the banner template over"
 cp -v "${ROOT}/usr/tmp/lotus_install/123/banner" "${LOTUS}/ri/USA-English/123ban.ri"
+
+echo "==> Copying default configuration file"
+cp -v "${BASE}/l123set.cf" "${ROOT}/lotus/l123set.cf"

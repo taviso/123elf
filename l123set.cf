@@ -1,5 +1,5 @@
 1001 Lotus 1-2-3 Version "10"
-1002 Base Directory "/{LOTUSROOT}/root/lotus"
+1002 Base Directory "/{LOTUSROOT}"
 1003 Printer Interface "lpr -o dest={dest} {file}"
 1004 Graphics Driver "dumb" "ega egas25cc.vbd"
 1007 Help Language "USA English" "USA-English"
