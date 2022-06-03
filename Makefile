@@ -76,7 +76,7 @@ distclean: clean
 	./gzip.sh clean
 	./binutils.sh clean
 
-install: bin/123 share/man/man1/123.1
+install: all
 	install -Dm 755 "bin/123" "$(prefix)/bin/123"
 	install -Dm 644 "share/man/man1/123.1" "$(prefix)/share/man/man1/123.1"
 	install -Dm 755 "share/lotus/etc/l123set.cf" "$(prefix)/share/lotus/etc/l123set.cf"
