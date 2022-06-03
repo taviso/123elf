@@ -317,9 +317,15 @@ int __unix_read(int fd, void *buf, size_t count)
 {
     int result;
 
+    // Always reset errno, because lotus checks it
+    // and can get confused with unexpected values.
+    __unix_errno = 0;
+
     result = read(fd, buf, count);
 
-    __unix_errno = errno;
+    if (result == -1) {
+        __unix_errno = errno;
+    }
 
     return result;
 }
