@@ -31,7 +31,6 @@ orig/123.o:
 	@echo You need to run the extract.sh script to get the 1-2-3 files.
 	@false
 
-# Functions that should be compatible, but 123 does something weird.
 123.o: orig/123.o $(OBJCOPY_FILES) | coffsyrup
 	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) $< $@
 	coffsyrup $@ $(@:.o=.tmp.o) $$(cat undefine.lst)
