@@ -117,12 +117,13 @@ static bool append_key_sequence(PKEYINFO *base,
                                 const char *keyseq,
                                 uint16_t kfun)
 {
-    if (!keyseq || *keyseq == '\0') {
-        errx(EXIT_FAILURE, "You cannot have an empty key sequence");
-    }
-
     if (!base || !kfun) {
         errx(EXIT_FAILURE, "The parameters were invalid.");
+    }
+
+    // This can happen if terminfo doesn't know a key sequence.
+    if (!keyseq || *keyseq == '\0') {
+        return false;
     }
 
     // If this is an empty base we can allocate a new one.
@@ -298,7 +299,7 @@ int main(int argc, char **argv)
         //}
 
         // Check that ncurses recognizes this capability.
-        if (sequence == NULL || sequence == (char *) ERR) {
+        if (sequence == NULL || sequence == (char *) ERR || *sequence == 0) {
             warnx("you do not appear to have a %s key", keydefs[i].name);
             continue;
         }
@@ -358,6 +359,11 @@ int main(int argc, char **argv)
 
     // Write out sequences.
     for (int i = 0; i < numkeys; i++) {
+        // Just write an empty string if there was no key sequence.
+        if (keydefs[i].kseq == NULL) {
+            fputc(0, stdout);
+            continue;
+        }
         fwrite(keydefs[i].kseq, strlen(keydefs[i].kseq) + 1, 1, stdout);
     }
 
