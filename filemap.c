@@ -9,17 +9,21 @@
 // Figure out where our runtime files are located.
 static const char *get_lotus_runtimefile(const char *file)
 {
-    static char procpath[PATH_MAX];
-    static char filepath[PATH_MAX];
     static char *lotusdir;
+    static char exepath[PATH_MAX];
+    static char *exedir;
+    static char filepath[PATH_MAX];
+    static char localpath[PATH_MAX];
 
     // Cache this path so it only has to be looked up once.
     if (lotusdir == NULL) {
-        if (readlink("/proc/self/exe", procpath, PATH_MAX) == -1) {
+        if (readlink("/proc/self/exe", exepath, PATH_MAX) == -1) {
             err(EXIT_FAILURE, "Failed to determine the lotus root directory");
         }
         // Figure out the containing directory from the exe path.
-        lotusdir = dirname(procpath);
+        exedir = dirname(exepath);
+        snprintf(localpath, PATH_MAX, "%s/%s", exedir, "../share/lotus");
+        lotusdir = localpath;
     }
 
     // Append the requested filename, obviously this is not reentrant, but 123
@@ -50,7 +54,7 @@ const char * map_unix_pathname(const char *unixpath)
         // we can map it to the default configuration file instead, which
         // is the directory where 123 is located.
         if (access(unixpath, F_OK) != 0) {
-            return get_lotus_runtimefile("l123set.cf");
+            return get_lotus_runtimefile("../../etc/l123set.cf");
         }
     }
 
