@@ -1,64 +1,46 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Extract the necessary files from Lotus 1-2-3 UNIX
 #
-BASE="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
-IMG="${BASE}"
-ROOT="${BASE}/root"
-ORIG="${BASE}/orig"
-LOTUS="${ROOT}/lotus/123.v10"
 
-CPIO="$(command -v cpio)"
-TAR="$(command -v tar)"
-
-if [ "$1" = 'clean' ]; then
-    rm -rfv "${ROOT}" "${ORIG}"
-    exit
-fi
+LOTUS=root/lotus/123.v10
 
 # Use any tools placed in this directory first.
-export PATH="${BASE}:$PATH"
+export PATH=.:$PATH
 
-if ! test -f "${IMG}/123UNIX1.IMG"   \
-       -a -f "${IMG}/123UNIX2.IMG"   \
-       -a -f "${IMG}/123UNIX3.IMG"   \
-       -a -f "${IMG}/123UNIX4.IMG"   \
-       -a -f "${IMG}/123UNIX5.IMG"; then
-    echo >&2 'You need to download the original 1-2-3 UNIX IMG files.'
-    echo >&2 'They are available here: https://archive.org/download/123-unix'
+if ! test -f 123UNIX1.IMG   \
+       -a -f 123UNIX2.IMG   \
+       -a -f 123UNIX3.IMG   \
+       -a -f 123UNIX4.IMG   \
+       -a -f 123UNIX5.IMG; then
+    printf "You need to download the original 1-2-3 UNIX IMG files.\n" 1>&2
+    printf "They are available here: https://archive.org/download/123-unix\n" 1>&2
     exit 1
 fi
 
-mkdir "${ROOT}"
-mkdir "${ORIG}"
+mkdir root
+mkdir orig
 
-cd "${ROOT}"
-echo "==> Extracting 123UNIX1.IMG tar archive"
-"${TAR}" xvf "${IMG}/123UNIX1.IMG"
-echo "==> Extracting 123UNIX2.IMG cpio archive"
-"${CPIO}" -idv < "${IMG}/123UNIX2.IMG"
-echo "==> Extracting 123UNIX3.IMG cpio archive"
-"${CPIO}" -idv < "${IMG}/123UNIX3.IMG"
-echo "==> Seeking into 123UNIX4.IMG to extract cpio archive"
-dd if="${IMG}/123UNIX4.IMG" skip=550536 bs=1 | "${CPIO}" -idv
-echo "==> Extracting 123UNIX5.IMG cpio archive"
-"${CPIO}" -idv < "${IMG}/123UNIX5.IMG"
-cd - > /dev/null
+tar -C root -xf 123UNIX1.IMG
 
-echo "==> Uncompressing .z files"
-find "${ROOT}" -iname '*.z' -exec gunzip --force {} \;
-
-echo "==> Uncompressing and copying object files"
-cat "${LOTUS}"/sysV386/lib/123.o.z_1 "${LOTUS}"/sysV386/lib/123.o.z_2 | zcat > "${ORIG}/123.o"
-cp "${LOTUS}"/sysV386/lib/*.o "${ORIG}/"
-
-echo "==> Installing better keymaps"
-for t in xterm xterm-256color; do
-    cp -v "${BASE}/xterm" "${LOTUS}/keymaps/$(echo "${t}" | cut -c1)/${t}"
+for i in 123UNIX{2..5}.IMG; do
+    cpio -D root -id < ${i}
 done
-if [ ! -f "${LOTUS}/keymaps/$(echo "${TERM}" | cut -c1)/${TERM}" ]; then
-    cp -v "${BASE}/xterm" "${LOTUS}/keymaps/$(echo "${TERM}" | cut -c1)/${TERM}"
+
+find root -iname '*.z' -exec gunzip {} --force \;
+
+cat ${LOTUS}/sysV386/lib/123.o.z_? | gzip -d > orig/123.o
+
+cp ${LOTUS}/sysV386/lib/*.o orig/
+
+# Install better keymap
+for i in xterm xterm-256color ; do
+    cp xterm ${LOTUS}/keymaps/${i:0:1}/${i}
+done
+
+if ! test -e ${LOTUS}/keymaps/${TERM:0:1}/${TERM}; then
+    cp xterm ${LOTUS}/keymaps/${TERM:0:1}/${TERM}
 fi
 
-echo "==> Copying the banner template over"
-cp -v "${ROOT}/usr/tmp/lotus_install/123/banner" "${LOTUS}/ri/USA-English/123ban.ri"
+# Copy the banner template over
+cp root/usr/tmp/lotus_install/123/banner ${LOTUS}/ri/USA-English/123ban.ri
