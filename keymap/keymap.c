@@ -53,6 +53,7 @@ static KEYDEF keydefs[] = {
     { "F8",                 "kf8",      KFUN_TABLE },
     { "F9",                 "kf9",      KFUN_CALC },
     { "F10",                "kf10",     KFUN_GRAPH },
+    { "Ctrl-F10",           "kf34",     KFUN_GRAPH },   // Alternative {GRAPH}
     { "Alt-F1",             "kf49",     KFUN_COMPOSE },
     { "Ctrl-F1",            "kf25",     KFUN_COMPOSE }, // Alternative {COMPOSE}
     { "Alt-F2",             "kf50",     KFUN_RECORD },
