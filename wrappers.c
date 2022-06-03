@@ -321,10 +321,9 @@ int __unix_read(int fd, void *buf, size_t count)
 
     if (result == -1) {
         // Lotus requests non-blocking io, but then doesn't
-        // handle EAGAIN. It does handle EINTR, so map it
-        // to that instead.
+        // handle EAGAIN.
         if (errno == EAGAIN) {
-            __unix_errno = EINTR;
+            return 0;
         }
         __unix_errno = errno;
     }
