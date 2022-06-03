@@ -235,6 +235,9 @@ static int translate_linux_stat(const struct stat *linuxstat, struct unixstat *u
     unixstat->st_umtime =  linuxstat->st_mtim.tv_sec;
     unixstat->st_uctime =  linuxstat->st_ctim.tv_sec;
 
+    // The MSB of st_dev is queried by file_is_local()
+    unixstat->st_dev &= ~0x8000;
+
     switch (linuxstat->st_mode & S_IFMT) {
         case S_IFREG: unixstat->st_mode |= UNIX_S_IFREG; break;
         case S_IFDIR: unixstat->st_mode |= UNIX_S_IFDIR; break;
