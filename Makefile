@@ -72,9 +72,9 @@ clean:
 	$(MAKE) -C keymap clean
 
 distclean: clean
-	./extract.sh clean
 	./gzip.sh clean
 	./binutils.sh clean
+	./extract.sh clean
 
 install: all
 	install -Dm 755 "bin/123" "$(prefix)/bin/123"
