@@ -258,6 +258,7 @@ static void caca_disp_post_system()
         return;
 
     reset_prog_mode();
+    keypad(stdscr, true);
     curs_set(0);
     refresh();
     erase_screen();
