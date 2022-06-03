@@ -21,7 +21,6 @@ export BFD_TARGET_ERROR
 .PHONY: clean check distclean install uninstall
 
 all: check 123 keymaps
-	@file 123
 	@size 123
 
 check:
@@ -50,7 +49,7 @@ bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o |
 	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -Wl,--whole-archive,ttydraw/ttydraw.a,atfuncs/atfuncs.a,--no-whole-archive -o $@ $(LDLIBS)
 
 123: bin/123
-	@ln -s $^ $@
+	@ln -fs $^ $@
 
 keymap/keymap:
 	$(MAKE) -C keymap

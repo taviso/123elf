@@ -106,15 +106,15 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
     return -1;
 }
 
+#pragma pack(push, 1)
 struct unixflock {
     uint16_t    l_type;
     uint16_t    l_whence;
     uint32_t    l_start;
     uint32_t    l_len;
-    uint32_t    l_sysid;
     uint16_t    l_pid;
-    uint32_t    l_pad[4];
 };
+#pragma pack(pop)
 
 int __unix_fcntl(int fd, int cmd, void *arg)
 {
@@ -129,6 +129,11 @@ int __unix_fcntl(int fd, int cmd, void *arg)
         [1] = F_RDLCK,
         [2] = F_WRLCK,
         [3] = F_UNLCK,
+    };
+    static int linux_lck_table[] = {
+        [F_RDLCK] = 1,
+        [F_WRLCK] = 2,
+        [F_UNLCK] = 3,
     };
 
     // Translate command from UNIX to Linux.
@@ -192,6 +197,24 @@ int __unix_fcntl(int fd, int cmd, void *arg)
             }
             __unix_errno = errno;
             return -1;
+        }
+        case F_GETLK: {
+            struct unixflock *ufl = arg;
+            struct flock lfl = {0};
+
+            // Check if there is a lock.
+            if (fcntl(fd, cmd, &lfl) == -1) {
+                __unix_errno = errno;
+                return -1;
+            }
+
+            // Translate the lock over.
+            ufl->l_start = lfl.l_start;
+            ufl->l_len = lfl.l_len;
+            ufl->l_whence = lfl.l_whence;
+            ufl->l_type = linux_lck_table[lfl.l_type];
+            ufl->l_pid = lfl.l_pid;
+            return 0;
         }
         default:
             err(EXIT_FAILURE, "fcntl: unknown cmd %u requested.\n", cmd);
