@@ -33,14 +33,5 @@ cat ${LOTUS}/sysV386/lib/123.o.z_? | gzip -d > orig/123.o
 
 cp ${LOTUS}/sysV386/lib/*.o orig/
 
-# Install better keymap
-for i in xterm xterm-256color ; do
-    cp xterm ${LOTUS}/keymaps/${i:0:1}/${i}
-done
-
-if ! test -e ${LOTUS}/keymaps/${TERM:0:1}/${TERM}; then
-    cp xterm ${LOTUS}/keymaps/${TERM:0:1}/${TERM}
-fi
-
 # Copy the banner template over
 cp root/usr/tmp/lotus_install/123/banner ${LOTUS}/ri/USA-English/123ban.ri

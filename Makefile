@@ -8,6 +8,7 @@ ASFLAGS = --32
 LDFLAGS = $(CFLAGS) -lc -B. -Wl,-b,$(BFD_OUT_TARGET) -no-pie
 LDLIBS = -lncurses -ltinfo -lm
 PATH := .:$(PATH)
+KEYMAPS = xterm rxvt xterm-256color $(TERM)
 
 define BFD_TARGET_ERROR
 Your version of binutils was compiled without coff-i386 target support.
@@ -18,7 +19,7 @@ export BFD_TARGET_ERROR
 
 .PHONY: clean check
 
-all: check 123 keymap
+all: check 123 keymaps
 	@file 123
 	@size 123
 
@@ -47,12 +48,20 @@ atfuncs/atfuncs.a:
 123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
 	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -Wl,--whole-archive,ttydraw/ttydraw.a,atfuncs/atfuncs.a,--no-whole-archive -o $@ $(LDLIBS)
 
-keymap:
+keymap/keymap:
 	$(MAKE) -C keymap
+
+# This generates the keymaps in a seperate directory based on the first letter.
+$(sort $(KEYMAPS)): keymap/keymap
+	mkdir -p keymaps/$(shell printf "%c" $@)
+	keymap/keymap $@ > keymaps/$(shell printf "%c" $@)/$@
+
+keymaps: $(KEYMAPS)
 
 clean:
 	$(RM) *.o 123 coffsyrup
 	$(RM) vgcore.* core.* core
+	$(RM) -r keymaps
 	$(MAKE) -C ttydraw clean
 	$(MAKE) -C atfuncs clean
 	$(MAKE) -C keymap clean

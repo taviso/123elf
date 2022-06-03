@@ -271,7 +271,7 @@ int main(int argc, char **argv)
     };
 
     // Let ncurses know what our terminal is.
-    if (setupterm(NULL, STDIN_FILENO, NULL) != OK) {
+    if (setupterm(argv[1], STDIN_FILENO, NULL) != OK) {
         err(EXIT_FAILURE, "setupterm failed, is $TERM correct?");
     }
 

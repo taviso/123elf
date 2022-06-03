@@ -8,4 +8,4 @@
 1006 Resource Language "USA English" "USA-English"
 1012 File Character Set "US ASCII" "l_ascii.bun"
 1008 File Name Mode "UNIX file name mode" "0"
-1010 Keyboard "xterm"
+1009 Keymaps Directory "/{LOTUSROOT}/keymaps"
