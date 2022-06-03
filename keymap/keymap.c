@@ -54,11 +54,15 @@ static KEYDEF keydefs[] = {
     { "F9",                 "kf9",      KFUN_CALC },
     { "F10",                "kf10",     KFUN_GRAPH },
     { "Alt-F1",             "kf49",     KFUN_COMPOSE },
+    { "Ctrl-F1",            "kf25",     KFUN_COMPOSE }, // Alternative {COMPOSE}
     { "Alt-F2",             "kf50",     KFUN_RECORD },
+    { "Ctrl-F2",            "kf26",     KFUN_RECORD },  // Alternative {RECORD}
     { "Alt-F3",             "kf51",     KFUN_RUN },
+    { "Ctrl-F3",            "kf27",     KFUN_RUN },     // Alternative {RUN}
     { "Alt-F4",             "kf52",     KFUN_UNDO },
-    { "Alt-F5",             "kf53",     KFUN_UNDO }, // Alternative {UNDO}
+    { "Ctrl-F4",            "kf28",     KFUN_UNDO },    // Alternative {UNDO}
     { "Alt-F6",             "kf54",     KFUN_ZOOM },
+    { "Ctrl-F6",            "kf29",     KFUN_ZOOM },    // Alternative {ZOOM}
 };
 
 // This adds room for a new node and returns the new node offset. The size
@@ -153,10 +157,11 @@ static bool append_key_sequence(PKEYINFO *base,
             }
             // We are at the end, so we want to take this node.
             if (root->kfun && root->kfun != kfun) {
-                errx(EXIT_FAILURE, "Duplicate key sequences?");
+                errx(EXIT_FAILURE, "Duplicate key sequences requested.");
             }
             if (root->kfun && root->kfun == kfun) {
-                errx(EXIT_FAILURE, "Adding the same sequence twice?");
+                warnx("The same sequence was added twice (probably harmless)");
+                return false;
             }
 
             // Okay, this node belongs to us now.
@@ -319,6 +324,8 @@ int main(int argc, char **argv)
     append_key_sequence(&keys, &hdr, "\e", KFUN_ESC);
     append_key_sequence(&keys, &hdr, "\f", KFUN_REFRESH);
     append_key_sequence(&keys, &hdr, "\b", KFUN_BACKSPACE);
+    append_key_sequence(&keys, &hdr, "\r", KFUN_RETURN);
+    append_key_sequence(&keys, &hdr, "\n", KFUN_RETURN);
 
     // Now append all the shortcuts.
     for (int i = 0; i < numkeys; i++) {
