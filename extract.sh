@@ -46,11 +46,20 @@ echo '==> Extracting 123UNIX5.IMG cpio archive'
 "${CPIO}" -idv < "${IMG}/123UNIX5.IMG"
 cd - > /dev/null
 
+echo '==> Reconstructing object file'
+
+if ! cat "${LOTUS}"/sysV386/lib/123.o.z_1 "${LOTUS}"/sysV386/lib/123.o.z_2 | zcat > "${ORIG}/123.o"; then
+    echo >&2 'Failed to decompress object files.'
+
+    echo >&2 'If you see the message "code out of range", gzip is too old.'
+    echo >&2 'You can try running ./gzip.sh to build a recent gzip that is known to work.'
+    exit 1
+fi
+
 echo '==> Uncompressing .z files'
 find "${ROOT}" -iname '*.z' -exec gunzip --force {} \;
 
-echo '==> Uncompressing and copying object files'
-cat "${LOTUS}"/sysV386/lib/123.o.z_1 "${LOTUS}"/sysV386/lib/123.o.z_2 | zcat > "${ORIG}/123.o"
+echo '==> Uncompressing and copying remaining object files'
 cp "${LOTUS}"/sysV386/lib/*.o "${ORIG}/"
 
 echo '==> Copying the banner template over'
