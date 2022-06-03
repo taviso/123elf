@@ -53,14 +53,6 @@ echo '==> Uncompressing and copying object files'
 cat "${LOTUS}"/sysV386/lib/123.o.z_1 "${LOTUS}"/sysV386/lib/123.o.z_2 | zcat > "${ORIG}/123.o"
 cp "${LOTUS}"/sysV386/lib/*.o "${ORIG}/"
 
-echo '==> Installing better keymaps'
-for t in xterm xterm-256color; do
-    cp -v "${BASE}/xterm" "${LOTUS}/keymaps/$(echo "${t}" | cut -c1)/${t}"
-done
-if [ ! -f "${LOTUS}/keymaps/$(echo "${TERM}" | cut -c1)/${TERM}" ]; then
-    cp -v "${BASE}/xterm" "${LOTUS}/keymaps/$(echo "${TERM}" | cut -c1)/${TERM}"
-fi
-
 echo '==> Copying the banner template over'
 install -vDm644 "${ROOT}/usr/tmp/lotus_install/123/banner" "${LOTUS}/ri/USA-English/123ban.ri"
 

@@ -17,14 +17,14 @@ endef
 
 export BFD_TARGET_ERROR
 
-.PHONY: clean check
+.PHONY: clean check distclean
 
-all: check bin/123 keymaps
-	@file bin/123
-	@size bin/123
+all: check 123 keymaps
+	@file 123
+	@size 123
 
 check:
-	@objdump --info | egrep -q '^coff-i386$$' || (echo "$$BFD_TARGET_ERROR"; exit 1)
+	@objdump --info | egrep -q '^coff-i386$$' || (echo "$$BFD_TARGET_ERROR"; false)
 
 orig/123.o:
 	@echo You need to run the extract.sh script to get the 1-2-3 files.
@@ -49,6 +49,9 @@ bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o |
 	@mkdir -p $(@D)
 	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -Wl,--whole-archive,ttydraw/ttydraw.a,atfuncs/atfuncs.a,--no-whole-archive -o $@ $(LDLIBS)
 
+123: bin/123
+	@ln -s $^ $@
+
 keymap/keymap:
 	$(MAKE) -C keymap
 
@@ -60,9 +63,14 @@ $(sort $(KEYMAPS)): keymap/keymap
 keymaps: $(KEYMAPS)
 
 clean:
-	$(RM) *.o bin/123 coffsyrup
+	$(RM) *.o coffsyrup 123
 	$(RM) vgcore.* core.* core
-	$(RM) -r share/lotus/keymaps
+	$(RM) -r bin share/lotus/keymaps
 	$(MAKE) -C ttydraw clean
 	$(MAKE) -C atfuncs clean
 	$(MAKE) -C keymap clean
+
+distclean: clean
+	$(RM) -r orig root share
+	./gzip.sh clean
+	./binutils.sh clean

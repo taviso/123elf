@@ -26,7 +26,7 @@ Run the included `binutils.sh` to download and compile a version of binutils kno
 
 Secondly, you need a copy of Lotus 1-2-3 for UNIX, you can download it
 [here](https://archive.org/details/123-unix). Just place the raw disk images in 
-the build directory and run `extract`.
+the build directory and run `extract.sh`.
 
 Finally, just run `make`.
 
@@ -58,7 +58,7 @@ The Makefile should automatically use the new binaries, and continue to build.
 
 ## Running
 
-Just run `bin/123`.
+Just run `./123`.
 
 ### Getting Started
 
