@@ -12,3 +12,4 @@ ld
 binutils-*
 drawtest
 *.a
+keymap/keymap
