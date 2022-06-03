@@ -71,6 +71,6 @@ clean:
 	$(MAKE) -C keymap clean
 
 distclean: clean
-	$(RM) -r orig root share
 	./gzip.sh clean
 	./binutils.sh clean
+	./extract.sh clean
