@@ -2,7 +2,7 @@
 //
 // Tavis Ormandy <taviso@gmail.com>
 //
-//
+// vim:set ft=c:
 
 struct KEYNODE {
     uint32 nextkeyhi <format=hex>;
