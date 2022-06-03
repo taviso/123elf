@@ -62,7 +62,7 @@ Run `make install` to install into `/usr/local`.
 
 Run `make install prefix=/my/prefix` to install into a custom prefix.
 
-Run `make uninstall` to uninstall.
+Run `make uninstall` or `make uninstall prefix=/my/prefix` to uninstall.
 
 ## Running
 
