@@ -9,6 +9,7 @@ LDFLAGS = $(CFLAGS) -lc -B. -Wl,-b,$(BFD_OUT_TARGET) -no-pie
 LDLIBS = -lncurses -ltinfo -lm
 PATH := .:$(PATH)
 KEYMAPS = xterm rxvt-unicode-256color xterm-256color $(TERM)
+prefix = /usr/local
 
 define BFD_TARGET_ERROR
 Your version of binutils was compiled without coff-i386 target support.
@@ -17,7 +18,7 @@ endef
 
 export BFD_TARGET_ERROR
 
-.PHONY: clean check distclean
+.PHONY: clean check distclean install uninstall
 
 all: check 123 keymaps
 	@file 123
@@ -30,7 +31,6 @@ orig/123.o:
 	@echo You need to run the extract.sh script to get the 1-2-3 files.
 	@false
 
-# Functions that should be compatible, but 123 does something weird.
 123.o: orig/123.o $(OBJCOPY_FILES) | coffsyrup
 	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) $< $@
 	coffsyrup $@ $(@:.o=.tmp.o) $$(cat undefine.lst)
@@ -74,3 +74,23 @@ distclean: clean
 	./gzip.sh clean
 	./binutils.sh clean
 	./extract.sh clean
+
+install: all
+	install -Dm 755 "bin/123" "$(prefix)/bin/123"
+	install -Dm 644 "share/man/man1/123.1" "$(prefix)/share/man/man1/123.1"
+	install -Dm 644 "share/lotus/etc/l123set.cf" "$(prefix)/share/lotus/etc/l123set.cf"
+	find "share/lotus/keymaps" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
+	install -Dm 644 "share/lotus/123.v10/sysV386/lotus.bcf" "$(prefix)/share/lotus/123.v10/sysV386/lotus.bcf"
+	install -Dm 644 "share/lotus/123.v10/sysV386/lib/wyse50-lts123" "$(prefix)/share/lotus/123.v10/sysV386/lib/wyse50-lts123"
+	find "share/lotus/123.v10/cbd" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
+	find "share/lotus/123.v10/fonts" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
+	find "share/lotus/123.v10/hlp" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
+	find "share/lotus/123.v10/keymaps" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
+	find "share/lotus/123.v10/pbd" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
+	find "share/lotus/123.v10/ri" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
+	find "share/lotus/123.v10/smpfiles" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
+
+uninstall:
+	$(RM) "$(prefix)/bin/123"
+	$(RM) "$(prefix)/share/man/man1/123.1"
+	$(RM) -r "$(prefix)/share/lotus"

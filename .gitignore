@@ -1,4 +1,3 @@
-root
 orig
 *.IMG
 real-ld
@@ -13,5 +12,4 @@ binutils-*
 drawtest
 *.a
 keymap/keymap
-keymaps
 share

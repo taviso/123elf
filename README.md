@@ -56,9 +56,17 @@ When that's complete, copy `objcopy` and `objdump` from the `binutils` directory
 
 The Makefile should automatically use the new binaries, and continue to build.
 
+## Installing
+
+Run `make install` to install into `/usr/local`.
+
+Run `make install prefix=/my/prefix` to install into a custom prefix.
+
+Run `make uninstall` or `make uninstall prefix=/my/prefix` to uninstall.
+
 ## Running
 
-Just run `./123`.
+Just run `./123` in the project directory after building, or, if you installed it, run `123`.
 
 ### Getting Started
 
