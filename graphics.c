@@ -272,6 +272,9 @@ int init_unix_display_code()
     // Initialize our ncurses, which we use for graphing.
     initscr();
 
+    // Switch to application mode so we can use terminfo.
+    keypad(stdscr, true);
+
     // We can draw graphs in color if available.
     start_color();
     use_default_colors();
