@@ -6,7 +6,7 @@ BASE="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
 IMG="${BASE}"
 ROOT="${BASE}/share"
 ORIG="${BASE}/orig"
-ETC="${BASE}/etc"
+ETC="${ROOT}/lotus/etc"
 LOTUS="${ROOT}/lotus/123.v10"
 
 CPIO="$(command -v cpio)"
@@ -32,7 +32,6 @@ fi
 
 mkdir "${ROOT}"
 mkdir "${ORIG}"
-mkdir "${ETC}"
 
 cd "${ROOT}"
 echo '==> Extracting 123UNIX1.IMG tar archive'

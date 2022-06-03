@@ -54,7 +54,7 @@ const char * map_unix_pathname(const char *unixpath)
         // we can map it to the default configuration file instead, which
         // is the directory where 123 is located.
         if (access(unixpath, F_OK) != 0) {
-            return get_lotus_runtimefile("../../etc/l123set.cf");
+            return get_lotus_runtimefile("etc/l123set.cf");
         }
     }
 
