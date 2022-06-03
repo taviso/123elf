@@ -26,7 +26,7 @@ Run the included `binutils.sh` to download and compile a version of binutils kno
 
 Secondly, you need a copy of Lotus 1-2-3 for UNIX, you can download it
 [here](https://archive.org/details/123-unix). Just place the raw disk images in 
-the build directory and run `extract.sh`.
+the build directory and run `extract`.
 
 Finally, just run `make`.
 
@@ -58,13 +58,13 @@ The Makefile should automatically use the new binaries, and continue to build.
 
 ## Running
 
-Just run `./123`.
+Just run `bin/123`.
 
 ### Getting Started
 
 There is a quick start guide in the wiki [here](https://github.com/taviso/123elf/wiki/Getting-Started), and the full manual can be seen here [here](https://archive.org/details/lotus-1-2-3-release-3.1-reference/Lotus%201-2-3%20Release%203.1%20-%20Tutorial).
 
-There is a man page in `./root/lotus/man/man1/123.1` that describes the command line options.
+There is a man page in `share/man/man1/123.1` that describes the command line options.
 
 Lotus 1-2-3 has context sensitive online help, you can press <kbd>F1</kbd> at most times to see some hints.
 

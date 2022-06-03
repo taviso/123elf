@@ -19,9 +19,9 @@ export BFD_TARGET_ERROR
 
 .PHONY: clean check
 
-all: check 123 keymaps
-	@file 123
-	@size 123
+all: check bin/123 keymaps
+	@file bin/123
+	@size bin/123
 
 check:
 	@objdump --info | egrep -q '^coff-i386$$' || (echo "$$BFD_TARGET_ERROR"; exit 1)
@@ -45,7 +45,8 @@ ttydraw/ttydraw.a:
 atfuncs/atfuncs.a:
 	$(MAKE) -C atfuncs
 
-123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
+bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
+	@mkdir -p $(@D)
 	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -Wl,--whole-archive,ttydraw/ttydraw.a,atfuncs/atfuncs.a,--no-whole-archive -o $@ $(LDLIBS)
 
 keymap/keymap:
@@ -53,15 +54,15 @@ keymap/keymap:
 
 # This generates the keymaps in a seperate directory based on the first letter.
 $(sort $(KEYMAPS)): keymap/keymap
-	mkdir -p keymaps/$(shell printf "%c" $@)
-	keymap/keymap $@ > keymaps/$(shell printf "%c" $@)/$@
+	mkdir -p share/lotus/keymaps/$(shell printf "%c" $@)
+	keymap/keymap $@ > share/lotus/keymaps/$(shell printf "%c" $@)/$@
 
 keymaps: $(KEYMAPS)
 
 clean:
-	$(RM) *.o 123 coffsyrup
+	$(RM) *.o bin/123 coffsyrup
 	$(RM) vgcore.* core.* core
-	$(RM) -r keymaps
+	$(RM) -r share/lotus/keymaps
 	$(MAKE) -C ttydraw clean
 	$(MAKE) -C atfuncs clean
 	$(MAKE) -C keymap clean
