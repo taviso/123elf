@@ -81,13 +81,7 @@ install: bin/123 share/man/man1/123.1
 	install -Dm 644 "share/man/man1/123.1" "$(prefix)/share/man/man1/123.1"
 	install -Dm 755 "share/lotus/etc/l123set.cf" "$(prefix)/share/lotus/etc/l123set.cf"
 	find "share/lotus/keymaps" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
-	find "share/lotus/123.v10/cbd" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
-	find "share/lotus/123.v10/fonts" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
-	find "share/lotus/123.v10/hlp" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
-	find "share/lotus/123.v10/keymaps" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
-	find "share/lotus/123.v10/pbd" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
-	find "share/lotus/123.v10/ri" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
-	find "share/lotus/123.v10/smpfiles" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
+	find "share/lotus/123.v10" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
 
 uninstall:
 	$(RM) "$(prefix)/bin/123"
