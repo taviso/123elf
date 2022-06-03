@@ -18,7 +18,7 @@ export BFD_TARGET_ERROR
 
 .PHONY: clean check
 
-all: check 123
+all: check 123 keymap
 	@file 123
 	@size 123
 
@@ -47,8 +47,12 @@ atfuncs/atfuncs.a:
 123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
 	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -Wl,--whole-archive,ttydraw/ttydraw.a,atfuncs/atfuncs.a,--no-whole-archive -o $@ $(LDLIBS)
 
+keymap:
+	$(MAKE) -C keymap
+
 clean:
 	$(RM) *.o 123 coffsyrup
 	$(RM) vgcore.* core.* core
 	$(MAKE) -C ttydraw clean
 	$(MAKE) -C atfuncs clean
+	$(MAKE) -C keymap clean
