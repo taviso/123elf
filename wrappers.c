@@ -317,13 +317,15 @@ int __unix_read(int fd, void *buf, size_t count)
 {
     int result;
 
-    // Always reset errno, because lotus checks it
-    // and can get confused with unexpected values.
-    __unix_errno = 0;
-
     result = read(fd, buf, count);
 
     if (result == -1) {
+        // Lotus requests non-blocking io, but then doesn't
+        // handle EAGAIN. It does handle EINTR, so map it
+        // to that instead.
+        if (errno == EAGAIN) {
+            __unix_errno = EINTR;
+        }
         __unix_errno = errno;
     }
 
