@@ -1,0 +1,95 @@
+// Lotus 1-2-3 for UNIX SystemV Keymap File
+//
+// Tavis Ormandy <taviso@gmail.com>
+//
+//
+
+struct KEYNODE {
+    uint32 nextkeyhi <format=hex>;
+    uint32 nextkeylo <format=hex>;
+};
+
+struct KEYDATA {
+    uint32 next <format=hex>;
+    uint32 timeout <format=decimal>;
+};
+
+typedef struct {
+    uint16 keyval <bgcolor=0xffe0c9>;
+    uint16 kfun <format=decimal>;
+    if (keyval != 0x100) {
+        struct KEYNODE node;
+    } else {
+        struct KEYDATA data;
+    }
+    uint32 next <format=hex>;
+} KEYINFO <size=16, name=Str("KEYINFO %s ", KeyName(this))>;
+
+struct {
+    uint16 Magic;
+    uint16 Version;
+    uint32 Zero;
+    uint32 KeyTreeSize;
+    uint32 KeyDataSize;
+    uint32 Root <read=Str("%xh", this + OffsetGetStart())>;
+} HEADER;
+
+// Calculate how many nodes there are in the tree.
+local int KeyTreeNodes = HEADER.KeyTreeSize / sizeof(KEYINFO);
+
+// The serialized nodes.
+KEYINFO KeyTree[KeyTreeNodes] <optimize=false>;
+
+// Number of Key names/sequences.
+uint32 NumKeys;
+
+uint16 FuncCodes[KeyTreeNodes];
+
+struct {
+    string Name;
+} KeyNames[NumKeys] <optimize=false, read=this.Name>;
+
+struct {
+    string Seq;
+} EscSequence[NumKeys] <optimize=false, read=this.Seq>;
+
+uint32 AdjustOffset(uint32 offset)
+{
+    return offset ? startof(KeyTree) + offset - sizeof(HEADER) : offset;
+}
+string FileOffset(uint32 root)
+{
+    return Str("%xh", AdjustOffset(root));
+}
+
+string KeyName(KEYINFO &key)
+{
+    string name;
+
+    switch (key.keyval) {
+        case 0:  return "\\0";
+        case 8:  return "\\b";
+        case 9:  return "\\t";
+        case 12: return "\\f";
+        case 13: return "\\r";
+        case 27: return "\\e";
+        case 32: return "SPC";
+        case '[':
+        case ']':
+        case ';':
+        case '~':
+            SPrintf(name, "%c", key.keyval);
+            return name;
+    }
+
+    if (IsCharAlphaNum(key.keyval)) {
+        SPrintf(name, "%c", key.keyval);
+    } else if (key.keyval < 0x100) {
+        SPrintf(name, "\\x%#02x", key.keyval);
+    } else if (key.keyval == 0x100) {
+        return "ENDSEQ";
+    } else {
+        SPrintf(name, "%#02x", key.keyval);
+    }
+    return name;
+}
