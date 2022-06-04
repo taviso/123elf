@@ -5,7 +5,6 @@
 #include <getopt.h>
 #include <unistd.h>
 #include <limits.h>
-#include <alloca.h>
 #include <err.h>
 
 #include "lotdefs.h"
@@ -100,7 +99,7 @@ int main(int argc, char **argv, char **envp)
         lotargc += 2;
 
     // Allocate the argument vector we're going to pass through to lotus.
-    lotargv = alloca(lotargc * sizeof(*argv));
+    lotargv = malloc(lotargc * sizeof(*argv));
 
     // Now reset and copy the options over.
     lotargc = 0;
@@ -128,7 +127,7 @@ int main(int argc, char **argv, char **envp)
 
         // If we reach here, we want to pass this option through to
         // Lotus verbatim.
-        lotargv[lotargc] = alloca(3);
+        lotargv[lotargc] = malloc(3);
         lotargv[lotargc][0] = '-';
         lotargv[lotargc][1] = opt;
         lotargv[lotargc][2] = 0;
