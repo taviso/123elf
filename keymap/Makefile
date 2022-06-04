@@ -5,4 +5,4 @@ CFLAGS = -ggdb3 -O0
 all: keymap
 
 clean:
-	$(RM) *.o keymap
+	rm -f *.o keymap

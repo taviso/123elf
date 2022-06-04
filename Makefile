@@ -58,9 +58,9 @@ $(sort $(KEYMAPS)): keymap/keymap
 keymaps: $(KEYMAPS)
 
 clean:
-	$(RM) *.o coffsyrup 123
-	$(RM) vgcore.* core.* core
-	$(RM) -r bin share/lotus/keymaps
+	rm -f *.o coffsyrup 123
+	rm -f vgcore.* core.* core
+	rm -rf bin share/lotus/keymaps
 	$(MAKE) -C ttydraw clean
 	$(MAKE) -C atfuncs clean
 	$(MAKE) -C keymap clean
@@ -86,6 +86,6 @@ install: all
 	find "share/lotus/123.v10/smpfiles" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
 
 uninstall:
-	$(RM) "$(prefix)/bin/123"
-	$(RM) "$(prefix)/share/man/man1/123.1"
-	$(RM) -r "$(prefix)/share/lotus"
+	rm -f "$(prefix)/bin/123"
+	rm -f "$(prefix)/share/man/man1/123.1"
+	rm -rf "$(prefix)/share/lotus"
