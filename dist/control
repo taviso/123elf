@@ -4,4 +4,4 @@ Architecture: i386
 Maintainer: Tavis Ormandy <taviso@gmail.com>
 Description: Create, modify, and process financial or scientific models.
 Homepage: https://github.com/taviso/123elf
-Depends: libtinfo6:i386, libc6:i386, lib32ncurses6:amd64 | libncurses6:i386
+Depends: lib32tinfo6 | libtinfo6:i386, libc6:i386, lib32ncurses6:amd64 | libncurses6:i386
