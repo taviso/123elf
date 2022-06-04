@@ -40,7 +40,7 @@ ttydraw/ttydraw.a:
 atfuncs/atfuncs.a:
 	$(MAKE) -C atfuncs
 
-bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
+bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
 	@mkdir -p $(@D)
 	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -Wl,--whole-archive,ttydraw/ttydraw.a,atfuncs/atfuncs.a,--no-whole-archive -o $@ $(LDLIBS)
 
@@ -51,7 +51,7 @@ keymap/keymap:
 	$(MAKE) -C keymap
 
 # This generates the keymaps in a seperate directory based on the first letter.
-$(sort $(KEYMAPS)): keymap/keymap
+$(KEYMAPS): keymap/keymap
 	mkdir -p share/lotus/keymaps/$(shell printf "%c" $@)
 	keymap/keymap $@ > share/lotus/keymaps/$(shell printf "%c" $@)/$@
 
