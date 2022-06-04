@@ -6,9 +6,12 @@ CFLAGS  = -m32 -ggdb3 -O0 -fno-stack-protector
 CPPFLAGS = -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I ttydraw
 ASFLAGS = --32
 LDFLAGS = $(CFLAGS) -lc -B. -Wl,-b,$(BFD_OUT_TARGET) -no-pie
-LDLIBS = $(shell ./ncurses-config.sh) -lm
-PATH := $(shell pwd):$(PATH)
-KEYMAPS = xterm rxvt-unicode-256color xterm-256color $(TERM)
+NCURSES_LIBS != ./ncurses-config.sh
+LDLIBS = $(NCURSES_LIBS) -lm
+OBJECT_FILES = 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
+workdir != pwd
+PATH := $(workdir):$(PATH)
+KEYMAPS != echo xterm rxvt-unicode-256color xterm-256color $(TERM) | tr ' ' '\n' | sort -u
 prefix = /usr/local
 
 .PHONY: clean check distclean install uninstall
@@ -28,11 +31,14 @@ orig/123.o:
 
 123.o: coffsyrup orig/123.o $(OBJCOPY_FILES)
 	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) orig/123.o $@
-	coffsyrup $@ $(@:.o=.tmp.o) $$(cat undefine.lst)
+	./coffsyrup $@ $(@:.o=.tmp.o) $$(cat undefine.lst)
 	mv $(@:.o=.tmp.o) $@
 
 dl_init.o: orig/dl_init.o
 	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) orig/dl_init.o $@
+
+forceplt.o: forceplt.s
+	as --32 -o $@ forceplt.s
 
 ttydraw/ttydraw.a:
 	$(MAKE) -C ttydraw
@@ -40,20 +46,19 @@ ttydraw/ttydraw.a:
 atfuncs/atfuncs.a:
 	$(MAKE) -C atfuncs
 
-bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
+bin/123: $(OBJECT_FILES)
 	@mkdir -p $(@D)
-	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -Wl,--whole-archive,ttydraw/ttydraw.a,atfuncs/atfuncs.a,--no-whole-archive -o $@ $(LDLIBS)
+	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $(OBJECT_FILES) -Wl,--whole-archive,ttydraw/ttydraw.a,atfuncs/atfuncs.a,--no-whole-archive -o $@ $(LDLIBS)
 
 123: bin/123
-	@ln -fs $^ $@
+	@ln -fs bin/123 $@
 
 keymap/keymap:
 	$(MAKE) -C keymap
 
 # This generates the keymaps in a seperate directory based on the first letter.
 $(KEYMAPS): keymap/keymap
-	mkdir -p share/lotus/keymaps/$(shell printf "%c" $@)
-	keymap/keymap $@ > share/lotus/keymaps/$(shell printf "%c" $@)/$@
+	./install-keymap.sh $@
 
 keymaps: $(KEYMAPS)
 

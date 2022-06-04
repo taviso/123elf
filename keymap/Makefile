@@ -1,4 +1,4 @@
-LDLIBS = -lncurses -ltinfo
+LDLIBS != ../ncurses-config.sh
 CFLAGS = -ggdb3 -O0
 .PHONY: clean
 
