@@ -77,3 +77,9 @@ int unset_raw_mode()
 {
     return 0;
 }
+
+// There is a hardcoded limit of 90 rows by default, we remove that limit here.
+int init_showme(uint16_t rows)
+{
+    return 0;
+}
