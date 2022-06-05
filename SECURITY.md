@@ -1,10 +1,10 @@
 # Security Policy
 
 By default, 1-2-3 allows [AutoExec macros](https://github.com/taviso/123elf/wiki/Getting-Started#autoexec-macros)
-in worksheets. 1-2-3 macros are powerfu, they can run shell commands with `{SYSTEM}`, read and write
+in worksheets. 1-2-3 macros are powerful, they can run shell commands with `{SYSTEM}`, read and write
 arbitrary files with `{OPEN}`, and so on.
 
-However, you can disable Autoexec macros via `/Worksheet Global Default Autoexec No Update`.
+However, you can disable AutoExec macros via `/Worksheet Global Default Autoexec No Update`.
 
 > I am thinking of changing this default before we reach a first release, see [#27](https://github.com/taviso/123elf/issues/27).
 
