@@ -5,5 +5,5 @@ if [ "$#" -ne 1 ]; then
 fi
 KEYMAPS_DIR="share/lotus/keymaps"
 c="$(echo "$1" | cut -c1)"
-install -dm 755 "$KEYMAPS_DIR/$c"
+install -m 755 -d "$KEYMAPS_DIR/$c"
 keymap/keymap "$1" > "$KEYMAPS_DIR/$c/$1"
