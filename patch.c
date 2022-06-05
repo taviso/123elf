@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdint.h>
-#include <alloca.h>
 #include <curses.h>
 
 #include "lotdefs.h"
@@ -39,7 +38,7 @@ int display_column_labels()
     uint8_t *buf;
 
     // Is this right?
-    buf = alloca(COLS);
+    buf = malloc(COLS);
 
     // I have no idea what this structure is.
     if (dspinfo[11]) {
