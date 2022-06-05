@@ -416,7 +416,7 @@ struct unixdirent * __unix_readdir(DIR *dirp)
     return NULL;
 }
 
-sighandler_t __unix_signal(int signum, sighandler_t handler)
+void (* __unix_signal(int signum, void (*handler)))(int)
 {
     static int unix_sig_table[] = {
         [7]  = -1,   // SIGEMT
