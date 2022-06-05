@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <curses.h>
+#include <malloc.h>
 
 #include "lotdefs.h"
 #include "lottypes.h"
