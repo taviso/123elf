@@ -95,8 +95,10 @@ extern int16_t need_to_close;
 
 extern struct PSCREEN pscreen;
 extern struct PSCREEN dscreen;
-extern uint8_t bg_equiv_map[16];
-extern uint8_t fg_equiv_map[16];
+// Note: these are structures.
+extern uint8_t bg_equiv_map[36];
+extern uint8_t fg_equiv_map[36];
+
 extern uint8_t *lfvec;
 extern uint8_t *opline;
 extern int get_screen_size();
