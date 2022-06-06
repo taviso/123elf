@@ -8,14 +8,13 @@
 #include "lottypes.h"
 #include "lotfuncs.h"
 #include "ttydraw.h"
+#include "graphics.h"
 #include "draw.h"
 
-extern struct LOTUSFUNCS *core_funcs;
-extern int RastHandle;
 caca_canvas_t *cv;
 
 // The font used for drawing labels and legends on graphs.
-struct FONTINFO fontinfo = {
+static struct FONTINFO fontinfo = {
     .name       = { 'd', 'e', 'f', 'a', 'u', 'l', 't' },
     .angle      = 0,
     .em_pix_hgt = 1,
@@ -333,8 +332,11 @@ int init_unix_display_code()
     Find_changes = tty_find_changes;
     dliopen = nullfunc;
     dliclose = nullfunc;
-    opcodes[26] = draw_text_label;
-    opcodes[10] = set_text_angle;
+
+    // Intercept these rasterizer opcodes to learn about text labels.
+    opcodes[ROP_DRAWTEXT] = draw_text_label;
+    opcodes[ROP_SETTEXTANGLE] = set_text_angle;
+
     return disp_txt_init(char_set_bundle);
 }
 

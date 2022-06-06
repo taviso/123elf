@@ -105,4 +105,7 @@ extern int get_screen_size();
 extern void *lts_malloc(size_t size);
 extern int clear_screen_buffer(struct PSCREEN *screenbuf);
 extern char *tc_setup_line_funcs();
+
+extern struct LOTUSFUNCS *core_funcs;
+extern int RastHandle;
 #endif
