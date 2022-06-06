@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdlib.h>
 #include <err.h>
 #include <curses.h>
 #include <sys/param.h>
@@ -335,4 +336,69 @@ int init_unix_display_code()
     opcodes[26] = draw_text_label;
     opcodes[10] = set_text_angle;
     return disp_txt_init(char_set_bundle);
+}
+
+// This is a re-implementation of setup_screen_mem that handles more than
+// UINT8_MAX rows, see issue #79.
+int setup_screen_mem(bool alloclines)
+{
+    struct LINE *plinedata;
+    struct LINE *dlinedata;
+    int result;
+    size_t i;
+    int8_t j;
+    int8_t k;
+
+    result = get_screen_size();
+
+    if (result == 0) {
+        if (alloclines) {
+            memset(&pscreen, 0, sizeof(pscreen));
+            memset(&dscreen, 0, sizeof(pscreen));
+
+            pscreen.linedata = calloc(sizeof(struct LINE), LINES);
+            dscreen.linedata = calloc(sizeof(struct LINE), LINES);
+
+            lfvec = calloc(8, LINES);
+
+            if (!lfvec || !pscreen.linedata || !dscreen.linedata)
+                return 3;
+
+            plinedata = pscreen.linedata;
+            dlinedata = dscreen.linedata;
+
+            for (i = 0; i < LINES; i++) {
+                dlinedata[i].linebuf  = lts_malloc(COLS);
+                dlinedata[i].lineattr = lts_malloc(COLS);
+                plinedata[i].linebuf  = lts_malloc(COLS);
+                plinedata[i].lineattr = lts_malloc(COLS);
+
+                if (!dlinedata[i].linebuf
+                 || !dlinedata[i].lineattr
+                 || !plinedata[i].linebuf
+                 || !plinedata[i].lineattr)
+                    return 3;
+            }
+        }
+
+        clear_screen_buffer(&dscreen);
+        clear_screen_buffer(&pscreen);
+
+        bg_equiv_map[0] = 1;
+        for ( j = 0; j <= 2; ++j )
+            bg_equiv_map[8 * (1 << j) + (1 << j)] = 1;
+
+        fg_equiv_map[0] = 1;
+
+        for ( k = 0; k <= 1; ++k )
+            fg_equiv_map[4 * (1 << k) + (1 << k)] = 1;
+
+        tc_setup_line_funcs();
+
+        opline = lts_malloc(COLS + 1);
+
+        if (opline == NULL)
+            return 3;
+    }
+    return result;
 }
