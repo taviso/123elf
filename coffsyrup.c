@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <stddef.h>
 #include <string.h>
+#include <assert.h>
 #include <err.h>
 
 #pragma pack(1)
@@ -27,6 +29,19 @@
 //    a relocation. coffsyrup will just do what you asked, and assume you know
 //    what you're doing... the UNIX way!
 //
+typedef struct {
+    uint16_t e_scnum;
+    uint32_t e_value;
+    uint32_t r_symndx;
+} MKRELOC;
+
+typedef struct {
+    uint8_t opcode;
+    uint32_t operand;
+} PATCHLOC;
+
+#define OPCODE_PUSH_EBP  0x55
+#define OPCODE_JMP_REL32 0xe9
 
 int main(int argc, char **argv)
 {
@@ -41,6 +56,8 @@ int main(int argc, char **argv)
     uint32_t strtabsz;
     char *strtab;
     char **sdata;
+    uint32_t nmkrelocs;
+    MKRELOC *pmkrelocs;
 
     if (argc < 3) {
         errx(EXIT_FAILURE, "Not enough arguments specified.");
@@ -112,6 +129,10 @@ int main(int argc, char **argv)
     relocs = calloc(hdr.f_nscns, sizeof *relocs);
     lines = calloc(hdr.f_nscns, sizeof *lines);
 
+    // These are used to add new relocs.
+    nmkrelocs = 0;
+    pmkrelocs = NULL;
+
     // We should already be at the string table, so read them in.
     if (fread(strtab + sizeof(strtabsz), strtabsz - sizeof(strtabsz), 1, infile) != 1) {
         err(EXIT_FAILURE, "Failed to read string table from file.");
@@ -158,6 +179,23 @@ int main(int argc, char **argv)
         for (int check = 3; check < argc; check++) {
             if (strcmp(symname, argv[check]) == 0) {
                 fprintf(stdout, "MATCH %s\n", symname);
+
+                // If this is a static symbol, we need to add a RELOC
+                if (symtab[i].e_sclass == C_STAT) {
+                    fprintf(stdout, "STATIC @%#x\n", symtab[i].e_value);
+
+                    if (symtab[i].e_scnum <= 0) {
+                        errx(EXIT_FAILURE, "The static symbol %s did not have a section number.", symname);
+                    }
+
+                    pmkrelocs = realloc(pmkrelocs, ++nmkrelocs * sizeof(*pmkrelocs));
+                    pmkrelocs[nmkrelocs - 1].e_value = symtab[i].e_value;
+                    pmkrelocs[nmkrelocs - 1].r_symndx = i;
+
+                    // The first section is section 1, so adjust this.
+                    pmkrelocs[nmkrelocs - 1].e_scnum = symtab[i].e_scnum - 1;
+                }
+
                 symtab[i].e_scnum = N_UNDEF;
                 symtab[i].e_sclass = C_EXT;
                 symtab[i].e_value = 0;
@@ -215,8 +253,9 @@ int main(int argc, char **argv)
             err(EXIT_FAILURE, "Could not seek to relocations for section %u.", i);
         }
 
-        // Allocate space to store them.
-        relocs[i] = calloc(scn[i].s_nreloc, sizeof(RELOC));
+        // Allocate space to store them, include space for any new relocs we
+        // might be adding.
+        relocs[i] = calloc(scn[i].s_nreloc + nmkrelocs, sizeof(RELOC));
 
         for (int r = 0; r < scn[i].s_nreloc; r++) {
             const char *symname;
@@ -276,6 +315,51 @@ int main(int argc, char **argv)
             }
         }
 
+        for (int mkr = 0; mkr < nmkrelocs; mkr++) {
+            RELOC *rel = &relocs[i][scn[i].s_nreloc];
+            PATCHLOC *patch;
+
+            // This should be empty!
+            assert(rel->r_vaddr == 0);
+
+            if (pmkrelocs[mkr].e_scnum != i)
+                continue;
+
+            // Okay, it's for this section, check it makes sense.
+            if (strcmp(scn[i].s_name, ".text") != 0) {
+                warnx("Currently static symbols have to be .text to be made external.");
+                continue;
+            }
+            if (pmkrelocs[mkr].e_value < scn[i].s_vaddr
+             || pmkrelocs[mkr].e_value - scn[i].s_vaddr > scn[i].s_size) {
+                errx(EXIT_FAILURE, "Sorry, could not decode static symbol value.");
+            }
+
+            // The location this static symbol pointed to.
+            patch = (PATCHLOC *) &sdata[i][pmkrelocs[mkr].e_value - scn[i].s_vaddr];
+
+            // It seems okay, so we want to replace the first byte of the text
+            // with a jmp, and then add a new RELOC. This really only makes sense
+            // if this is a function, so it should begin with push ebp.
+            if (patch->opcode != OPCODE_PUSH_EBP) {
+                errx(EXIT_FAILURE, "Text symbol is missing a function prologue.");
+            }
+
+            // Now patch it with a JMP, is this right??
+            patch->opcode   = OPCODE_JMP_REL32;
+            patch->operand  = pmkrelocs[mkr].e_value + sizeof(PATCHLOC);
+            patch->operand *= -1;
+
+            rel->r_vaddr    = pmkrelocs[mkr].e_value + offsetof(PATCHLOC, operand);
+            rel->r_symndx   = pmkrelocs[mkr].r_symndx;
+            rel->r_type     = RELOC_REL32;
+
+            scn[i].s_nreloc++;
+
+            // Record that we have a new RELOC.
+            fprintf(stdout, "OK NEWRELOC\n");
+        }
+
         // Seek to the line numbers
         if (fseek(infile, scn[i].s_lnnoptr, SEEK_SET) != 0) {
             err(EXIT_FAILURE, "Failed to seek to line numbers.");
@@ -297,6 +381,58 @@ int main(int argc, char **argv)
                 }
             }
         }
+    }
+
+    // Now we can figure out the all the file pointers.
+    hdr.f_symptr = sizeof(hdr) + sizeof(opt) + sizeof(*scn) * hdr.f_nscns;
+
+    for (int i = 0; i < hdr.f_nscns; i++) {
+        if (scn[i].s_size == 0) {
+            assert(scn[i].s_nreloc == 0);
+            assert(scn[i].s_nlnno == 0);
+            continue;
+        }
+
+        scn[i].s_scnptr = sizeof(hdr) + sizeof(opt) + sizeof(*scn) * hdr.f_nscns;
+
+        // Count all the previous section sizes to find where our data is.
+        for (int j = 0; j < i; j++) {
+            scn[i].s_scnptr += scn[j].s_size;
+        }
+
+        if (scn[i].s_nreloc) {
+            scn[i].s_relptr = sizeof(hdr) + sizeof(opt) + sizeof(*scn) * hdr.f_nscns;
+
+            // Count all the previous section sizes to find our relocations.
+            for (int j = 0; j < i; j++) {
+                scn[i].s_relptr += scn[j].s_nreloc * sizeof(RELOC);
+            }
+
+            // Count all sections total to find the relocation ptr;
+            for (int j = 0; j < hdr.f_nscns; j++) {
+                scn[i].s_relptr += scn[j].s_size;
+            }
+        }
+
+        if (scn[i].s_nlnno) {
+            scn[i].s_lnnoptr = sizeof(hdr) + sizeof(opt) + sizeof(*scn) * hdr.f_nscns;
+
+            // Count all the previous secions' lines to find ours.
+            for (int j = 0; j < i; j++) {
+                scn[i].s_lnnoptr += scn[j].s_nlnno * sizeof(LINENO);
+            }
+
+            // Count all section sizes and rels as well.
+            for (int j = 0; j < hdr.f_nscns; j++) {
+                scn[i].s_lnnoptr += scn[j].s_size;
+                scn[i].s_lnnoptr += scn[j].s_nreloc * sizeof(RELOC);
+            }
+        }
+
+        hdr.f_symptr += scn[i].s_size;
+        hdr.f_symptr += scn[i].s_nreloc * sizeof(RELOC);
+        hdr.f_symptr += scn[i].s_nlnno * sizeof(LINENO);
+
     }
 
     // Okay, now try to write out the new object.
@@ -380,5 +516,6 @@ int main(int argc, char **argv)
     free(sdata);
     free(relocs);
     free(lines);
+    free(pmkrelocs);
     return 0;
 }
