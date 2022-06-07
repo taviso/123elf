@@ -11,7 +11,7 @@ PATH := .:$(PATH)
 prefix = /usr/local
 
 # The list of terminals we generate keymaps for by default.
-KEYMAPS  = xterm rxvt-unicode vte konsole
+KEYMAPS  = xterm rxvt-unicode konsole
 KEYMAPS := $(KEYMAPS) $(patsubst %,%-256color,$(KEYMAPS))
 KEYMAPS += screen.xterm-256color $(TERM)
 
