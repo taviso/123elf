@@ -58,3 +58,6 @@ encode_date
 check_three_numbers
 get_integer
 need_to_close
+clear_screen_buffer
+opline
+get_screen_size

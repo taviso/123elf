@@ -8,8 +8,12 @@ ASFLAGS = --32
 LDFLAGS = $(CFLAGS) -lc -B. -Wl,-b,$(BFD_OUT_TARGET) -no-pie
 LDLIBS = -lncurses -ltinfo -lm
 PATH := .:$(PATH)
-KEYMAPS = xterm rxvt-unicode-256color xterm-256color $(TERM)
 prefix = /usr/local
+
+# The list of terminals we generate keymaps for by default.
+KEYMAPS  = xterm rxvt-unicode
+KEYMAPS := $(KEYMAPS) $(patsubst %,%-256color,$(KEYMAPS))
+KEYMAPS += screen.xterm-256color $(TERM)
 
 define BFD_TARGET_ERROR
 Your version of binutils was compiled without coff-i386 target support.

@@ -48,13 +48,7 @@ It's very easy to enable it yourself, download [binutils](https://www.gnu.org/so
 
 > Note: binutils-2.38 is known to work, some earlier versions have been found to not work.
 
-There's no need to install it, just build it with `make`.
-
-When that's complete, copy `objcopy` and `objdump` from the `binutils` directory, and `ld-new` from the `ld` directory to `123elf` directory.
-
-> Important: Remember to rename `ld-new` to `ld`.
-
-The Makefile should automatically use the new binaries, and continue to build.
+Alternatively, run the included `binutils.sh` to download and compile a version of binutils known to work for this.
 
 ## Installing
 
@@ -97,27 +91,9 @@ script.
 
 ## Bugs
 
-- ~~The keyboard map seems to be incomplete~~ This seems to be working in xterm, please test other terminals!
+- ~~The keyboard map seems to be incomplete~~ (XTerm compatible terminals should be [working](https://github.com/taviso/123elf/wiki/Keybindings), please test others!)
 - ~~Graphs don't work yet~~ (Partially working!, see [#5](https://github.com/taviso/123elf/issues/5)).
 - ~~Printing doesn't work yet~~ (Print to file works, print to lpr is being worked on, see [#50](https://github.com/taviso/123elf/issues/50)).
 - File an issue if you notice something, there are probably lots of minor issues that can be fixed!
-
-## Security
-
-By default, 123 allows Autoexec macros in worksheets. Lotus macros are very
-powerful, and can run shell commands, read and write arbitrary files, load
-plugins and so on.
-
-However, you can disable Autoexec macros via `/Worksheet Global Default Autoexec`.
-
-> I am thinking of changing this default before we reach a first release, see [#27](https://github.com/taviso/123elf/issues/27).
-
-If you disable Autoexec then in *theory* it's safe to open untrusted
-worksheets -- ***but*** this software hasn't been maintained for over 30 years,
-and may contain security bugs!
-
-We can fix bugs with `coffsyrup`, by redirecting unsafe functions to new
-safe versions, so we will make a best effort to fix vulnerabilities if you
-[report](https://github.com/taviso/123elf/issues/new) them!
 
 

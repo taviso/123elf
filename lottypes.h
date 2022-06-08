@@ -95,5 +95,23 @@ struct FONTINFO
 
 struct GRAPH;
 
+struct LINE
+{
+    uint8_t field_0;
+    uint8_t field_1;
+    uint8_t field_2;
+    uint8_t field_3;
+    uint32_t field_4;
+    uint8_t *lineattr;
+    uint8_t *linebuf;
+};
+
+struct PSCREEN
+{
+    uint32_t field_0;
+    uint32_t field_4;
+    struct LINE *linedata;
+};
+
 #pragma pack(pop)
 #endif

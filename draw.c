@@ -40,7 +40,10 @@ void exprt_thin_vert_line(int x, int y, int height, int attr)
 }
 
 // This is called for cross hatching, pattern fills.
-void exprt_shade_rect(struct POINT origin, struct POINT dim, PATT *fillpat, uint16_t fillcolor)
+void exprt_shade_rect(struct POINT origin,
+                      struct POINT dim,
+                      PATT *fillpat,
+                      uint16_t fillcolor)
 {
     caca_set_attr(cv, fillcolor);
     caca_fill_box(cv, origin.ptx, origin.pty, dim.ptx, dim.pty, fillpat->pattptr[0]);

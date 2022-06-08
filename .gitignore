@@ -18,3 +18,4 @@ drawtest
 *.a
 keymap/keymap
 share
+*.deb
