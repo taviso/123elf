@@ -39,7 +39,7 @@ fi
 
 # Compile gzip.
 if [ ! -x "$GZIP_DIR/gzip" ]; then
-   cd "$GZIP_DIR" && ./configure && gmake -j$(nproc)
+   cd "$GZIP_DIR" && ./configure && gmake
    cd "$ORIGIN_DIR"
 fi
 
