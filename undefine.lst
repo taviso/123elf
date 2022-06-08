@@ -71,7 +71,6 @@ getgrent
 getgrgid
 getgrnam
 getlogin
-getopt
 getpass
 getpgrp
 getpid
@@ -126,10 +125,6 @@ nice
 nrand48
 opendir
 open
-optarg
-opterr
-optind
-optopt
 pause
 perror
 poll
@@ -235,9 +230,7 @@ tgetflag
 tgetnum
 tgoto
 tputs
-tempnam
 tmpfile
-tmpnam
 chown
 msgctl
 semctl
@@ -268,5 +261,6 @@ fmod
 fabs
 kbd_term
 set_raw_mode
-unset_raw_mode
 ustat
+init_showme
+setup_screen_mem

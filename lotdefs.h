@@ -93,4 +93,19 @@ extern int erase_screen();
 extern int invalidate_screen();
 extern int16_t need_to_close;
 
+extern struct PSCREEN pscreen;
+extern struct PSCREEN dscreen;
+// Note: these are structures.
+extern uint8_t bg_equiv_map[36];
+extern uint8_t fg_equiv_map[36];
+
+extern uint8_t *lfvec;
+extern uint8_t *opline;
+extern int get_screen_size();
+extern void *lts_malloc(size_t size);
+extern int clear_screen_buffer(struct PSCREEN *screenbuf);
+extern char *tc_setup_line_funcs();
+
+extern struct LOTUSFUNCS *core_funcs;
+extern int RastHandle;
 #endif

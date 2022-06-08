@@ -18,7 +18,9 @@ LDFLAGS != if [ "$(platform)" = "Linux" ]; then echo $(LINUX_LDFLAGS) $(GENERIC_
 NCURSES_LIBS != ./ncurses-config.sh
 LDLIBS = $(NCURSES_LIBS) -lm
 OBJECT_FILES = 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
-KEYMAPS != echo xterm rxvt-unicode-256color xterm-256color $(TERM) | tr ' ' '\n' | sort -u
+#
+# The list of terminals we generate keymaps for by default.
+KEYMAPS = xterm rxvt-unicode xterm-256color rxvt-unicode-256color screen.xterm-256color $(TERM)
 prefix = /usr/local
 
 .PHONY: clean check distclean install uninstall

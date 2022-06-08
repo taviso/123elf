@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stddef.h>
 
 #include "../lottypes.h"
 #include "../lotfuncs.h"
