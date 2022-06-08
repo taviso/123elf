@@ -8,8 +8,8 @@ GZIP_DIR="$(basename $GZIP_XZ .tar.xz)"
 GZIP_URL="$GZIP_DL/$GZIP_XZ"
 ORIGIN_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
 
-# Dont continue on error.
-set -e
+# Make sure we have GNU make
+. "$ORIGIN_DIR/detect_gnu_make.sh"
 
 # Help text.
 if [ "$1" = '-h' ]; then
@@ -22,7 +22,7 @@ fi
 # Optional cleanup if requested.
 if [ "$1" = 'clean' ]; then
     rm -fv "$ORIGIN_DIR/gzip" "$ORIGIN_DIR/gunzip" "$ORIGIN_DIR/zcat"
-    rm -rfv "$GZIP_DIR"
+    rm -rf "$GZIP_DIR"
     rm -fv "$ORIGIN_DIR/$GZIP_XZ"
     exit
 fi
@@ -39,7 +39,7 @@ fi
 
 # Compile gzip.
 if [ ! -x "$GZIP_DIR/gzip" ]; then
-   cd "$GZIP_DIR" && ./configure && gmake -j$(nproc)
+   cd "$GZIP_DIR" && ./configure && "$gnu_make"
    cd "$ORIGIN_DIR"
 fi
 
