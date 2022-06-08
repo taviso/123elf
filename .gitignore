@@ -6,6 +6,7 @@ real-ld
 coffsyrup
 123
 binutils-*
+as
 objcopy
 objdump
 ld
