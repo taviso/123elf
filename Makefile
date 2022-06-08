@@ -83,32 +83,32 @@ distclean: clean
 	./extract.sh clean
 
 install: all
-	install -m 755 -d "$(prefix)/bin"
-	install -m 755 "bin/123" "$(prefix)/bin/123"
-	install -m 755 -d "$(prefix)/share/man/man1"
-	install -m 644 "share/man/man1/123.1" "$(prefix)/share/man/man1/123.1"
-	install -m 755 -d "$(prefix)/share/lotus/etc"
-	install -m 644 "share/lotus/etc/l123set.cf" "$(prefix)/share/lotus/etc/l123set.cf"
-	find "share/lotus/keymaps" -type d -exec install -m 755 -d "$(prefix)/{}" \;
-	find "share/lotus/keymaps" -type f -exec install -m 644 {} "$(prefix)/{}" \;
-	install -m 755 -d "$(prefix)/share/lotus/123.v10/sysV386"
-	install -m 644 "share/lotus/123.v10/sysV386/lotus.bcf" "$(prefix)/share/lotus/123.v10/sysV386/lotus.bcf"
-	install -m 755 -d "$(prefix)/share/lotus/123.v10/sysV386/lib"
-	install -m 644 "share/lotus/123.v10/sysV386/lib/wyse50-lts123" "$(prefix)/share/lotus/123.v10/sysV386/lib/wyse50-lts123"
-	find "share/lotus/123.v10/cbd" -type d -exec install -m 755 -d "$(prefix)/{}" \;
-	find "share/lotus/123.v10/cbd" -type f -exec install -m 644 {} "$(prefix)/{}" \;
-	find "share/lotus/123.v10/fonts" -type d -exec install -m 755 -d "$(prefix)/{}" \;
-	find "share/lotus/123.v10/fonts" -type f -exec install -m 644 {} "$(prefix)/{}" \;
-	find "share/lotus/123.v10/hlp" -type d -exec install -m 755 -d "$(prefix)/{}" \;
-	find "share/lotus/123.v10/hlp" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
-	find "share/lotus/123.v10/keymaps" -type d -exec install -m 755 -d "$(prefix)/{}" \;
-	find "share/lotus/123.v10/keymaps" -type f -exec install -m 644 {} "$(prefix)/{}" \;
-	find "share/lotus/123.v10/pbd" -type d -exec install -m 755 -d "$(prefix)/{}" \;
-	find "share/lotus/123.v10/pbd" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
-	find "share/lotus/123.v10/ri" -type d -exec install -m 755 -d "$(prefix)/{}" \;
-	find "share/lotus/123.v10/ri" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
-	find "share/lotus/123.v10/smpfiles" -type d -exec install -m 755 -d "$(prefix)/{}" \;
-	find "share/lotus/123.v10/smpfiles" -type f -exec install -Dm 644 {} "$(prefix)/{}" \;
+	install -m 0755 -d "$(prefix)/bin"
+	install -m 0755 "bin/123" "$(prefix)/bin/123"
+	install -m 0755 -d "$(prefix)/share/man/man1"
+	install -m 0644 "share/man/man1/123.1" "$(prefix)/share/man/man1/123.1"
+	install -m 0755 -d "$(prefix)/share/lotus/etc"
+	install -m 0644 "share/lotus/etc/l123set.cf" "$(prefix)/share/lotus/etc/l123set.cf"
+	find "share/lotus/keymaps" -type d -exec install -m 0755 -d "$(prefix)/{}" \;
+	find "share/lotus/keymaps" -type f -exec install -m 0644 {} "$(prefix)/{}" \;
+	install -m 0755 -d "$(prefix)/share/lotus/123.v10/sysV386"
+	install -m 0644 "share/lotus/123.v10/sysV386/lotus.bcf" "$(prefix)/share/lotus/123.v10/sysV386/lotus.bcf"
+	install -m 0755 -d "$(prefix)/share/lotus/123.v10/sysV386/lib"
+	install -m 0644 "share/lotus/123.v10/sysV386/lib/wyse50-lts123" "$(prefix)/share/lotus/123.v10/sysV386/lib/wyse50-lts123"
+	find "share/lotus/123.v10/cbd" -type d -exec install -m 0755 -d "$(prefix)/{}" \;
+	find "share/lotus/123.v10/cbd" -type f -exec install -m 0644 {} "$(prefix)/{}" \;
+	find "share/lotus/123.v10/fonts" -type d -exec install -m 0755 -d "$(prefix)/{}" \;
+	find "share/lotus/123.v10/fonts" -type f -exec install -m 0644 {} "$(prefix)/{}" \;
+	find "share/lotus/123.v10/hlp" -type d -exec install -m 0755 -d "$(prefix)/{}" \;
+	find "share/lotus/123.v10/hlp" -type f -exec install -m 0644 {} "$(prefix)/{}" \;
+	find "share/lotus/123.v10/keymaps" -type d -exec install -m 0755 -d "$(prefix)/{}" \;
+	find "share/lotus/123.v10/keymaps" -type f -exec install -m 0644 {} "$(prefix)/{}" \;
+	find "share/lotus/123.v10/pbd" -type d -exec install -m 0755 -d "$(prefix)/{}" \;
+	find "share/lotus/123.v10/pbd" -type f -exec install -m 0644 {} "$(prefix)/{}" \;
+	find "share/lotus/123.v10/ri" -type d -exec install -m 0755 -d "$(prefix)/{}" \;
+	find "share/lotus/123.v10/ri" -type f -exec install -m 0644 {} "$(prefix)/{}" \;
+	find "share/lotus/123.v10/smpfiles" -type d -exec install -m 0755 -d "$(prefix)/{}" \;
+	find "share/lotus/123.v10/smpfiles" -type f -exec install -m 0644 {} "$(prefix)/{}" \;
 
 uninstall:
 	rm -f "$(prefix)/bin/123"
