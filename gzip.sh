@@ -9,7 +9,7 @@ GZIP_URL="$GZIP_DL/$GZIP_XZ"
 ORIGIN_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
 
 # Make sure we have GNU make
-. "$ORIGIN_DIR/detect_gnu_make.sh"
+. "$ORIGIN_DIR/detect-gnu-make.sh"
 
 # Help text.
 if [ "$1" = '-h' ]; then
