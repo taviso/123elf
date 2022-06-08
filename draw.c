@@ -2,7 +2,7 @@
 
 #include "lotdefs.h"
 #include "lottypes.h"
-#include "ttydraw.h"
+#include "ttydraw/ttydraw.h"
 
 // The canvas used for drawing ascii-art graphics.
 extern caca_canvas_t *cv;

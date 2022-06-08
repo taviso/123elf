@@ -14,11 +14,17 @@ static const char *get_lotus_runtimefile(const char *file)
     static char *exedir;
     static char filepath[PATH_MAX];
     static char localpath[PATH_MAX];
+    static char procexefile[PATH_MAX];
+    pid_t pid;
 
     // Cache this path so it only has to be looked up once.
     if (lotusdir == NULL) {
-        if (readlink("/proc/self/exe", exepath, PATH_MAX) == -1) {
-            err(EXIT_FAILURE, "Failed to determine the lotus root directory");
+        if (readlink("/proc/self/exe", exepath, PATH_MAX) == -1) { // Linux
+            pid = getpid();
+            snprintf(procexefile, PATH_MAX, "/proc/%d/file", pid);
+            if (readlink(procexefile, exepath, PATH_MAX) == -1) { // BSD
+                err(EXIT_FAILURE, "Failed to determine the lotus root directory");
+	    }
         }
         // Figure out the containing directory from the exe path.
         exedir = dirname(exepath);

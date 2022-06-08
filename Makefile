@@ -1,16 +1,23 @@
+platform != uname -s
+undefine != if [ "$(platform)" = "FreeBSD" ]; then echo undefine.freebsd; else echo undefine.lst; fi
+redefine = redefine.lst
+localize != if [ "$(platform)" = "FreeBSD" ]; then echo localize.freebsd; else echo localize.lst; fi
+globalize = globalize.lst
+OBJCOPY_FLAGS = --wildcard --localize-symbols=$(localize) --globalize-symbols=$(globalize) --redefine-syms=$(redefine)
+OBJCOPY_FILES = $(localize) $(globalize) $(redefine) $(undefine)
+OBJCOPY != if [ -x ./objcopy ]; then echo ./objcopy; else echo objcopy; fi
+AS != if [ -x ./as ]; then echo ./as; else echo as; fi
 BFD_INP_TARGET = coff-i386
 BFD_OUT_TARGET = coff-i386
-OBJCOPY_FLAGS  = --wildcard --localize-symbols=localize.lst --globalize-symbols=globalize.lst --redefine-syms=redefine.lst
-OBJCOPY_FILES = localize.lst globalize.lst redefine.lst undefine.lst
 CFLAGS  = -m32 -ggdb3 -O0 -fno-stack-protector
 CPPFLAGS = -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I ttydraw
 ASFLAGS = --32
-LDFLAGS = $(CFLAGS) -lc -B. -Wl,-b,$(BFD_OUT_TARGET) -no-pie
+LINUX_LDFLAGS = -lc
+GENERIC_LDFLAGS = $(CFLAGS) -B. -Wl,-b,$(BFD_OUT_TARGET) -no-pie
+LDFLAGS != if [ "$(platform)" = "Linux" ]; then echo $(LINUX_LDFLAGS) $(GENERIC_LDFLAGS); else echo $(GENERIC_LDFLAGS); fi
 NCURSES_LIBS != ./ncurses-config.sh
 LDLIBS = $(NCURSES_LIBS) -lm
 OBJECT_FILES = 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
-workdir != pwd
-PATH := $(workdir):$(PATH)
 KEYMAPS != echo xterm rxvt-unicode-256color xterm-256color $(TERM) | tr ' ' '\n' | sort -u
 prefix = /usr/local
 
@@ -30,15 +37,15 @@ orig/123.o:
 	@false
 
 123.o: coffsyrup orig/123.o $(OBJCOPY_FILES)
-	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) orig/123.o $@
-	./coffsyrup $@ $(@:.o=.tmp.o) $$(cat undefine.lst)
+	$(OBJCOPY) -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) orig/123.o $@
+	./coffsyrup $@ $(@:.o=.tmp.o) $$(cat $(undefine))
 	mv $(@:.o=.tmp.o) $@
 
 dl_init.o: orig/dl_init.o
-	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) orig/dl_init.o $@
+	$(OBJCOPY) -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) orig/dl_init.o $@
 
 forceplt.o: forceplt.s
-	as --32 -o $@ forceplt.s
+	$(AS) $(ASFLAGS) -o $@ forceplt.s
 
 ttydraw/ttydraw.a:
 	$(MAKE) -C ttydraw

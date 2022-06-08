@@ -225,8 +225,6 @@ __require_ref:
     call    msgctl@plt
     call    semctl@plt
     call    shmctl@plt
-    call    fstat64@plt
-    call    stat64@plt
     call    atexit@plt
     call    sin@plt
     call    cos@plt

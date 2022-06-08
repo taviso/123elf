@@ -23,6 +23,10 @@ extern int __unix_errno;
 #define SI86FPHW 40
 #define FP_387 3
 
+#define TCGETS 0x5401
+#define TCSETS 0x5402
+#define TCSETSW 0x5403
+
 static struct termios original;
 
 void __attribute__((constructor)) init_terminal_settings()
@@ -405,7 +409,6 @@ struct unixdirent * __unix_readdir(DIR *dirp)
     if ((lent = readdir(dirp))) {
         uent.d_ino = lent->d_ino;
         uent.d_off = lent->d_off;
-        uent.d_reclen = lent->d_reclen;
         uent.d_type = lent->d_type;
         strncpy(uent.d_name, lent->d_name, sizeof uent.d_name);
         return &uent;
@@ -425,10 +428,10 @@ void (* __unix_signal(int signum, void (*handler)))(int)
         [16] = SIGUSR1,
         [17] = SIGUSR2,
         [18] = SIGCHLD,
-        [19] = SIGPWR,
+        [19] = SIGCONT,
         [20] = SIGWINCH,
         [21] = SIGURG,
-        [22] = SIGPOLL,
+        [22] = SIGTTOU,
         [23] = SIGSTOP,
         [24] = SIGTSTP,
         [25] = SIGCONT,

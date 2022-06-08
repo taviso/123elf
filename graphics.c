@@ -6,7 +6,7 @@
 #include "lotdefs.h"
 #include "lottypes.h"
 #include "lotfuncs.h"
-#include "ttydraw.h"
+#include "ttydraw/ttydraw.h"
 #include "draw.h"
 
 extern struct LOTUSFUNCS *core_funcs;

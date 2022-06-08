@@ -1,8 +1,8 @@
 #include <stdint.h>
 
-#include "lottypes.h"
-#include "lotfuncs.h"
-#include "lotdefs.h"
+#include "../lottypes.h"
+#include "../lotfuncs.h"
+#include "../lotdefs.h"
 
 int16_t at_date()
 {
