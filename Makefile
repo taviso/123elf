@@ -1,8 +1,8 @@
 platform != uname -s
-undefine != if [ "$(platform)" = "FreeBSD" ]; then echo undefine.freebsd; else echo undefine.lst; fi
-redefine = redefine.lst
-localize != if [ "$(platform)" = "FreeBSD" ]; then echo localize.freebsd; else echo localize.lst; fi
-globalize = globalize.lst
+undefine != ./detect-os-symbol-list-file.sh undefine
+redefine != ./detect-os-symbol-list-file.sh redefine
+localize != ./detect-os-symbol-list-file.sh localize
+globalize != ./detect-os-symbol-list-file.sh globalize
 OBJCOPY_FLAGS = --wildcard --localize-symbols=$(localize) --globalize-symbols=$(globalize) --redefine-syms=$(redefine)
 OBJCOPY_FILES = $(localize) $(globalize) $(redefine) $(undefine)
 OBJCOPY != if [ -x ./objcopy ]; then echo ./objcopy; else echo objcopy; fi
