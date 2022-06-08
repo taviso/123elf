@@ -14,7 +14,6 @@ platform=`(uname -s)`
 
 if [ "$platform" = "FreeBSD" ]; then
     file_undefine=undefine.freebsd
-    file_localize=localize.freebsd
 fi
 
 if [ "$platform" = "NetBSD" ]; then
