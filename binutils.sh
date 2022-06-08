@@ -19,7 +19,7 @@ fi
 
 # Optional cleanup if requested.
 if [ "$1" = 'clean' ]; then
-    rm -fv "$ORIGIN_DIR/objcopy" "$ORIGIN_DIR/objdump" "$ORIGIN_DIR/ld"
+    rm -fv "$ORIGIN_DIR/objcopy" "$ORIGIN_DIR/objdump" "$ORIGIN_DIR/ld" "$ORIGIN_DIR/as"
     rm -rfv "$BINUTILS_DIR"
     rm -fv "$ORIGIN_DIR/$BINUTILS_XZ"
     exit
@@ -39,12 +39,11 @@ fi
 if [ ! -x "$BINUTILS_DIR/binutils/objcopy" ]; then
     cd "$BINUTILS_DIR" && \
     ./configure --enable-targets=i386-pc-elf32 \
-                --disable-gas \
                 --disable-libctf \
                 --disable-plugins \
                 --disable-gprof \
                 --enable-compressed-debug-sections=none && \
-    gmake all-ld -j$(nproc) MAKEINFO=true
+    gmake all-ld all-gas MAKEINFO=true
     cd "$ORIGIN_DIR"
 fi
 
@@ -56,3 +55,4 @@ copy() {
 copy "$BINUTILS_DIR/binutils/objcopy" "$ORIGIN_DIR/objcopy"
 copy "$BINUTILS_DIR/binutils/objdump" "$ORIGIN_DIR/objdump"
 copy "$BINUTILS_DIR/ld/ld-new" "$ORIGIN_DIR/ld"
+copy "$BINUTILS_DIR/gas/as-new" "$ORIGIN_DIR/as"
