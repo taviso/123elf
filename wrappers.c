@@ -408,7 +408,6 @@ struct unixdirent * __unix_readdir(DIR *dirp)
     // Fetch the real entry, and translate it to the UNIX format.
     if ((lent = readdir(dirp))) {
         uent.d_ino = lent->d_ino;
-        uent.d_off = lent->d_off;
         uent.d_type = lent->d_type;
         strncpy(uent.d_name, lent->d_name, sizeof uent.d_name);
         return &uent;
