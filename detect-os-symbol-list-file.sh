@@ -20,6 +20,10 @@ if [ "$platform" = "NetBSD" ]; then
     file_undefine=undefine.netbsd
 fi
 
+if [ "$platform" = "OpenBSD" ]; then
+    file_undefine=undefine.openbsd
+fi
+
 if [ "$1" = "undefine" ]; then
     echo "$file_undefine"
  elif [ "$1" = "redefine" ]; then
