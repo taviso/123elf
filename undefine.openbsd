@@ -130,3 +130,4 @@ fpsetsticky
 fpsetmask
 ftell
 fputs
+environ
