@@ -32,8 +32,20 @@ static struct termios original;
 void __attribute__((constructor)) init_terminal_settings()
 {
     // Make a backup of the terminal state to restore to later.
-    if (isatty(STDIN_FILENO) && tcgetattr(STDIN_FILENO, &original) != 0) {
-        err(EXIT_FAILURE, "Failed to query terminal attributes.");
+    // Pass a heap pointer t to tcgetattr,
+    // then copy result to data segment,
+    // as a workaround for OpenBSD not allowing
+    // ioctl(2) to write to the data segment at this point.
+    int attr;
+    struct termios *t;
+    if (isatty(STDIN_FILENO)) {
+        t = malloc(sizeof(struct termios));
+        attr = tcgetattr(STDIN_FILENO, t);
+        memmove(&original, t, sizeof(struct termios));
+        free(t);
+        if (attr != 0) {
+            err(EXIT_FAILURE, "Failed to query terminal attributes.");
+        }
     }
 }
 
