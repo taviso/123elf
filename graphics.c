@@ -4,8 +4,8 @@
 #include <curses.h>
 #include <sys/param.h>
 
-#include "lotdefs.h"
 #include "lottypes.h"
+#include "lotdefs.h"
 #include "lotfuncs.h"
 #include "ttydraw.h"
 #include "graphics.h"

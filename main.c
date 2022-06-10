@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <string.h>
 #include <getopt.h>
 #include <unistd.h>
@@ -8,8 +9,8 @@
 #include <alloca.h>
 #include <err.h>
 
-#include "lotdefs.h"
 #include "lottypes.h"
+#include "lotdefs.h"
 #include "lotfuncs.h"
 
 extern int __unix_main(int argc, char **argv, char **envp);

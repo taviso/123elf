@@ -3,8 +3,8 @@
 #include <alloca.h>
 #include <curses.h>
 
-#include "lotdefs.h"
 #include "lottypes.h"
+#include "lotdefs.h"
 #include "lotfuncs.h"
 
 int lic_init(void)
