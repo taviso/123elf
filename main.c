@@ -77,6 +77,21 @@ int main(int argc, char **argv, char **envp)
 
     setchrclass("ascii");
 
+    // Enable emulation of CTRL+PgUp and CTRL+PgDn on physical DEC VT320 terminal
+    // DEC's Shift+F20 -> Ctrl+PgUp (Go to next sheet)
+    // DEC's Shift+F19 -> Ctrl+PgDn (Go to previous sheet)
+    // DEC's Shift+F11 -> ESC
+    // DEC's Shift+F6  -> ESC
+    // docs: https://www.vt100.net/docs/vt510-rm/DECUDK.html
+    char *term = getenv("TERM");
+    if (term[0]=='v' && term[1]=='t') {
+        setenv("TERM", "vt100", 1);
+        printf("\033P1;1;1|34/1b5b353b357e\033\\"); // '|34/' = F20
+        printf("\033P1;1;1|33/1b5b363b357e\033\\"); // '|33/' = F19
+        printf("\033P1;1;1|17/1b\033\\"); // '|17/' = F6
+        printf("\033P1;1;1|23/1b\033\\"); // '|23/' = F11
+    }
+
     // Disable the banner by default, it can be re-enabled via -b.
     banner_printed = true;
 

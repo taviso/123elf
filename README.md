@@ -9,6 +9,14 @@ There's an article documenting how this is possible
 
 ![Lotus 1-2-3 for Linux](https://lock.cmpxchg8b.com/img/123linux.png)
 
+# Keybindings for real DEC VT320 terminal
+
+If you use a physical DEC VT320 there will be a remapping for some function keys to enable the navigation through multiple-sheet files. These are remapped keys:
+
+- **SHIFT + F20**: go to the next sheet (equivalent to **CTRL + PgUp** on PC)
+- **SHIFT + F19**: go to the previous sheet (equivalent to **CTRL + PgDn** on PC)
+- **SHIFT + F11**: equivalent to **ESC**
+
 ## Building
 
 ### Dependencies
