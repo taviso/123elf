@@ -22,6 +22,7 @@ fdopen
 fprintf
 fscanf
 freopen
+fwrite
 sys_errlist
 sys_nerr
 gtty
