@@ -1,0 +1,10 @@
+#ifndef __LOTERRS_H
+#define __LOTERRS_H
+
+enum {
+    LOTERR_FILENAME_TOO_LONG    = 9083,
+    LOTERR_FILENAME_INVALID     = 9248,
+    LOTERR_WORKSHEET_UNNAMED    = 9130,
+};
+
+#endif

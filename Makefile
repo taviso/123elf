@@ -48,7 +48,7 @@ ttydraw/ttydraw.a:
 atfuncs/atfuncs.a:
 	$(MAKE) -C atfuncs
 
-bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
+bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o filename.o | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
 	@mkdir -p $(@D)
 	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -Wl,--whole-archive,ttydraw/ttydraw.a,atfuncs/atfuncs.a,--no-whole-archive -o $@ $(LDLIBS)
 

@@ -113,5 +113,24 @@ struct PSCREEN
     struct LINE *linedata;
 };
 
+struct PATHNAME {
+    uint16_t start;
+    uint16_t diroff;
+    uint16_t diroffpreroot;
+    uint16_t filenameoff;
+    uint16_t dirlen;
+    uint16_t namelen;
+    uint16_t offext;
+    uint16_t extlen;
+    char str[0];
+};
+
+struct MACXRTNS {
+    uint32_t get_mac_text;
+    uint32_t mac_stop;
+    uint32_t get_mac_name;
+    uint32_t field_C;
+};
+
 #pragma pack(pop)
 #endif
