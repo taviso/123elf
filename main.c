@@ -99,7 +99,7 @@ int main(int argc, char **argv, char **envp)
         lotargc += 2;
 
     // Allocate the argument vector we're going to pass through to lotus.
-    lotargv = malloc(lotargc * sizeof(*argv));
+    lotargv = alloca(lotargc * sizeof(*argv));
 
     // Now reset and copy the options over.
     lotargc = 0;
@@ -127,7 +127,7 @@ int main(int argc, char **argv, char **envp)
 
         // If we reach here, we want to pass this option through to
         // Lotus verbatim.
-        lotargv[lotargc] = malloc(3);
+        lotargv[lotargc] = alloca(3);
         lotargv[lotargc][0] = '-';
         lotargv[lotargc][1] = opt;
         lotargv[lotargc][2] = 0;

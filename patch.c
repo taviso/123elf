@@ -39,7 +39,7 @@ int display_column_labels()
     uint8_t *buf;
 
     // Is this right?
-    buf = malloc(COLS);
+    buf = alloca(COLS);
 
     // I have no idea what this structure is.
     if (dspinfo[11]) {
