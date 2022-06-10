@@ -36,7 +36,7 @@ int display_column_labels()
 {
     uint8_t *dspinfo = vmr[3];
     uint16_t column_labels = 0;
-    uint8_t *buf;
+    char *buf;
 
     // Is this right?
     buf = alloca(COLS);

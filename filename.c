@@ -37,13 +37,10 @@ uint16_t file_name_split(struct PATHNAME *pstruct,
     unsigned int mbcs;
     char *prepended_root_after_drv;
     char *dirsep;
-    int extlen_1;
     char *extptr;
     int extlen;
     int pathend;
-    uint16_t *fname_content_xlt_tbl;
-    uint16_t reallen;
-    uint16_t lenglob;
+    int16_t *fname_content_xlt_tbl;
     int16_t pathtype;
     uint16_t diroff_1;
     uint16_t diroff;
@@ -59,8 +56,6 @@ uint16_t file_name_split(struct PATHNAME *pstruct,
     char reducedpath[PATH_MAX];
 
     result  = 0;
-    lenglob = 0;
-    reallen = 0;
 
     // The translation table for lmbcs encoded filenames.
     fname_content_xlt_tbl = get_fname_content_xlt_tbl(0, 2);
@@ -220,12 +215,6 @@ uint16_t file_name_split(struct PATHNAME *pstruct,
         if (fileext) {
             pstruct->extlen = p - fileext;
             pstruct->namelen -= p - fileext;
-            if (file_mode == FILE_MODE_UNIX) {
-                lenglob = fname_real_len(pathname, fileext);
-                reallen = fname_real_len(fileext, p);
-            }
-        } else if (file_mode == FILE_MODE_UNIX) {
-            lenglob = fname_real_len(pathname, p);
         }
         if ( pstruct->extlen + pstruct->namelen + pstruct->dirlen > PATH_MAX) {
             return LOTERR_FILENAME_TOO_LONG;
@@ -237,11 +226,6 @@ uint16_t file_name_split(struct PATHNAME *pstruct,
         memcpy(&pstruct->str[offsetofext], fileext, pstruct->extlen);
     } else if (extension) {
         pstruct->extlen = strlen(extension) + 1;
-
-        if (file_mode == FILE_MODE_UNIX) {
-            extlen_1 = strlen(extension);
-            reallen = fname_real_len(extension, &extension[extlen_1]);
-        }
 
         if (pstruct->extlen + pstruct->namelen + pstruct->dirlen > PATH_MAX) {
             return LOTERR_FILENAME_TOO_LONG;

@@ -44,9 +44,7 @@ void __attribute__((destructor)) fini_terminal_settings()
 int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
 {
     int action;
-    static bool rawmode;
     struct termios tio = {0};
-    static struct termios restore = {0};
 
     if (argp == NULL) {
         return -1;
@@ -440,17 +438,12 @@ sighandler_t __unix_signal(int signum, sighandler_t handler)
         [31] = SIGXFSZ,
         [32] = -1, // SIGWAITING
         [33] = -1, // SIGLWP
-        [24] = -1, // SIGAIO
+        [34] = -1, // SIGAIO
     };
 
     // Translate the signal number, 0 means no translation necessary.
     if (unix_sig_table[signum] != 0) {
         signum = unix_sig_table[signum];
-    }
-
-    // If this is -1, no such signal exists on Linux.
-    if (signum == -1) {
-        return SIG_ERR;
     }
 
     return signal(signum, handler);

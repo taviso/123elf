@@ -202,6 +202,7 @@ static void set_text_angle()
         case 3:
         case 4:
             TextAngle = 2;
+            break;
         case 5:
         case 6:
             TextAngle = 4;
