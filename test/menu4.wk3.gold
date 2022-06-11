@@ -1,36 +1,22 @@
-
-
-
-
-
     a        gr_menu.wk3
-
     Purpose: This program will show sample charts
              data.  In order to view the sample c
              a spreadsheet containing data to be 
              followed by:
-
                X  to highlight the range of data 
                A - F to highlight the each range 
-
              To view the sample charts of your da
              press Enter.
-
-
     Layout:  Sheet A  Coversheet
-
              Sheet B  Menu
                       [TOP OF MB:B1..B:BTop of Gr
                       [MENU]   B:B2..B:EText of G
-
              Sheet C  Help Screens
                       [HELP]   C:B1..C:BText of h
-
              Sheet D  Macros
                       \0       D:B6..D:BAutoexecu
                       *ERROR   D:B26..D:Macro whi
                       *STOP    D:B16..D:Macro whi
-
                       Subroutines
                       .GET_USERD:B29..D:Sub-routi
                       .GR1_SEQUD:B96..D:Sub-routi
@@ -45,12 +31,10 @@
                       .PREV_TABD:B93..D:B93
                       .SAVE_GRAD:B62..D:Sub-routi
                       .SELECT_GD:B52..D:Sub-routi
-
              Sheet E  Tables
                       GR_TABLE E:B9..E:CTable con
                       HELP_CALLE:B77..E:Table use
                       INCLUDE_LE:B85..E:Table of 
                       MENU_CALLE:B60..E:Table use
-
              Sheet F  Blank Screen
                       [BLANK]  F:B1..F:BBlank are

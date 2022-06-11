@@ -1,0 +1,29 @@
+                       SAMPLE PROJECT MANAGEMENT MACRO
+    ==================================================================
+    TASK LIST     RESOURCE START  WKS END    STAT  WK# 01-Apr  08-Apr
+    ------------------------------------------------------------------
+    MAJOR TASK #1 SUMMARY  01-Apr  5  06-May Begun  0 XXXXXXXXXXXXXXXX
+     SUBTASK #1A  SUMMARY  01-Apr  4  29-Apr Begun  0 ++++++++++++++++
+      Task 1       Cynthia 01-Apr  1  08-Apr Begun  0 >>>>>>>>
+      Task 2       Jan     08-Apr  1  15-Apr Begun  1         >>>>>>>>
+      Task 3       Jim     08-Apr  3  29-Apr Begun  1         >>>>>>>>
+     SUBTASK #1B  SUMMARY  08-Apr  4  06-May Next   1         ++++++++
+      Task 1       John    08-Apr  1  15-Apr Next   1         >>>>>>>>
+      Task 2       Kyle    15-Apr  3  06-May Next   2                 
+      Task 3       Millie  08-Apr  4  06-May Next   1         >>>>>>>>
+    ------------------------------------------------------------------
+      new_task    Name     start  wks********stat  ***    ERR
+      \I          /wir~           Move pointer to column A; insert new
+                  /cnew_task~~    Copy range new_task to new row
+                  {R 2}           Move pointer to task name
+    ======================================
+     15-Apr  22-Apr  29-Apr 06-May 13-May
+    --------------------------------------
+    XXXXXXXXXXXXXXXXXXXXXXXX
+    ++++++++++++++++
+    >>>>>>>>>>>>>>>>
+    ++++++++++++++++++++++++
+    >>>>>>>>>>>>>>>>>>>>>>>>
+    >>>>>>>>>>>>>>>>>>>>>>>>
+    --------------------------------------
+     row

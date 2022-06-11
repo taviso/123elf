@@ -5,26 +5,27 @@
 #
 
 declare smpfiles="${ROOT:-..}/share/lotus/123.v10/smpfiles/"
-
-# These files have macros that makes their output unpredictable.
 declare -A blacklist=(
-    [consale.wk3]=1     # contains weird macro
-    [DBT13S.WK3]=1      # unreliable
-    [DBT14S.WK3]=1      # unreliable
-    [SMPSCHED.WK3]=1    # unreliable
+    [example.wk3]=1     # Example blacklist entry
+    [example2.wk3]=1    # Example blacklist entry
 )
-
 
 function lotus_print_file()
 {
-    # Remove any existing file.
-    rm -f "${2}"
+    local output=$(mktemp -u)
 
     # Generate the output.
-    if ! env ../123 -e "/pf{CE}${2}~r{CE}{HOME}.{END}{HOME}~gq/qyy" "${1}"; then
+    if ! ../123 -e "/pf{CE}${output}~r{CE}{HOME}.{END}{HOME}~gq/qyy" "${1}"; then
         printf "error: 123 failed to generate output for %s\n" "${1}" 1>&2
         exit 1
     fi
+
+    # Looks good, remove whitespace
+    grep -v '^\s*$' "${output}" > "${2}"
+
+    # Cleanup
+    rm -f "${output}"
+
     return 0
 }
 
