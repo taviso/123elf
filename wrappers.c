@@ -240,6 +240,7 @@ struct unixstat {
 #define UNIX_S_IFLNK 0xA000
 #define UNIX_S_IFDIR 0x4000
 #define UNIX_S_IFCHR 0x2000
+#define UNIX_S_IFIFO 0x1000
 
 static int translate_linux_stat(const struct stat *linuxstat, struct unixstat *unixstat)
 {
@@ -265,6 +266,7 @@ static int translate_linux_stat(const struct stat *linuxstat, struct unixstat *u
         case S_IFLNK: unixstat->st_mode |= UNIX_S_IFLNK; break;
         case S_IFBLK: unixstat->st_mode |= UNIX_S_IFBLK; break;
         case S_IFCHR: unixstat->st_mode |= UNIX_S_IFCHR; break;
+        case S_IFIFO: unixstat->st_mode |= UNIX_S_IFIFO; break;
         default:
             warnx("Failed to translate filetype %#x.", linuxstat->st_mode);
     }
