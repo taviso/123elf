@@ -65,3 +65,4 @@ cur_term
 longjmp
 setjmp
 file_name_split
+ready_to_read

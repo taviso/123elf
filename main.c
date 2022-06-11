@@ -35,6 +35,35 @@ static void canonicalize_auto_worksheet(int *argc, char **argv, const char *wksp
     argv[(*argc)++] = autofile;
 }
 
+// This is used to evaluate a macro on the commandline.
+static const char *macro_text;
+
+static const char *playback_macro_text(int16_t n)
+{
+    // n is set one 123 wants to advance to the next cell, so
+    // we just remove the contents.
+    if (n != 0) {
+        macro_text = NULL;
+    }
+
+    return macro_text;
+}
+
+// This is called when 123 is ready to receive input, we can check
+// if we have any jobs we want to do.
+int ready_to_read(int fd)
+{
+    static struct MACXRTNS macro = {
+        .get_mac_text = playback_macro_text,
+    };
+
+    // If we have a macro to evaluate, submit it here.
+    if (macro_text) {
+        macro_buff_run(&macro);
+    }
+
+    return 0;
+}
 
 // This is an atexit() routine that is called after 1-2-3 prints
 // it's own help, so we can append any flags we support.
@@ -48,7 +77,10 @@ static void print_help()
 
     printf("        -b                      to enable banner\n");
     printf("        -u                      to disable undo support\n");
+    printf("        -e macro                to evaluate a macro\n");
 }
+
+static const char *optstring = ":f:c:k:np:w:hbue:";
 
 int main(int argc, char **argv, char **envp)
 {
@@ -92,7 +124,7 @@ int main(int argc, char **argv, char **envp)
 
     // We need to do a first pass through the options to see how many there
     // are.
-    while ((opt = getopt(argc, argv, "f:c:k:np:w:hbu")) != -1)
+    while ((opt = getopt(argc, argv, optstring)) != -1)
         lotargc++;
 
     // If there was a non-option parameter, we will inject a synthetic
@@ -112,15 +144,16 @@ int main(int argc, char **argv, char **envp)
     // The first argument is the same.
     lotargv[lotargc++] = argv[0];
 
-    // This time we copy options over, remember to update optsting above if you
-    // change this. The first ':' simply prevents multiple error messages.
-    while ((opt = getopt(argc, argv, ":f:c:k:np:w:hbu")) != -1) {
+    // This time we copy options over.
+    while ((opt = getopt(argc, argv, optstring)) != -1) {
         // Here 'continue' means don't pass this option to Lotus and 'break'
         // means pass it through verbatim.
         switch (opt) {
             case 'b': banner_printed = false;
                       continue;
             case 'u': undo_off_cmd();
+                      continue;
+            case 'e': macro_text = optarg;
                       continue;
             case '?':
             case 'h': atexit(print_help);
