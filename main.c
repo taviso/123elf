@@ -111,7 +111,7 @@ int main(int argc, char **argv, char **envp)
     setenv("LOTUS_ESCAPE_TIMEOUT", "1", 0);
 
     // This changes how some timeouts work, is this still necessary?
-    setenv("LOTUS_OS_ENV", "xenix", 0);
+    setenv("LOTUS_OS_ENV", "systemv", 0);
 
     // If you send lotus a SIGUSR1 (e.g. kill -USR1 $(pidof 123)), it will save
     // a copy of the screen to the specified file. You can use this for automation
