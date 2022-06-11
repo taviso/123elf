@@ -129,4 +129,5 @@ extern int16_t char_size(char);
 extern int peek_next_mbcs(char *);
 extern uint16_t resource_substr_match(uint16_t resid, char **matchpart);
 extern void macro_buff_run(struct MACXRTNS *callbacks);
+extern int in_rdy_mode();
 #endif

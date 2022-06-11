@@ -1,0 +1,35 @@
+
+
+
+
+
+    EMP      EMP_NAME       DEPTNO   JOB      YEARS    SALARY   BONUS
+        1777 Azibad             4000 Sales           2    40000    10000
+       81964 Brown              6000 Sales           3    45000    10000
+       40370 Burns              6000 Mgr             4    75000    25000
+       50706 Caeser             7000 Mgr             3    65000    25000
+       49692 Curly              3000 Mgr             5    65000    20000
+       34791 Dabarrett          7000 Sales           2    45000    10000
+       84984 Daniels            1000 President       8   150000   100000
+       59937 Dempsey            3000 Sales           3    40000    10000
+       51515 Donovan            3000 Sales           2    30000     5000
+       48338 Fields             4000 Mgr             5    70000    25000
+       91574 Fiklore            1000 Admin           8    35000      ---
+       64596 Fine               5000 Mgr             3    75000    25000
+       13729 Green              1000 Mgr             5    90000    25000
+       55957 Hermann            4000 Sales           4    50000    10000
+       31619 Hodgedon           5000 Sales           2    40000    10000
+        1773 Howard             2000 Mgr             3    80000    25000
+        2165 Hugh               1000 Admin           5    30000      ---
+       23907 Johnson            1000 VP              1   100000    50000
+        7166 Laflare            2000 Sales           2    35000     5000
+       23805 Loften             6000 Sales           1    40000    10000
+       87821 Madden             5000 Sales           7    75000    15000
+       66315 Miles              3000 Sales           1    35000     5000
+       51784 O'Sullivan         7000 Sales           1    50000    10000
+        9502 Smith              7000 Sales           4    35000     5000
+        6950 Smith              1000 Admin           2    25000      ---
+        5013 Spence             6000 Sales           3    30000     5000
+       68123 Wallace            7000 Sales           4    35000     5000
+       74494 White              1000 VP              7   120000    50000
+        8718 Wilson             2000 Sales           4    60000    10000

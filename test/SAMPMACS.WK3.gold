@@ -1,0 +1,125 @@
+
+
+
+
+
+    \G         {GOTO}{NAME 2}          Press GOTO then NAME twice to lis
+
+
+    \S         {D 19}{U 19}            Shift current row to top of scree
+
+
+    \D         {PANELOFF}{WINDOWSOFF}  Freeze screen
+               /rfd1~                  Format current cell as Date 1
+               @TODAY{CALC}~           Type @TODAY and convert formula t
+               {WINDOWSON}{PANELON}    Unfreeze screen
+
+
+    \R         {GETLABEL "Round to what place? ",<<SAMPMACS.WK3>>PLACE}
+    R_LOOP     {EDIT}{HOME}@ROUND(
+               {END},{PLACE})~
+               {DOWN}
+               {IF @CELLPOINTER("type")="v"}{BRANCH R_LOOP}
+               {QUIT}
+
+    PLACE      1
+               {RETURN}
+
+
+    \C         {MENUCALL COL_MENU}     Display column-macro menu
+               {BRANCH \C}             Restart column macro
+
+    ==========================COLUMN-MACRO MENU=========================
+    COL_MENU   Global   Set   Reset    Hide    Unhide   AddCol   DelCol
+               Set globaSet wiReset a rHide a rRedisplayInsert a Delete 
+               {GLOBAL} {SET} {RESET}  {HIDE}  {UNHIDE} {ADDCOL} {DELCOL
+
+    GLOBAL     /wgc{?}~       Set global column-width to user-specified 
+
+    SET        /wccs{?}~{?}~  Set column-width for user-specified range
+
+    RESET      /wccr{?}~      Reset column width for user-specified rang
+
+    HIDE       /wch{?}~       Hide user-specified range of columns
+
+    UNHIDE     /wcd{?}~       Redisplay user-specified range of columns
+
+    ADDCOL     /wic{?}~       Insert user-specified range of columns
+
+    DELCOL     /wdc{?}~       Delete user-specified range of columns
+
+    ====================================================================
+
+
+    \M         /ppr{CE}<<SAMPMACS.WK3>>LABEL~oouqaq     Set LABEL as pri
+    P_LOOP     {IF @CELLPOINTER("type")="b"}{QUIT}      Check current ce
+               /c{RIGHT 5}~<<SAMPMACS.WK3>>LAST~        Copy current dat
+               {RECALC <<SAMPMACS.WK3>>LABEL}           Recalculate mail
+               /ppgq{DOWN}                              Print mailing la
+               {BRANCH P_LOOP}                          Restart print lo
+
+
+
+
+
+
+
+
+
+
+
+
+    t range n
+
+
+    n
+
+
+    
+    
+    o value
+    
+
+
+    Get decim
+    Start con
+    Complete 
+    Move to n
+    If cell c
+    If cell i
+
+    Cell PLAC
+    Return to
+
+
+    
+    
+
+    =========
+    Quit
+    End macro
+    {QUIT}
+
+    width
+
+    
+
+    e
+
+    
+
+    
+
+    
+
+    
+
+    =========
+
+
+    nt range
+    ll's cont
+    abase rec
+    ing label
+    bel, then
+    op

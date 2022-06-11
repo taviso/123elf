@@ -58,7 +58,7 @@ int ready_to_read(int fd)
     };
 
     // If we have a macro to evaluate, submit it here.
-    if (macro_text) {
+    if (macro_text && in_rdy_mode()) {
         macro_buff_run(&macro);
     }
 
