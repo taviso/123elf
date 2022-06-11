@@ -35,18 +35,25 @@ static void canonicalize_auto_worksheet(int *argc, char **argv, const char *wksp
     argv[(*argc)++] = autofile;
 }
 
+#define MAX_MACRO 32
+
 // This is used to evaluate a macro on the commandline.
-static const char *macro_text;
+static int macro_cell_num = -1;
+static int macro_cell_cnt = 0;
+static const char *macro_cell_text[MAX_MACRO];
 
 static const char *playback_macro_text(int16_t n)
 {
-    // n is set one 123 wants to advance to the next cell, so
-    // we just remove the contents.
-    if (n != 0) {
-        macro_text = NULL;
-    }
+    // n is set when 123 wants to advance to the next cell, so
+    // we just remove the contents. Note that some macro commands
+    // "advance" the macro cell automatically, like {OPEN}, {WRITE},
+    // {IF}.
+    macro_cell_num += n;
 
-    return macro_text;
+    if (macro_cell_num < MAX_MACRO) {
+        return macro_cell_text[macro_cell_num];
+    }
+    return NULL;
 }
 
 // This is called when 123 is ready to receive input, we can check
@@ -58,7 +65,11 @@ int ready_to_read(int fd)
     };
 
     // If we have a macro to evaluate, submit it here.
-    if (macro_text && in_rdy_mode()) {
+    if (macro_cell_cnt && macro_cell_num == -1 && in_rdy_mode()) {
+        // Start at the first cell, this allows multiple cells to be
+        // used on the commandline, -e a -e b -e c, and so on.
+        macro_cell_num = 0;
+        // Submit it.
         macro_buff_run(&macro);
     }
 
@@ -153,7 +164,9 @@ int main(int argc, char **argv, char **envp)
                       continue;
             case 'u': undo_off_cmd();
                       continue;
-            case 'e': macro_text = optarg;
+            case 'e': if (macro_cell_cnt < MAX_MACRO) {
+                          macro_cell_text[macro_cell_cnt++] = optarg;
+                      }
                       continue;
             case '?':
             case 'h': atexit(print_help);
