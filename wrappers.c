@@ -312,6 +312,7 @@ int __unix_open(const char *pathname, int flags, mode_t mode)
     switch (flags) {
         case 0x000: return open(pathname, O_RDONLY);
         case 0x001: return open(pathname, O_WRONLY);
+        case 0x002: return open(pathname, O_RDWR);
         case 0x102: return open(pathname, O_CREAT | O_RDWR, mode);
         case 0x101: return open(pathname, O_CREAT | O_WRONLY, mode);
         case 0x109: return open(pathname, O_CREAT | O_WRONLY | O_APPEND, mode);
