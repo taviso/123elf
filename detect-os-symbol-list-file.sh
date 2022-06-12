@@ -10,7 +10,7 @@ if [ "$#" -lt 1 ]; then
     exit 1
 fi
 
-platform=`(uname -s)`
+platform="$(uname -s)"
 
 if [ "$platform" = "FreeBSD" ]; then
     file_undefine=undefine.freebsd
