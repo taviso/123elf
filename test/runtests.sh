@@ -31,7 +31,7 @@ function generate_gold_output()
     for i in ${smpfiles}/*.[wW][kK][13]; do
         base=$(basename "${i}")
         real=$(realpath "${base}")
-        lotus_print_file "${i}" "${real}.gold"
+        lotus_print_file "${i}" "${real}.txt"
     done
 }
 
@@ -48,7 +48,7 @@ function verify_output_matches()
 
         starttest "${base}"
         lotus_print_file "${i}" "${real}.out"
-        verifymatch "${real}.out" "${real}.gold"
+        verifymatch "${real}.out" "${real}.txt"
         endtest "${real}.out"
     done
 }
@@ -74,6 +74,16 @@ function enter()
     printf -- " -e '~'"
 }
 
+function sendkeys()
+{
+    printf -- " -e '%s'" "${@}"
+}
+
+function putstring()
+{
+    printf -- " -e '{PUT %s,0,0,%s}'" "${1}" "${2}"
+}
+
 # saveas filename
 function saveas()
 {
@@ -84,6 +94,11 @@ function saveas()
 function retrieve()
 {
     printf -- " -e '/fr{CE}%s~'" "${1}"
+}
+
+function system()
+{
+    printf -- " -e '{SYSTEM %c%s%c}'" '"' "${*}" '"'
 }
 
 function screendump()
@@ -181,7 +196,16 @@ function verifymatch()
 
 function starttest()
 {
-    printf "Testing %s..." "${*}"
+    printf "Testing %s..." "${1}"
+
+    if test ${#} -gt 1; then
+        if ! type "${2}" &> /dev/null; then
+            printf "skipped (no %s)\n" "${2}"
+            return 1
+        fi
+    fi
+
+    return 0
 }
 
 function endtest()
@@ -199,127 +223,187 @@ function verify_file_ops()
     local scrdmp=$(mktemp -u)
     local macro
 
-    starttest "/File Save"
-    # Generate some test data.
-    printf -v macro -- "-e '/df.{END}{D}~~~~'"
-    macro+=$(saveas "${output}")
-    macro+=$(quit)
-    runmacro "${macro}"
-    verifyexist "${output}"
-    endtest
+    starttest "/File Save" && {
+        # Generate some test data.
+        printf -v macro -- "-e '/df.{END}{D}~~~~'"
+        macro+=$(saveas "${output}")
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifyexist "${output}"
+        endtest
+    }
 
-    starttest "/File Retrieve"
-    macro=$(retrieve "${output}")
-    macro+=$(writerange "${result}" "@STRING(@SUM(A1..A8192), 0)")
-    macro+=$(quit)
-    runmacro "${macro}"
-    verifycontents "${result}" 33550336
-    endtest
+    starttest "/File Retrieve" && {
+        macro=$(retrieve "${output}")
+        macro+=$(writerange "${result}" "@STRING(@SUM(A1..A8192), 0)")
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifycontents "${result}" 33550336
+        endtest
+    }
 
-    starttest "/File Combine"
-    printf -v macro -- "-e '/fcce{CE}%s~/fcae{CE}%s~'" "${output}" "${output}"
-    macro+=$(writerange "${result}" "@STRING(@SUM(A1..A8192), 0)")
-    macro+=$(quit)
-    runmacro "${macro}"
-    verifycontents "${result}" 67100672
-    endtest
+    starttest "/File Combine" && {
+        printf -v macro -- "-e '/fcce{CE}%s~/fcae{CE}%s~'" "${output}" "${output}"
+        macro+=$(writerange "${result}" "@STRING(@SUM(A1..A8192), 0)")
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifycontents "${result}" 67100672
+        endtest
+    }
 
-    starttest "/File Xtract"
-    printf -v macro -- "-e '/df.{END}{D}~~~~/fxv{CE}%s~{D 10}~r'" "${output}"
-    macro+=$(retrieve "${output}")
-    macro+=$(writerange "${result}" "@STRING(@SUM(A1..A8192), 0)")
-    macro+=$(quit)
-    runmacro "${macro}"
-    verifycontents "${result}" 55
-    endtest
+    starttest "/File Xtract" && {
+        printf -v macro -- "-e '/df.{END}{D}~~~~/fxv{CE}%s~{D 10}~r'" "${output}"
+        macro+=$(retrieve "${output}")
+        macro+=$(writerange "${result}" "@STRING(@SUM(A1..A8192), 0)")
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifycontents "${result}" 55
+        endtest
+    }
 
-    starttest "/File Open"
-    printf -v macro -- "-e '/foa{CE}%s~y~'" "${output}"
-    macro+=$(quit)
-    runmacro "${macro}"
-    endtest
+    starttest "/File Open" && {
+        printf -v macro -- "-e '/foa{CE}%s~y~'" "${output}"
+        macro+=$(quit)
+        runmacro "${macro}"
+        endtest
+    }
 
-    starttest "/File Admin"
-    printf -v macro -- "-e '/fatw{CE}%s~~'" "${output}"
-    macro+=$(writerange "${result}" "A1")
-    macro+=$(quit)
-    runmacro "${macro}"
-    verifycontents "${result}" "${output##*/}"
-    endtest
+    starttest "/File Admin" && {
+        printf -v macro -- "-e '/fatw{CE}%s~~'" "${output}"
+        macro+=$(writerange "${result}" "A1")
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifycontents "${result}" "${output##*/}"
+        endtest
+    }
 
-    starttest "/File Erase"
-    printf -v macro -- "-e '/few{CE}%s~y~'" "${output}"
-    macro+=$(quit)
-    runmacro "${macro}"
-    verifyexist "${output}" false
-    endtest
+    starttest "/File Erase" && {
+        printf -v macro -- "-e '/few{CE}%s~y~'" "${output}"
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifyexist "${output}" false
+        endtest
+    }
 
-    starttest "/File List"
-    printf -v macro -- "-e '/flo{CE}%s/*'~~" "/tmp"
-    macro+=$(quit)
-    runmacro "${macro}"
-    endtest
+    starttest "/File List" && {
+        printf -v macro -- "-e '/flo{CE}%s/*'~~" "/tmp"
+        macro+=$(quit)
+        runmacro "${macro}"
+        endtest
+    }
 
-    starttest "/File Import"
-    seq 123 456 > ${result}
-    printf -v macro -- "-e '/fin{CE}%s~'" "${result}"
-    macro+=$(writerange "${result}" "@STRING(@SUM(A1..A8192), 0)")
-    macro+=$(quit)
-    runmacro "${macro}"
-    verifycontents "${result}" 96693
-    endtest
+    starttest "/File Import" && {
+        seq 123 456 > ${result}
+        printf -v macro -- "-e '/fin{CE}%s~'" "${result}"
+        macro+=$(writerange "${result}" "@STRING(@SUM(A1..A8192), 0)")
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifycontents "${result}" 96693
+        endtest
+    }
 
-    starttest "/File Dir"
-    printf -v macro -- "-e '/fd{CE}%s~'" "/tmp"
-    macro+=$(quit)
-    runmacro "${macro}"
-    endtest
+    starttest "/File Dir" && {
+        printf -v macro -- "-e '/fd{CE}%s~'" "/tmp"
+        macro+=$(quit)
+        runmacro "${macro}"
+        endtest
+    }
 
-    starttest "/File New"
-    printf -v macro -- "-e '/fna{CE}%s~'" "${output}"
-    macro+=$(quit)
-    runmacro "${macro}"
-    verifyexist "${output}" false
-    endtest
+    starttest "/File New" && {
+        printf -v macro -- "-e '/fna{CE}%s~'" "${output}"
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifyexist "${output}" false
+        endtest
+    }
 
     # Check that wildcards work
-    starttest "wildcards"
-    verifyexist "${lotdir}"
-    for i in {a,b,c}{.txt,.wk3,.wk1}; do
-        touch ${lotdir}/${i}
-    done
-    printf -v macro -- " -e '/fd{CE}%s~/fr'" ${lotdir}
-    macro+=$(screendump)
-    macro+=$(escape 4)
-    macro+=$(quit)
-    LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=80 runmacro "${macro}"
-    verifyexist "${scrdmp}"
+    starttest "wildcards" && {
+        verifyexist "${lotdir}"
+        for i in {a,b,c}{.txt,.wk3,.wk1}; do
+            touch ${lotdir}/${i}
+        done
+        printf -v macro -- " -e '/fd{CE}%s~/fr'" ${lotdir}
+        macro+=$(screendump)
+        macro+=$(escape 4)
+        macro+=$(quit)
+        LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=80 runmacro "${macro}"
+        verifyexist "${scrdmp}"
 
-    # Pull out the file list
-    sed 's/\s\+/ /g;3q;d' "${scrdmp}" > "${result}"
+        # Pull out the file list
+        sed 's/\s\+/ /g;3q;d' "${scrdmp}" > "${result}"
 
-    # Check they're all listed
-    verifycontents "${result}" "a.wk1 a.wk3 b.wk1 b.wk3 \n"
-    endtest "${scrdmp}"
+        # Check they're all listed
+        verifycontents "${result}" "a.wk1 a.wk3 b.wk1 b.wk3 \n"
+        endtest "${scrdmp}"
+    }
 
-    starttest "/File Import w/Long Name"
-    verifyexist "${lotdir}"
-    seq 1 10 > ${lotdir}/this-is-a-very-long-name-longer-than-expected-it-keeps-going.csv
-    printf -v macro -- " -e '/fin{CE}%s/*.csv~'" ${lotdir}
-    macro+=$(screendump)
-    macro+=$(enter)
-    macro+=$(writerange "${result}" "@STRING(@SUM(A1..A8192), 0)")
-    macro+=$(quit)
-    LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=80 runmacro "${macro}"
-    verifycontents "${result}" 55
-    verifyexist "${scrdmp}"
+    starttest "/File Import w/Long Name" && {
+        verifyexist "${lotdir}"
+        seq 1 10 > ${lotdir}/this-is-a-very-long-name-longer-than-expected-it-keeps-going.csv
+        printf -v macro -- " -e '/fin{CE}%s/*.csv~'" ${lotdir}
+        macro+=$(screendump)
+        macro+=$(enter)
+        macro+=$(writerange "${result}" "@STRING(@SUM(A1..A8192), 0)")
+        macro+=$(quit)
+        LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=80 runmacro "${macro}"
+        verifycontents "${result}" 55
+        verifyexist "${scrdmp}"
 
-    # Pull out the file list
-    sed 's/\s\+/ /g;3q;d' "${scrdmp}" > "${result}"
+        # Pull out the file list
+        sed 's/\s\+/ /g;3q;d' "${scrdmp}" > "${result}"
 
-    # Check the long file is in there (truncated, but thats okay).
-    verifycontents "${result}" "this-is-a-very-lon \n"
-    endtest "${scrdmp}"
+        # Check the long file is in there (truncated, but thats okay).
+        verifycontents "${result}" "this-is-a-very-lon \n"
+        endtest "${scrdmp}"
+    }
+
+    starttest "/File Admin Reservation" lsof && {
+        # Generate some test data.
+        macro=$(sendkeys  "/df.{END}{D}~~~~")
+        macro+=$(saveas "${output}")
+        # Check that lsof can see the lock
+        macro+=$(system "lsof -Fl -a -f -- ${output}")
+        macro+=$(writerange "${result}" '@STRING(@INFO("osreturncode") / 2^8, 0)')
+        macro+=$(quit)
+
+        runmacro "${macro}"
+
+        # Check the return code indicates a lock was present.
+        verifycontents "${result}" "0"
+
+        macro=$(retrieve "${output}")
+        macro+=$(sendkeys "/farr")
+        # Check that lsof cannot see a lock
+        macro+=$(system "lsof -Fl -a -f -- ${output}")
+        macro+=$(writerange "${result}" '@STRING(@INFO("osreturncode") / 2^8, 0)')
+        macro+=$(quit)
+
+        runmacro "${macro}"
+
+        # Check the return code indicates a lock was present.
+        verifycontents "${result}" "1"
+
+        macro=$(retrieve "${output}")
+        macro+=$(sendkeys "/farr")
+        macro+=$(screendump)
+        macro+=$(sendkeys "/farg")
+        # Check that lsof can see a lock
+        macro+=$(system "lsof -Fl -a -f -- ${output}")
+        macro+=$(writerange "${result}" '@STRING(@INFO("osreturncode") / 2^8, 0)')
+        macro+=$(quit)
+
+        LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=80 runmacro "${macro}"
+
+        # Check the return code indicates a lock was present.
+        verifycontents "${result}" "0"
+
+        # Check that there was a "RO" indicator when the lock was released.
+        sed 's/\s\+/ /g;$!d' "${scrdmp}" > "${result}"
+
+        verifycontents "${result}" "${output##*/} RO CMD \n"
+        endtest
+    }
 
     # Cleanup
     rm -rf "${output}" "${result}" "${lotdir}"
@@ -335,7 +419,7 @@ function show_help()
     printf "    gold    - generate golden outputs\n"
     printf "    help    - print this message\n"
     printf "\n"
-    printf "Your terminal may flicker as the test macros play.\n"
+    printf "Your terminal may flicker or look frozen as the test macros play.\n"
     exit 1
 }
 
