@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <string.h>
 #include <getopt.h>
 #include <unistd.h>
 #include <limits.h>
 #include <err.h>
 
-#include "lotdefs.h"
 #include "lottypes.h"
+#include "lotdefs.h"
 #include "lotfuncs.h"
 
 extern int __unix_main(int argc, char **argv, char **envp);
@@ -33,6 +34,46 @@ static void canonicalize_auto_worksheet(int *argc, char **argv, const char *wksp
     argv[(*argc)++] = autofile;
 }
 
+#define MAX_MACRO 64
+
+// This is used to evaluate a macro on the commandline.
+static int macro_cell_num = -1;
+static int macro_cell_cnt = 0;
+static const char *macro_cell_text[MAX_MACRO];
+
+static const char *playback_macro_text(int16_t n)
+{
+    // n is set when 123 wants to advance to the next cell, so
+    // we just remove the contents. Note that some macro commands
+    // "advance" the macro cell automatically, like {OPEN}, {WRITE},
+    // {IF}.
+    macro_cell_num += n;
+
+    if (macro_cell_num < MAX_MACRO) {
+        return macro_cell_text[macro_cell_num];
+    }
+    return NULL;
+}
+
+// This is called when 123 is ready to receive input, we can check
+// if we have any jobs we want to do.
+int ready_to_read(int fd)
+{
+    static struct MACXRTNS macro = {
+        .get_mac_text = playback_macro_text,
+    };
+
+    // If we have a macro to evaluate, submit it here.
+    if (macro_cell_cnt && macro_cell_num == -1 && in_rdy_mode()) {
+        // Start at the first cell, this allows multiple cells to be
+        // used on the commandline, -e a -e b -e c, and so on.
+        macro_cell_num = 0;
+        // Submit it.
+        macro_buff_run(&macro);
+    }
+
+    return 0;
+}
 
 // This is an atexit() routine that is called after 1-2-3 prints
 // it's own help, so we can append any flags we support.
@@ -46,7 +87,10 @@ static void print_help()
 
     printf("        -b                      to enable banner\n");
     printf("        -u                      to disable undo support\n");
+    printf("        -e macro                to evaluate a macro\n");
 }
+
+static const char *optstring = ":f:c:k:np:w:hbue:";
 
 int main(int argc, char **argv, char **envp)
 {
@@ -66,7 +110,7 @@ int main(int argc, char **argv, char **envp)
     setenv("LOTUS_ESCAPE_TIMEOUT", "1", 0);
 
     // This changes how some timeouts work, is this still necessary?
-    setenv("LOTUS_OS_ENV", "xenix", 0);
+    setenv("LOTUS_OS_ENV", "systemv", 0);
 
     // If you send lotus a SIGUSR1 (e.g. kill -USR1 $(pidof 123)), it will save
     // a copy of the screen to the specified file. You can use this for automation
@@ -90,7 +134,7 @@ int main(int argc, char **argv, char **envp)
 
     // We need to do a first pass through the options to see how many there
     // are.
-    while ((opt = getopt(argc, argv, "f:c:k:np:w:hbu")) != -1)
+    while ((opt = getopt(argc, argv, optstring)) != -1)
         lotargc++;
 
     // If there was a non-option parameter, we will inject a synthetic
@@ -110,15 +154,18 @@ int main(int argc, char **argv, char **envp)
     // The first argument is the same.
     lotargv[lotargc++] = argv[0];
 
-    // This time we copy options over, remember to update optsting above if you
-    // change this. The first ':' simply prevents multiple error messages.
-    while ((opt = getopt(argc, argv, ":f:c:k:np:w:hbu")) != -1) {
+    // This time we copy options over.
+    while ((opt = getopt(argc, argv, optstring)) != -1) {
         // Here 'continue' means don't pass this option to Lotus and 'break'
         // means pass it through verbatim.
         switch (opt) {
             case 'b': banner_printed = false;
                       continue;
             case 'u': undo_off_cmd();
+                      continue;
+            case 'e': if (macro_cell_cnt < MAX_MACRO) {
+                          macro_cell_text[macro_cell_cnt++] = optarg;
+                      }
                       continue;
             case '?':
             case 'h': atexit(print_help);

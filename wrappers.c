@@ -48,9 +48,7 @@ void __attribute__((destructor)) fini_terminal_settings()
 int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
 {
     int action;
-    static bool rawmode;
     struct termios tio = {0};
-    static struct termios restore = {0};
 
     if (argp == NULL) {
         return -1;
@@ -246,6 +244,7 @@ struct unixstat {
 #define UNIX_S_IFLNK 0xA000
 #define UNIX_S_IFDIR 0x4000
 #define UNIX_S_IFCHR 0x2000
+#define UNIX_S_IFIFO 0x1000
 
 static int translate_linux_stat(const struct stat *linuxstat, struct unixstat *unixstat)
 {
@@ -271,6 +270,7 @@ static int translate_linux_stat(const struct stat *linuxstat, struct unixstat *u
         case S_IFLNK: unixstat->st_mode |= UNIX_S_IFLNK; break;
         case S_IFBLK: unixstat->st_mode |= UNIX_S_IFBLK; break;
         case S_IFCHR: unixstat->st_mode |= UNIX_S_IFCHR; break;
+        case S_IFIFO: unixstat->st_mode |= UNIX_S_IFIFO; break;
         default:
             warnx("Failed to translate filetype %#x.", linuxstat->st_mode);
     }
@@ -316,6 +316,7 @@ int __unix_open(const char *pathname, int flags, mode_t mode)
     switch (flags) {
         case 0x000: return open(pathname, O_RDONLY);
         case 0x001: return open(pathname, O_WRONLY);
+        case 0x002: return open(pathname, O_RDWR);
         case 0x102: return open(pathname, O_CREAT | O_RDWR, mode);
         case 0x101: return open(pathname, O_CREAT | O_WRONLY, mode);
         case 0x109: return open(pathname, O_CREAT | O_WRONLY | O_APPEND, mode);
@@ -442,17 +443,12 @@ void (* __unix_signal(int signum, void (*handler)))(int)
         [31] = SIGXFSZ,
         [32] = -1, // SIGWAITING
         [33] = -1, // SIGLWP
-        [24] = -1, // SIGAIO
+        [34] = -1, // SIGAIO
     };
 
     // Translate the signal number, 0 means no translation necessary.
     if (unix_sig_table[signum] != 0) {
         signum = unix_sig_table[signum];
-    }
-
-    // If this is -1, no such signal exists on Linux.
-    if (signum == -1) {
-        return SIG_ERR;
     }
 
     return signal(signum, handler);

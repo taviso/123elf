@@ -33,8 +33,8 @@ static KEYDEF keydefs[] = {
     { "Pg Dn",              "knp",      KFUN_PG_DN },
     { "Ctrl Left Arrow",    "kLFT5",    KFUN_BIG_LEFT },
     { "Ctrl Right Arrow",   "kRIT5",    KFUN_BIG_RIGHT },
-    { "Ctrl Pg Up",         "kPRV5",    KFUN_NEXT_SHEET },
-    { "Ctrl Pg Dn",         "kNXT5",    KFUN_PREV_SHEET },
+    { "Ctrl Pg Up",         "kPRV5",    KFUN_NEXT_SHEET, .altcaps = { "kf20" } },
+    { "Ctrl Pg Dn",         "kNXT5",    KFUN_PREV_SHEET, .altcaps = { "kf19" } },
     { "Ctrl Home",          "kHOM5",    KFUN_FIRST_CELL },
     { "Ctrl End",           "kEND5",    KFUN_FILE },
     { "Tab",                "ht",       KFUN_TAB },
@@ -53,6 +53,7 @@ static KEYDEF keydefs[] = {
     { "F8",                 "kf8",      KFUN_TABLE },
     { "F9",                 "kf9",      KFUN_CALC },
     { "F10",                "kf10",     KFUN_GRAPH },
+    { "F11",                "kf11",     KFUN_ESC },
     { "Ctrl-F10",           "kf34",     KFUN_GRAPH },   // Alternative {GRAPH}
     { "Alt-F1",             "kf49",     KFUN_COMPOSE },
     { "Ctrl-F1",            "kf25",     KFUN_COMPOSE }, // Alternative {COMPOSE}
@@ -255,13 +256,6 @@ int main(int argc, char **argv)
 {
     struct KEYINFO *keys = NULL;
     uint32_t numkeys;
-    uint32_t count;
-    uint32_t ptr;
-    uint16_t *keyfuncs;
-    uint16_t match;
-    uint32_t index;
-    char **keynames;
-    char **keyseqs;
     struct KEYMAP hdr = {
         .magic = 0x101,
         .version = 1,
@@ -297,18 +291,34 @@ int main(int argc, char **argv)
         hdr.keydatasize += strlen(keydefs[i].cap);
         hdr.keydatasize += 2;
 
-        // FIXME: Is this right??  I'm trying to get the normal mode
-        // sequence, and terminfo gives me the application mode sequence.
-        // FIXME: I have no idea how this works.
-        //if (sequence[0] == '\033' && sequence[1] == 'O' && sequence[2] != '\0') {
-        //    sequence[1] = '[';
-        //}
-
         // Check that ncurses recognizes this capability.
         if (sequence == NULL || sequence == (char *) ERR || *sequence == 0) {
+            // No sequence found, lets check if any of the alternatives works.
+            for (int alt = 0; alt < MAX_ALTCAPS; alt++) {
+                // This might be the end of our caps.
+                if (keydefs[i].altcaps[alt] == NULL)
+                    break;
+
+                // See if this one works.
+                sequence = tigetstr(keydefs[i].altcaps[alt]);
+
+                // Check result.
+                if (sequence && sequence != (char *) ERR && *sequence != 0) {
+                    warnx("Terminal %s uses alternative cap %s for %s",
+                          argv[1] ? argv[1] : getenv("TERM"),
+                          keydefs[i].altcaps[alt],
+                          kfun_name(keydefs[i].kfun));
+                    goto foundalt;
+                }
+            }
+
+#ifdef DEBUG
             warnx("you do not appear to have a %s key", keydefs[i].name);
+#endif
             continue;
         }
+
+        foundalt:
 
         // Seems okay, add it to the array.
         keydefs[i].kseq = sequence;
@@ -327,6 +337,10 @@ int main(int argc, char **argv)
     append_key_sequence(&keys, &hdr, "\b", KFUN_BACKSPACE);
     append_key_sequence(&keys, &hdr, "\r", KFUN_RETURN);
     append_key_sequence(&keys, &hdr, "\n", KFUN_RETURN);
+
+    // Alternatives for vt100
+    append_key_sequence(&keys, &hdr, "\036", KFUN_PREV_SHEET);
+    append_key_sequence(&keys, &hdr, "\035", KFUN_NEXT_SHEET);
 
     // Now append all the shortcuts.
     for (int i = 0; i < numkeys; i++) {

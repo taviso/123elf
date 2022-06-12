@@ -23,6 +23,7 @@ fprintf
 fscanf
 fwrite
 freopen
+fwrite
 sys_errlist
 sys_nerr
 gtty
@@ -64,3 +65,5 @@ ttytype
 cur_term
 longjmp
 setjmp
+file_name_split
+ready_to_read

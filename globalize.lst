@@ -61,3 +61,7 @@ need_to_close
 clear_screen_buffer
 opline
 get_screen_size
+slash_convert
+fname_real_len
+file_path_expand
+check_lengths
