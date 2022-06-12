@@ -100,6 +100,11 @@ function system()
     printf -- " -e '{SYSTEM %c%s%c}'" '"' "${*}" '"'
 }
 
+function macsleep()
+{
+    printf -- " -e '{WAIT @NOW+@TIME(0,0,%u)}'" "${1:-1}"
+}
+
 function screendump()
 {
     printf -- " -e '{WINDOWSOFF}{SYSTEM +%s & @CHAR(36) & %s}{WINDOWSON}'" '"kill -USR1 "' '"{PPID}"'
@@ -425,7 +430,7 @@ function start_stress_test()
     starttest "Huge 3D-Range" && {
         # Fill the sheet up with junk
         macro=""
-        # Note: you can have more sheets, they continue to AA.
+        # Note: you can have more sheets, they continue past AA.
         for sheet in {A..Z}; do
             macro+=$(sendkeys "/df{CE}${sheet}:A1..${sheet}:IV8192~${i}~~8192*256+${i}~")
             macro+=$(sendkeys "/wisa~")
@@ -437,6 +442,29 @@ function start_stress_test()
         runmacro "${macro}"
         verifycontents "${result}" "57175258955776"
         endtest "${result}"
+    }
+    starttest "Full Perspective Sheets" && {
+        # Fill the sheet up with junk
+        macro=""
+        for sheet in {A..C}; do
+            macro+=$(sendkeys "/df{CE}${sheet}:A1..${sheet}:IV8192~${i}~~8192*256+${i}~")
+            macro+=$(sendkeys "/wisa~")
+            let i++
+        done
+        # Check that perspective mode is working.
+        macro+=$(sendkeys "/wwp")
+        macro+=$(macsleep 1)
+        macro+=$(sendkeys "{PS}")
+        macro+=$(macsleep 1)
+        macro+=$(sendkeys "{PS}")
+        macro+=$(macsleep 1)
+        macro+=$(sendkeys "{PS}")
+        macro+=$(macsleep 1)
+        macro+=$(sendkeys "/wwc")
+        macro+=$(macsleep 1)
+        macro+=$(quit)
+        runmacro "${macro}"
+        endtest
     }
 }
 
