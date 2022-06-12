@@ -9,8 +9,8 @@ OBJCOPY != if [ -x ./objcopy ]; then echo ./objcopy; else echo objcopy; fi
 AS != if [ -x ./as ]; then echo ./as; else echo as; fi
 BFD_INP_TARGET = coff-i386
 BFD_OUT_TARGET = coff-i386
-CFLAGS  = -m32 -ggdb3 -O0 -fno-stack-protector
-CPPFLAGS = -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I ttydraw
+CFLAGS  = -W -Wall -m32 -ggdb3 -O0 -fno-stack-protector
+CPPFLAGS = -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I ttydraw -Wno-unused-parameter
 ASFLAGS = --32
 LINUX_LDFLAGS = -lc
 GENERIC_LDFLAGS = $(CFLAGS) -B. -Wl,-b,$(BFD_OUT_TARGET) -no-pie
@@ -19,7 +19,7 @@ NCURSES_LIBS != ./ncurses-config.sh
 LDLIBS = $(NCURSES_LIBS) -lm
 OBJECT_FILES = 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
 # The list of terminals we generate keymaps for by default.
-KEYMAPS = xterm rxvt-unicode xterm-256color rxvt-unicode-256color screen $(TERM)
+KEYMAPS = xterm rxvt-unicode xterm-256color rxvt-unicode-256color screen screen.xterm-256color vt100 vt320 $(TERM)
 prefix = /usr/local
 
 .PHONY: clean check distclean install uninstall
