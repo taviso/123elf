@@ -1,7 +1,6 @@
 #!/bin/bash
 #
-# This script will run through all the smpfiles and verify the output
-# matches the expected or "gold" output.
+# This script is used to check 123 is functioning as expected.
 #
 
 declare smpfiles="${ROOT:-..}/share/lotus/123.v10/smpfiles/"
@@ -173,10 +172,7 @@ function verifycontents()
     shift
     printf -- "${*}" >> "${temp}"
 
-    if ! cmp "${orig}" "${temp}"; then
-        printf "error: the contents of %s did not match\n" "${orig}" 1>&2
-        exit 1
-    fi
+    verifymatch "${orig}" "${temp}"
 
     # Clean up.
     rm -f "${temp}"
@@ -409,13 +405,49 @@ function verify_file_ops()
     rm -rf "${output}" "${result}" "${lotdir}"
 }
 
+function start_stress_test()
+{
+    local result=$(mktemp -u)
+    local macro
+    local -i i=0
+
+    starttest "@RAND Average" && {
+        # Fill the sheet up with random numbers
+        macro=$(sendkeys "@RAND~")
+        macro+=$(sendkeys "/c~.{END}{R}{END}{D}~")
+        # The average should be ~0.50, right?
+        macro+=$(writerange "${result}" '@STRING(@AVG(A1..IV8192), 2)')
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifycontents "${result}" "0.50"
+        endtest "${result}"
+    }
+    starttest "Huge 3D-Range" && {
+        # Fill the sheet up with junk
+        macro=""
+        # Note: you can have more sheets, they continue to AA.
+        for sheet in {A..Z}; do
+            macro+=$(sendkeys "/df{CE}${sheet}:A1..${sheet}:IV8192~${i}~~8192*256+${i}~")
+            macro+=$(sendkeys "/wisa~")
+            let i++
+        done
+        # Now the 3d-range A:A1..Z:IV8192 is truly enormous
+        macro+=$(writerange "${result}" '@STRING(@SUM(A:A1..Z:IV8192), 0)')
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifycontents "${result}" "57175258955776"
+        endtest "${result}"
+    }
+}
+
 function show_help()
 {
-    printf "usage: %s [gold|test|help|calc|menu|file]\n" "${1}"
+    printf "usage: %s [cmd]\n" "${1}"
     printf "    test    - verify that outputs still match golden outputs\n"
     printf "    calc    - verify the result of some calculations\n"
     printf "    menu    - verify various menu options are working\n"
     printf "    file    - check that file management works\n"
+    printf "    stress  - generate lots of data and check results\n"
     printf "    gold    - generate golden outputs\n"
     printf "    help    - print this message\n"
     printf "\n"
@@ -534,6 +566,7 @@ case "${1}" in
     calc) check_calculations;;
     menu) check_menu_options;;
     file) verify_file_ops;;
+    stress) start_stress_test;;
     *) show_help "${0##*/}" >&2;
        ;;
 esac

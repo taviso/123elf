@@ -35,7 +35,7 @@ static void canonicalize_auto_worksheet(int *argc, char **argv, const char *wksp
     argv[(*argc)++] = autofile;
 }
 
-#define MAX_MACRO 32
+#define MAX_MACRO 64
 
 // This is used to evaluate a macro on the commandline.
 static int macro_cell_num = -1;
