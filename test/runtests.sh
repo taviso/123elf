@@ -64,6 +64,16 @@ function quit()
     printf -- " -e '/qyy'"
 }
 
+function escape()
+{
+    printf -- " -e '{ESC %s}'" "${1}"
+}
+
+function enter()
+{
+    printf -- " -e '~'"
+}
+
 # saveas filename
 function saveas()
 {
@@ -76,12 +86,17 @@ function retrieve()
     printf -- " -e '/fr{CE}%s~'" "${1}"
 }
 
+function screendump()
+{
+    printf -- " -e '{WINDOWSOFF}{SYSTEM +%s & @CHAR(36) & %s}{WINDOWSON}'" '"kill -USR1 "' '"{PPID}"'
+}
+
 # writerange file range
 function writerange()
 {
     local o w c
     printf -v o -- '{OPEN "%s","w"}' "${1}"
-    printf -v w -- '{WRITELN %s}' "${2}"
+    printf -v w -- '{WRITE %s}' "${2}"
     printf -v c -- '{CLOSE}'
     printf -- " -e '%s'" "${o}" "${w}" "${c}"
 }
@@ -136,12 +151,20 @@ function verifyexist()
 # verifycontents file contents
 function verifycontents()
 {
-    verifyexist "${1}"
+    local temp=$(mktemp -u)
+    local orig="${1}"
 
-    if ! test "$(<${1})" == "${2}"; then
-        printf "error: the contents of %s did not match\n" "${1}" 1>&2
+    verifyexist "${orig}"
+    shift
+    printf -- "${*}" >> "${temp}"
+
+    if ! cmp "${orig}" "${temp}"; then
+        printf "error: the contents of %s did not match\n" "${orig}" 1>&2
         exit 1
     fi
+
+    # Clean up.
+    rm -f "${temp}"
 }
 
 function verifymatch()
@@ -172,6 +195,8 @@ function verify_file_ops()
 {
     local output=$(mktemp -u --suffix=.wk3)
     local result=$(mktemp -u)
+    local lotdir=$(mktemp -d)
+    local scrdmp=$(mktemp -u)
     local macro
 
     starttest "/File Save"
@@ -257,8 +282,47 @@ function verify_file_ops()
     verifyexist "${output}" false
     endtest
 
+    # Check that wildcards work
+    starttest "wildcards"
+    verifyexist "${lotdir}"
+    for i in {a,b,c}{.txt,.wk3,.wk1}; do
+        touch ${lotdir}/${i}
+    done
+    printf -v macro -- " -e '/fd{CE}%s~/fr'" ${lotdir}
+    macro+=$(screendump)
+    macro+=$(escape 4)
+    macro+=$(quit)
+    LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=80 runmacro "${macro}"
+    verifyexist "${scrdmp}"
+
+    # Pull out the file list
+    sed 's/\s\+/ /g;3q;d' "${scrdmp}" > "${result}"
+
+    # Check they're all listed
+    verifycontents "${result}" "a.wk1 a.wk3 b.wk1 b.wk3 \n"
+    endtest "${scrdmp}"
+
+    starttest "/File Import w/Long Name"
+    verifyexist "${lotdir}"
+    seq 1 10 > ${lotdir}/this-is-a-very-long-name-longer-than-expected-it-keeps-going.csv
+    printf -v macro -- " -e '/fin{CE}%s/*.csv~'" ${lotdir}
+    macro+=$(screendump)
+    macro+=$(enter)
+    macro+=$(writerange "${result}" "@STRING(@SUM(A1..A8192), 0)")
+    macro+=$(quit)
+    LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=80 runmacro "${macro}"
+    verifycontents "${result}" 55
+    verifyexist "${scrdmp}"
+
+    # Pull out the file list
+    sed 's/\s\+/ /g;3q;d' "${scrdmp}" > "${result}"
+
+    # Check the long file is in there (truncated, but thats okay).
+    verifycontents "${result}" "this-is-a-very-lon \n"
+    endtest "${scrdmp}"
+
     # Cleanup
-    rm -f "${output}" "${result}"
+    rm -rf "${output}" "${result}" "${lotdir}"
 }
 
 function show_help()
