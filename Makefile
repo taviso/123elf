@@ -2,8 +2,8 @@ BFD_INP_TARGET = coff-i386
 BFD_OUT_TARGET = coff-i386
 OBJCOPY_FLAGS  = --wildcard --localize-symbols=localize.lst --globalize-symbols=globalize.lst --redefine-syms=redefine.lst
 OBJCOPY_FILES = localize.lst globalize.lst redefine.lst undefine.lst
-CFLAGS  = -m32 -ggdb3 -O0 -fno-stack-protector
-CPPFLAGS = -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I ttydraw
+CFLAGS  = -W -Wall -m32 -ggdb3 -O0 -fno-stack-protector
+CPPFLAGS = -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I ttydraw -Wno-unused-parameter
 ASFLAGS = --32
 LDFLAGS = $(CFLAGS) -lc -B. -Wl,-b,$(BFD_OUT_TARGET) -no-pie
 LDLIBS = -lncurses -ltinfo -lm
@@ -13,7 +13,7 @@ prefix = /usr/local
 # The list of terminals we generate keymaps for by default.
 KEYMAPS  = xterm rxvt-unicode
 KEYMAPS := $(KEYMAPS) $(patsubst %,%-256color,$(KEYMAPS))
-KEYMAPS += screen.xterm-256color $(TERM)
+KEYMAPS += screen.xterm-256color vt100 vt320 $(TERM)
 
 define BFD_TARGET_ERROR
 Your version of binutils was compiled without coff-i386 target support.
@@ -48,7 +48,7 @@ ttydraw/ttydraw.a:
 atfuncs/atfuncs.a:
 	$(MAKE) -C atfuncs
 
-bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
+bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o filename.o | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
 	@mkdir -p $(@D)
 	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -Wl,--whole-archive,ttydraw/ttydraw.a,atfuncs/atfuncs.a,--no-whole-archive -o $@ $(LDLIBS)
 

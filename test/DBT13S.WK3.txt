@@ -1,0 +1,63 @@
+    PERSONNEL DATA: Sloane Camera and Video
+    EMPLOYEE#     LASTNAME      FIRSTNAME     LOCATION         DATE_HIRED
+    000220        Edwards       Jack          Atlanta           14-Feb-87
+    000297        Percival      James         Atlanta           18-Dec-87
+    000348        Reese         Carl          Atlanta           13-Sep-88
+    000190        Santos        Elizabeth     Atlanta           17-Jul-86
+    000247        Savage        Elaine        Atlanta           27-May-87
+    000281        Adamson       Joy           Boston            21-Oct-87
+    000262        Bird          Lance         Boston            13-Aug-87
+    000159        Caulfield     Sherry        Boston            19-Mar-84
+    000139        Cobb          William       Boston            28-May-82
+    000367        Fletcher      Amanda        Boston            03-Jan-89
+    000185        Johnson       Rebecca       Boston            04-Feb-86
+    000118        Kaplan        Janet         Boston            22-Jun-81
+    000307        Bjorkman      Robert        Chicago           24-Feb-88
+    000146        Krauss        Edward        Chicago           13-Jul-83
+    000162        Lerner        Kimberly      Chicago           28-Jun-84
+    000284        Morse         Miriam        Chicago           02-Nov-87
+    000324        Tallan        George        Chicago           20-May-88
+    000141        Dickinson     Angela        Detroit           13-Nov-86
+    000222        King          Mary          Detroit           10-Mar-87
+    000192        Mosley        Deborah       Detroit           23-Aug-86
+    000361        Robinson      Linda         Detroit           11-Nov-88
+    000226        Rosenzweig    Adam          Detroit           01-Mar-87
+    000174        Edwards       Cindy         San Francisco     15-Aug-85
+    000101        Mintz         Michael       San Francisco     01-Feb-81
+    000339        Stolper       Charles       San Francisco     09-Jul-88
+    000366        Zucker        Richard       San Francisco     26-Dec-88
+    000315        Grogan        Dave          Seattle           03-Apr-88
+    000211        Johnson       Stuart        Seattle           29-Dec-86
+    000210        Morin         Victoria      Seattle           20-Dec-86
+    000199        Smith         Steven        Seattle           11-Oct-86
+    YEARS_EMPLOYED       SALARY           AGE PROFITSHARING
+              2.0    $32,200.00            44           Yes
+              1.2    $19,200.00            36           Yes
+              0.4    $15,800.00            23            No
+              2.6    $17,200.00            26           Yes
+              1.7    $18,900.00            26            No
+              1.3    $34,400.00            46           Yes
+              1.5    $21,100.00            38           Yes
+              5.0    $24,100.00            40           Yes
+              6.9    $27,500.00            42           Yes
+              0.1    $16,500.00            22            No
+              3.1    $20,200.00            35            No
+              7.8    $34,000.00            44           Yes
+              1.0    $25,000.00            23           Yes
+              5.7    $26,200.00            41           Yes
+              4.7    $24,900.00            29            No
+              1.3    $19,600.00            23            No
+              0.7    $19,700.00            27            No
+              2.3    $23,900.00            33            No
+              1.9    $18,100.00            24            No
+              2.5    $20,800.00            34            No
+              0.2    $17,000.00            23            No
+              2.0    $19,000.00            33            No
+              3.6    $21,500.00            27            No
+              8.2    $30,440.00            45           Yes
+              0.6    $17,800.00            23            No
+              0.1    $17,500.00            27            No
+              0.9    $17,500.00            26            No
+              2.1    $21,000.00            37            No
+              2.2    $20,700.00            31            No
+              2.4    $40,900.00            32           Yes

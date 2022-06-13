@@ -3,11 +3,17 @@
 
 #include <stdint.h>
 
+enum {
+    FILE_MODE_UNIX,
+    FILE_MODE_DOSUPPER,
+    FILE_MODE_DOSLOWER,
+};
+
 extern uint8_t *vmr[];
 
 extern uint16_t *displayed_window;
 
-extern int get_column_labels(uint16_t, uint16_t, uint8_t *, uint16_t);
+extern int get_column_labels(uint16_t, uint16_t, char *, uint16_t);
 
 extern int (*x_disp_txt_set_pos)(uint16_t, uint16_t);
 extern int (*x_disp_txt_write)(uint16_t byteslen, char *lmbcsptr, int attrs);
@@ -108,4 +114,20 @@ extern char *tc_setup_line_funcs();
 
 extern struct LOTUSFUNCS *core_funcs;
 extern int RastHandle;
+extern int16_t file_mode;
+
+extern void slash_convert(char *path, uint16_t len);
+extern uint16_t fname_real_len(const char *start, const char *end);
+extern int file_path_expand(struct PATHNAME *src);
+extern int check_lengths(char *);
+extern int16_t *get_fname_content_xlt_tbl(char *, uint16_t);
+extern int file_name_clear(struct PATHNAME *name);
+extern int16_t file_name_reduce(char *dst, char *pathname);
+extern void file_name_case_check(char *pathname);
+extern void fallback_and_coerce_case(char *path);
+extern int16_t char_size(char);
+extern int peek_next_mbcs(char *);
+extern uint16_t resource_substr_match(uint16_t resid, char **matchpart);
+extern void macro_buff_run(struct MACXRTNS *callbacks);
+extern int in_rdy_mode();
 #endif

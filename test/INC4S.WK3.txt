@@ -1,0 +1,11 @@
+    INCOME STATEMENT 1989: Sloane Camera and Video
+             Q1       Q2       Q3       Q4       YTD
+    Net Sales
+    Costs and Expenses:
+      Salary     2000     2200     2500
+      Int        1200     1300     1300
+      Rent        600      600      600
+      Ads         900     1000     2500
+      COG        4000     4000     4000
+      Op Exp
+    Op Income

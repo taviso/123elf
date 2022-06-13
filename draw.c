@@ -1,7 +1,7 @@
 #include <curses.h>
 
-#include "lotdefs.h"
 #include "lottypes.h"
+#include "lotdefs.h"
 #include "ttydraw.h"
 
 // The canvas used for drawing ascii-art graphics.

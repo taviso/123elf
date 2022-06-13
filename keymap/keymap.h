@@ -28,11 +28,14 @@ typedef struct KEYMAP {
     uint32_t root;
 } KEYMAP, *PKEYMAP;
 
+#define MAX_ALTCAPS 8
+
 typedef struct KEYDEF {
     const char *name;
     const char *cap;
     uint16_t kfun;
     const char *kseq;
+    const char *altcaps[MAX_ALTCAPS];
 } KEYDEF, *PKEYDEF;
 
 // The offsets in the KEYINFO tree are encoded in an unusual way, these
