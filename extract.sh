@@ -13,7 +13,7 @@ CPIO="$(command -v cpio)"
 TAR="$(command -v tar)"
 
 if [ "$1" = 'clean' ]; then
-    rm -rfv "${ROOT}" "${ORIG}" "${ETC}"
+    rm -rf "${ROOT}" "${ORIG}" "${ETC}"
     exit
 fi
 
@@ -50,7 +50,6 @@ echo '==> Reconstructing object file'
 
 if ! cat "${LOTUS}"/sysV386/lib/123.o.z_1 "${LOTUS}"/sysV386/lib/123.o.z_2 | zcat > "${ORIG}/123.o"; then
     echo >&2 'Failed to decompress object files.'
-
     echo >&2 'If you see the message "code out of range", gzip is too old.'
     echo >&2 'You can try running ./gzip.sh to build a recent gzip that is known to work.'
     exit 1
@@ -63,10 +62,12 @@ echo '==> Uncompressing and copying remaining object files'
 cp "${LOTUS}"/sysV386/lib/*.o "${ORIG}/"
 
 echo '==> Copying the banner template over'
-install -vDm644 "${ROOT}/usr/tmp/lotus_install/123/banner" "${LOTUS}/ri/USA-English/123ban.ri"
+install -m 0644 "${ROOT}/usr/tmp/lotus_install/123/banner" "${LOTUS}/ri/USA-English/123ban.ri"
 
 echo '==> Copying default config file'
-install -vDm644 l123set.cf "${ETC}/l123set.cf"
+install -m 0755 -d "${ETC}"
+install -m 0644 "l123set.cf" "${ETC}/l123set.cf"
 
 echo '==> Copying man page'
-install -vDm644 "${ROOT}/lotus/man/man1/123.1" "${ROOT}/man/man1/123.1"
+install -m 0755 -d "${ROOT}/man/man1"
+install -m 0644 "${ROOT}/lotus/man/man1/123.1" "${ROOT}/man/man1/123.1"
