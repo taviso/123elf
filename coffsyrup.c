@@ -145,7 +145,8 @@ int main(int argc, char **argv)
 
     // Read in each symbol.
     for (int i = 0; i < hdr.f_nsyms; i++) {
-        const char *symname;
+        char *symname;
+        int symnamedup = 0;
 
         if (fread(&symtab[i], sizeof *symtab, 1, infile) != 1) {
             err(EXIT_FAILURE, "Failed to read in a symbol.");
@@ -171,9 +172,12 @@ int main(int argc, char **argv)
         }
 
         // Figure out the symbol name.
-        symname = symtab[i].e.e.e_zeroes
-                    ? strndupa(symtab[i].e.e_name, sizeof symtab[i].e.e_name)
-                    : (strtab + symtab[i].e.e.e_offset);
+        if (symtab[i].e.e.e_zeroes) {
+            symname = strndup(symtab[i].e.e_name, sizeof symtab[i].e.e_name);
+            symnamedup = 1;
+        } else {
+            symname = strtab + symtab[i].e.e.e_offset;
+        }
 
         // See if we are supposed to be adjusting this symbol.
         for (int check = 3; check < argc; check++) {
@@ -201,6 +205,9 @@ int main(int argc, char **argv)
                 symtab[i].e_value = 0;
             }
         }
+
+        // free symname if it was duplicated on heap
+        if (symnamedup) free(symname);
 
         // XXX: Note the ++i, this must be last in the loop!!!
         if (symtab[i].e_numaux) {
@@ -258,7 +265,8 @@ int main(int argc, char **argv)
         relocs[i] = calloc(scn[i].s_nreloc + nmkrelocs, sizeof(RELOC));
 
         for (int r = 0; r < scn[i].s_nreloc; r++) {
-            const char *symname;
+            char *symname;
+            int symnamedup = 0;
             RELOC *rel = &relocs[i][r];
 
             if (fread(rel, sizeof *rel, 1, infile) != 1) {
@@ -282,9 +290,12 @@ int main(int argc, char **argv)
             }
 
             // Figure out the symbol name.
-            symname = symtab[rel->r_symndx].e.e.e_zeroes
-                        ? strndupa(symtab[rel->r_symndx].e.e_name, sizeof symtab[rel->r_symndx].e.e_name)
-                        : (strtab + symtab[rel->r_symndx].e.e.e_offset);
+            if (symtab[rel->r_symndx].e.e.e_zeroes) {
+                symname = strndup(symtab[rel->r_symndx].e.e_name, sizeof symtab[rel->r_symndx].e.e_name);
+                symnamedup = 1;
+            } else {
+                symname = (strtab + symtab[rel->r_symndx].e.e.e_offset);
+            }
 
             // See if we are supposed to be adjusting this symbol.
             for (int check = 3; check < argc; check++) {
@@ -313,6 +324,9 @@ int main(int argc, char **argv)
                     }
                 }
             }
+
+            // free symname if it was duplicated on heap
+            if (symnamedup) free(symname);
         }
 
         for (int mkr = 0; mkr < nmkrelocs; mkr++) {

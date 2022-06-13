@@ -21,6 +21,7 @@ pclose
 fdopen
 fprintf
 fscanf
+fwrite
 freopen
 fwrite
 sys_errlist

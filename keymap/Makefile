@@ -1,4 +1,4 @@
-LDLIBS = -lncurses -ltinfo
+LDLIBS != ../ncurses-config.sh
 CFLAGS = -ggdb3 -O0
 CPPFLAGS = -W -Wall -Wno-missing-field-initializers -Wno-sign-compare -Wno-unused-parameter
 .PHONY: clean
@@ -6,4 +6,4 @@ CPPFLAGS = -W -Wall -Wno-missing-field-initializers -Wno-sign-compare -Wno-unuse
 all: keymap
 
 clean:
-	$(RM) *.o keymap
+	rm -f *.o keymap

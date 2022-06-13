@@ -8,7 +8,7 @@ LDLIBS=
 all: atfuncs.a
 
 atfuncs.a: date.o
-	$(AR) r $@ $^
+	$(AR) r $@ date.o
 
 clean:
 	rm -f *.a *.o

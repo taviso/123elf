@@ -7,7 +7,7 @@
 #include "lottypes.h"
 #include "lotdefs.h"
 #include "lotfuncs.h"
-#include "ttydraw.h"
+#include "ttydraw/ttydraw.h"
 #include "graphics.h"
 #include "draw.h"
 

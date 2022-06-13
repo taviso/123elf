@@ -6,7 +6,6 @@
 #include <getopt.h>
 #include <unistd.h>
 #include <limits.h>
-#include <alloca.h>
 #include <err.h>
 
 #include "lottypes.h"

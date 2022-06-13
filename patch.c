@@ -1,6 +1,6 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
-#include <alloca.h>
 #include <curses.h>
 
 #include "lottypes.h"
