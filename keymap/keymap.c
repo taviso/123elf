@@ -341,6 +341,7 @@ int main(int argc, char **argv)
     append_key_sequence(&keys, &hdr, "\e", KFUN_ESC);
     append_key_sequence(&keys, &hdr, "\f", KFUN_REFRESH);
     append_key_sequence(&keys, &hdr, "\b", KFUN_BACKSPACE);
+    append_key_sequence(&keys, &hdr, "\177", KFUN_BACKSPACE);
     append_key_sequence(&keys, &hdr, "\r", KFUN_RETURN);
     append_key_sequence(&keys, &hdr, "\n", KFUN_RETURN);
 
