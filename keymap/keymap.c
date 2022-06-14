@@ -158,12 +158,8 @@ static bool append_key_sequence(PKEYINFO *base,
                 continue;
             }
             // We are at the end, so we want to take this node.
-            if (root->kfun && root->kfun != kfun) {
+            if (root->kfun) {
                 errx(EXIT_FAILURE, "Duplicate key sequences requested.");
-            }
-            if (root->kfun && root->kfun == kfun) {
-                warnx("The same sequence was added twice (probably harmless)");
-                return false;
             }
 
             // Okay, this node belongs to us now.
@@ -181,6 +177,16 @@ static bool append_key_sequence(PKEYINFO *base,
             // Advance sequence to next character. If this is nul
             // then thats the end of the sequence.
             ++keyseq;
+
+            // This seems like an error, this keysequence is already defined?
+            if (root->kfun && !*keyseq) {
+                // This seems harmless, just adding the same sequence twice.
+                if (root->kfun == kfun) {
+                    return true;
+                }
+                // This is not harmless, ignoring the request.
+                return false;
+            }
 
             // If this node already has a kfun, then that means
             // another sequence shares this prefix. We need to inject
