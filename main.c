@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
+#include <signal.h>
 #include <getopt.h>
 #include <unistd.h>
 #include <limits.h>
@@ -39,7 +40,8 @@ static void canonicalize_auto_worksheet(int *argc, char **argv, const char *wksp
 
 // This is used to evaluate a macro on the commandline.
 static int macro_cell_num = -1;
-static int macro_cell_cnt = 0;
+static int macro_cell_cnt;
+static int macro_run_signal;
 static const char *macro_cell_text[MAX_MACRO];
 
 static const char *playback_macro_text(int16_t n)
@@ -64,8 +66,12 @@ int ready_to_read(int fd)
         .get_mac_text = playback_macro_text,
     };
 
+    // Only check for macro jobs in READY mode.
+    if (!in_rdy_mode())
+        return;
+
     // If we have a macro to evaluate, submit it here.
-    if (macro_cell_cnt && macro_cell_num == -1 && in_rdy_mode()) {
+    if (macro_cell_cnt && macro_cell_num == -1) {
         // Start at the first cell, this allows multiple cells to be
         // used on the commandline, -e a -e b -e c, and so on.
         macro_cell_num = 0;
@@ -73,7 +79,25 @@ int ready_to_read(int fd)
         macro_buff_run(&macro);
     }
 
+    // If a signal handler macro has been triggered, run it here.
+    if (macro_run_signal) {
+        // Mark this signal processed.
+        macro_run_signal = 0;
+
+        // Trigger a {REFRESH} to leave the idle loop.
+        kfqueue_submit_kfun(6244);
+
+        // Invoke the macro \1.
+        macro_key_run(24);
+    }
+
     return 0;
+}
+
+// This signal handler triggers the use of macro \1.
+static void macro_signal(int n)
+{
+    macro_run_signal++;
 }
 
 // This is an atexit() routine that is called after 1-2-3 prints
@@ -120,6 +144,9 @@ int main(int argc, char **argv, char **envp)
     setenv("LOTUS_SCREEN_DUMP", dumpfile, 0);
 
     setchrclass("ascii");
+
+    // Setup a signal handler for SIGUSR2
+    signal(SIGUSR2, macro_signal);
 
     // Disable the banner by default, it can be re-enabled via -b.
     banner_printed = true;

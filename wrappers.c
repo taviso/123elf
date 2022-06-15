@@ -424,7 +424,7 @@ sighandler_t __unix_signal(int signum, sighandler_t handler)
         [10] = SIGBUS,
         [12] = SIGSYS,
         [16] = SIGUSR1,
-        [17] = SIGUSR2,
+        [17] = -1,   // SIGUSR2, Reserved
         [18] = SIGCHLD,
         [19] = SIGPWR,
         [20] = SIGWINCH,

@@ -485,6 +485,16 @@ function show_help()
 
 function check_menu_options()
 {
+    local result=$(mktemp -u)
+
+    starttest "Signal Macro" && {
+        macro=$(sendkeys '{{}OPEN "'"${result}"'","w"{}}~{D}^/qyy~')
+        macro+=$(sendkeys '/rnc{CE}\1~{HOME}~')
+        macro+=$(system "kill -USR2 \${PPID}")
+        runmacro "${macro}"
+        verifyexist "${result}"
+        endtest "${result}"
+    }
     return 0;
 }
 
