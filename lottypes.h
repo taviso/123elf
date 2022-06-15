@@ -132,5 +132,11 @@ struct MACXRTNS {
     uint32_t mac_restart;
 };
 
+struct CELLCOORD {
+    uint16_t row;
+    uint8_t sheet;
+    uint8_t col;
+};
+
 #pragma pack(pop)
 #endif
