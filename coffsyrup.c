@@ -144,7 +144,7 @@ int main(int argc, char **argv)
     }
 
     // Read in each symbol.
-    for (int i = 0; i < hdr.f_nsyms; i++) {
+    for (unsigned i = 0; i < hdr.f_nsyms; i++) {
         const char *symname;
 
         if (fread(&symtab[i], sizeof *symtab, 1, infile) != 1) {
@@ -315,7 +315,7 @@ int main(int argc, char **argv)
             }
         }
 
-        for (int mkr = 0; mkr < nmkrelocs; mkr++) {
+        for (unsigned mkr = 0; mkr < nmkrelocs; mkr++) {
             RELOC *rel = &relocs[i][scn[i].s_nreloc];
             PATCHLOC *patch;
 
