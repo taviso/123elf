@@ -68,7 +68,7 @@ int ready_to_read(int fd)
 
     // Only check for macro jobs in READY mode.
     if (!in_rdy_mode())
-        return;
+        return 0;
 
     // If we have a macro to evaluate, submit it here.
     if (macro_cell_cnt && macro_cell_num == -1) {
