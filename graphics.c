@@ -348,7 +348,7 @@ int setup_screen_mem(bool alloclines)
     struct LINE *plinedata;
     struct LINE *dlinedata;
     int result;
-    size_t i;
+    int i;
     int8_t j;
     int8_t k;
 
