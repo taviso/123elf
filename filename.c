@@ -116,8 +116,8 @@ uint16_t file_name_split(struct PATHNAME *pstruct,
                 break;
             case '<':
             case '>':
-                // Invalid characters for some reason? Maybe this is a UNIX
-                // limitation, these are perfectly valid on Linux.
+                // These are not permitted in filenames because it's part of the
+                // linked file range syntax, e.g. <<foo.wk3>>A1..A5
                 return LOTERR_FILENAME_INVALID;
             case '\\':
                 // In DOS mode, this is an acceptable dirseperator, otherwise
