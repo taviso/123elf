@@ -1,10 +1,6 @@
 # Lotus 1-2-3 for Linux
 
-This is a native port of Lotus 1-2-3 Release 3 to Linux. This is possible
-because Lotus 1-2-3 for UNIX SystemV used a trick called [partial
-linking](https://sourceware.org/binutils/docs-2.38/ld/Options.html#:~:text=This%20is%20often%20called%20partial%20linking.) to workaround a technical limitation in early UNIX systems. Surprisingly, that can be used to modify it to support new platforms.
-
-There's an article documenting how this is possible
+This is a native port of Lotus 1-2-3 Release 3 to Linux. There's an article documenting how this is possible
 [here](https://lock.cmpxchg8b.com/linux123.html).
 
 ![Lotus 1-2-3 for Linux](https://lock.cmpxchg8b.com/img/123linux.png)
@@ -39,16 +35,6 @@ The following packages are required
 | build-essential     | glibc-devel.i686    | build-essential     | build-essential
 | gcc-multilib        | libgcc.i686         | gcc-multilib        | gcc-multilib
 | lib32ncurses-dev    | ncurses-static.i686 | lib32ncurses-dev    | libncurses-dev:i386
-
-### Binutils
-
-Unfortunately, most distributions do not enable `coff-i386` support in binutils.
-
-It's very easy to enable it yourself, download [binutils](https://www.gnu.org/software/binutils/) and configure it with `--enable-targets=all`.
-
-> Note: binutils-2.38 is known to work, some earlier versions have been found to not work.
-
-Alternatively, run the included `binutils.sh` to download and compile a version of binutils known to work for this.
 
 ## Installing
 
@@ -94,6 +80,7 @@ script.
 - ~~The keyboard map seems to be incomplete~~ (XTerm compatible terminals should be [working](https://github.com/taviso/123elf/wiki/Keybindings), please test others!)
 - ~~Graphs don't work yet~~ (Partially working!, see [#5](https://github.com/taviso/123elf/issues/5)).
 - ~~Printing doesn't work yet~~ (Print to file works, print to lpr is being worked on, see [#50](https://github.com/taviso/123elf/issues/50)).
+- There is limited i18n support (We're working on it, see [#73](https://github.com/taviso/123elf/issues/73)).
 - File an issue if you notice something, there are probably lots of minor issues that can be fixed!
 
 
