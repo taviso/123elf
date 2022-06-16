@@ -24,14 +24,15 @@ if [ "$1" = 'clean' ]; then
    exit
 fi
 
-# Download binutils.
-if [ ! -f "$BINUTILS_XZ" ]; then
-   wget "$BINUTILS_URL"
-fi
-
 # Extract binutils.
 if [ ! -d "$BINUTILS_DIR" ]; then
-   tar xf "$BINUTILS_XZ"
+
+    # Download binutils.
+    if [ ! -f "$BINUTILS_XZ" ]; then
+       wget "$BINUTILS_URL"
+    fi
+
+    tar xf "$BINUTILS_XZ"
 fi
 
 # Compile binutils.
