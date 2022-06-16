@@ -6,6 +6,7 @@ License:        Abandonware
 URL:            https://github.com/taviso/123elf
 Source0:        https://github.com/taviso/123elf/archive/refs/tags/v1.0.0-rc1.tar.gz
 Source1:        https://archive.org/compress/123-unix/formats=ISO%20IMAGE&file=/123-unix.zip
+Source2:        https://ftp.gnu.org/gnu/binutils/binutils-2.38.tar.xz
 Requires:       ncurses-libs(x86-32) glibc(x86-32)
 
 %description
@@ -14,7 +15,7 @@ be used in interactive mode to create and modify financial and  scientific
 models.
 
 %prep
-%setup -q -n 123elf-1.0.0-rc1 -a 1
+%setup -q -n 123elf-1.0.0-rc1 -a 1 -a 2
 
 %build
 ./extract.sh
