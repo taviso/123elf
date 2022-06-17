@@ -45,7 +45,7 @@ fi
 
 # Copy compiled binaries to working directory.
 copy() {
-   test ! -x "$2" && cp -v "$1" "$2"
+   test ! -x "$2" && cp "$1" "$2"
 }
 
 copy "$GZIP_DIR/gzip" "$ORIGIN_DIR/gzip"

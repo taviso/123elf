@@ -19,9 +19,9 @@ fi
 
 # Optional cleanup if requested.
 if [ "$1" = 'clean' ]; then
-    rm -fv "$ORIGIN_DIR/objcopy" "$ORIGIN_DIR/objdump" "$ORIGIN_DIR/ld" "$ORIGIN_DIR/as"
+    rm -f "$ORIGIN_DIR/objcopy" "$ORIGIN_DIR/objdump" "$ORIGIN_DIR/ld" "$ORIGIN_DIR/as"
     rm -rf "$BINUTILS_DIR"
-    rm -fv "$ORIGIN_DIR/$BINUTILS_XZ"
+    rm -f "$ORIGIN_DIR/$BINUTILS_XZ"
     exit
 fi
 
@@ -49,7 +49,7 @@ fi
 
 # Copy compiled binaries to working directory.
 copy() {
-    test ! -x "$2" && cp -v "$1" "$2"
+    test ! -x "$2" && cp "$1" "$2"
 }
 
 copy "$BINUTILS_DIR/binutils/objcopy" "$ORIGIN_DIR/objcopy"
