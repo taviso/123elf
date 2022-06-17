@@ -21,9 +21,9 @@ fi
 
 # Optional cleanup if requested.
 if [ "$1" = 'clean' ]; then
-    rm -fv "$ORIGIN_DIR/gzip" "$ORIGIN_DIR/gunzip" "$ORIGIN_DIR/zcat"
+    rm -f "$ORIGIN_DIR/gzip" "$ORIGIN_DIR/gunzip" "$ORIGIN_DIR/zcat"
     rm -rf "$GZIP_DIR"
-    rm -fv "$ORIGIN_DIR/$GZIP_XZ"
+    rm -f "$ORIGIN_DIR/$GZIP_XZ"
     exit
 fi
 
