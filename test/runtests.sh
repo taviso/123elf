@@ -73,6 +73,11 @@ function enter()
     printf -- " -e '~'"
 }
 
+function goto()
+{
+    printf -- " -e '{GOTO}{CE}%s~'" "${1}"
+}
+
 function sendkeys()
 {
     printf -- " -e '%s'" "${@}"
@@ -412,6 +417,7 @@ function verify_file_ops()
 
 function start_stress_test()
 {
+    local scrdmp=$(mktemp -u)
     local result=$(mktemp -u)
     local macro
     local -i i=0
@@ -426,6 +432,77 @@ function start_stress_test()
         runmacro "${macro}"
         verifycontents "${result}" "0.50"
         endtest "${result}"
+    }
+    starttest "Huge Display" && {
+        printf -v macro -- " -e '/dfA1..IV8192~~~8192*8192~'"
+        macro+=$(screendump)
+        macro+=$(quit)
+        LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=1000 LINES=500 runmacro "${macro}"
+        verifyexist "${scrdmp}"
+
+        if ! test $(wc -l < "${scrdmp}") -eq 500; then
+            printf "error: lines is wrong\n" 1>&2
+            exit 1
+        fi
+        if ! test $(awk 'END { print length }' "${scrdmp}") -eq 1000; then
+            printf "error: columns is wrong\n" 1>&2
+            exit 1
+        fi
+
+        # Check the long file is in there (truncated, but thats okay).
+        endtest "${scrdmp}"
+    }
+    starttest "Scroll Huge Diagonal Line" && {
+        printf -v macro -- " -e '{{}R{}}{{}D{}}\\#{~}{{}RETURN{}}~{FOR A8192,1,255,1,A1..A1}'"
+        LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=1000 LINES=256 runmacro "${macro} $(screendump) $(quit)"
+
+        verifyexist "${scrdmp}"
+        sed 's/\s\+/ /g;255q;d' "${scrdmp}" > "${result}"
+        verifycontents "${result}" "256 ######### \n"
+        rm -f "${scrdmp}"
+
+        # Now move it up, to test the screen drawing code.
+        macro+=$(sendkeys '{U 256}')
+        LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=1000 LINES=256 runmacro "${macro} $(screendump) $(quit)"
+        verifyexist "${scrdmp}"
+        sed 's/\s\+/ /g;255q;d' "${scrdmp}" > "${result}"
+        verifycontents "${result}" "251 ######### \n"
+        rm -f "${scrdmp}"
+
+        endtest "${scrdmp}" "${result}"
+    }
+    # This was tricky to get right, make sure it works.
+    starttest "Hilight Full Range From Prev Sheet" bc && {
+        printf -v macro -- " -e '/dfA1..IV8192~~~8192*8192~/wis~~'"
+        macro+=$(sendkeys '/df')
+        macro+=$(screendump)
+        macro+=$(sendkeys '{ESC 5}')
+        macro+=$(quit)
+        LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=1000 LINES=100 runmacro "${macro}"
+        verifyexist "${scrdmp}"
+        awk '/^[0-9]+ / {print}' "${scrdmp}" | sed 's/\s\+/+/g' | tr -d '\n' | sed 's/+$/\n/g' > "${result}"
+        if ! test $(bc < "${result}") -eq 17249961775; then
+            printf "error: range not displayed correctly\n" 1>&2
+            exit 1
+        fi
+        endtest "${scrdmp}" "${result}"
+    }
+    starttest "Split Large Window" && {
+        macro=$(goto GG1)
+        macro+=$(sendkeys '/wwv')
+        macro+=$(sendkeys '/wwc')
+        macro=$(goto GG1024)
+        macro+=$(sendkeys '/wwh')
+        macro+=$(sendkeys '/wwc')
+        macro+=$(quit)
+        COLUMNS=8192 LINES=1024 runmacro "${macro}"
+        endtest
+    }
+    starttest "Render Huuuuuge Map" && {
+        printf -v macro -- " -e '/dfA1..IV8192~~~8192*8192~/wwme~{ESC}'"
+        macro+=$(quit)
+        COLUMNS=8192 LINES=1024 runmacro "${macro}"
+        endtest
     }
     starttest "Huge 3D-Range" && {
         # Fill the sheet up with junk
@@ -598,7 +675,18 @@ function check_calculations()
     verify_result_contents '@UPPER("hello")' "HELLO"
 }
 
+function run_all_tests()
+{
+    verify_output_matches
+    check_calculations
+    check_menu_options
+    verify_file_ops
+    start_stress_test
+    exit 0
+}
+
 case "${1}" in
+    all) run_all_tests;;
     gold) generate_gold_output;;
     test) verify_output_matches;;
     calc) check_calculations;;

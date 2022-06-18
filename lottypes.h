@@ -97,19 +97,18 @@ struct GRAPH;
 
 struct LINE
 {
-    uint8_t field_0;
-    uint8_t field_1;
-    uint8_t field_2;
-    uint8_t field_3;
-    uint32_t field_4;
+    uint8_t dirty;
+    uint8_t _padding[3];
+    uint32_t maxy;
     uint8_t *lineattr;
-    uint8_t *linebuf;
+    char *linebuf;
 };
 
 struct PSCREEN
 {
-    uint32_t field_0;
-    uint32_t field_4;
+    uint8_t dirty;
+    uint8_t _padding[3];
+    uint32_t nlines;
     struct LINE *linedata;
 };
 
@@ -136,6 +135,11 @@ struct CELLCOORD {
     uint16_t row;
     uint8_t sheet;
     uint8_t col;
+};
+
+struct LINEFUNCS {
+    int (*lfprint)(char *str, unsigned len);
+    int (*lfmove)(int ypos, int xpos);
 };
 
 #pragma pack(pop)

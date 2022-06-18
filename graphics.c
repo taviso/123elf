@@ -266,6 +266,191 @@ static void caca_disp_post_system()
     invalidate_screen();
 }
 
+void tty_find_changes()
+{
+    struct LINE *linedata;
+    int cnum;
+    int j;
+    struct LINE *k;
+    struct LINE *dline;
+    unsigned int y;
+    int (*clearfunc)(void);
+    int last;
+    unsigned maxy;
+    uint8_t *curra;
+    char *plineattr;
+    size_t linelen;
+    char *oplineptr;
+    unsigned int i;
+    unsigned int cline;
+    uint8_t *lineattr;
+    char *currc;
+    char *plinebuf;
+    char *linebuf;
+    struct LINE *pline;
+
+    oplineptr = opline;
+    linelen = 0;
+    if (dscreen.dirty) {
+        Replace_cursor();
+        if ((scr_init_state & 8) == 0) {
+            Initsc();
+            Clrandhome();
+            scr_init_state |= 8u;
+        }
+        linedata = dscreen.linedata;
+        for (i = 0; dscreen.nlines > i; ++i) {
+            if (linedata->dirty) {
+                if (linedata->maxy) {
+                    cnum = linedata->maxy - 1;
+                    curra = &linedata->lineattr[cnum];
+                    currc = &linedata->linebuf[cnum];
+                    for (j = cnum; j > 0; --currc) {
+                        if (*currc != ' ')
+                            break;
+                        if (!bg_equiv_map[8 * ((uint8_t)(*curra & 0x1C) >> 2)])
+                            break;
+                        if (!fg_equiv_map[4 * (*curra & 3)])
+                            break;
+                        --linedata->maxy;
+                        --j;
+                        --curra;
+                    }
+                }
+            }
+            ++linedata;
+        }
+        if (dscreen.nlines) {
+            for (k = &dscreen.linedata[dscreen.nlines - 1]; dscreen.nlines && !k->maxy; --k)
+                --dscreen.nlines;
+        }
+        cline = 0;
+        dline = dscreen.linedata;
+        pline = pscreen.linedata;
+        while (dscreen.nlines > cline) {
+            if (dline->dirty) {
+                plineattr = (char *)dline->lineattr;
+                plinebuf = dline->linebuf;
+                linebuf = pline->linebuf;
+                lineattr = pline->lineattr;
+                for (y = 0; y < dline->maxy; ++plineattr) {
+                    if ( *plinebuf != *linebuf
+                            || !bg_equiv_map[8 * ((uint8_t)(*plineattr & 0x1C) >> 2)
+                            + ((uint8_t)(*lineattr & 0x1C) >> 2)]
+                            || !fg_equiv_map[4 * (*plineattr & 3) + (*lineattr & 3)] ) {
+                        if (cline != vpos[0] || y != vpos[1]) {
+                            if (inprint == 1) {
+                                lfvec[real_pos[0]].lfprint(opline, linelen);
+                                linelen = 0;
+                                inprint = 0;
+                            }
+                            if (cline || y)
+                                lfvec[cline].lfmove(cline, y);
+                            else
+                                Home();
+                            vpos[0] = cline;
+                            vpos[1] = y;
+                        }
+                        if (!bg_equiv_map[8 * ((uint8_t)(*plineattr & 0x1C) >> 2)
+                                + ((uint8_t)(ref_cur_attr & 0x1C) >> 2)]
+                                || !fg_equiv_map[4 * (*plineattr & 3) + (ref_cur_attr & 3)]) {
+                            if (inprint == 1) {
+                                lfvec[real_pos[0]].lfprint(opline, linelen);
+                                linelen = 0;
+                                inprint = 0;
+                            }
+                            Atset(*plineattr);
+                            ref_cur_attr = *plineattr;
+                        }
+                        if (!inprint) {
+                            oplineptr = opline;
+                            inprint = 1;
+                        }
+                        *oplineptr++ = *plinebuf;
+                        ++linelen;
+                        ++vpos[1];
+                    }
+                    ++plinebuf;
+                    ++linebuf;
+                    ++y;
+                    ++lineattr;
+                }
+                if (pline->maxy > dline->maxy) {
+                    if ( inprint == 1 )
+                    {
+                        lfvec[real_pos[0]].lfprint(opline, linelen);
+                        linelen = 0;
+                        inprint = 0;
+                    }
+                    if (cline != vpos[0] || dline->maxy != vpos[1]) {
+                        if ( cline || y )
+                            lfvec[cline].lfmove(cline, dline->maxy);
+                        else
+                            Home();
+                        vpos[0] = cline;
+                        vpos[1] = dline->maxy;
+                    }
+                    if (!bg_equiv_map[8 * ((uint8_t)(ref_cur_attr & 0x1C) >> 2)] || !fg_equiv_map[4 * (ref_cur_attr & 3)]) {
+                        Atset(0);
+                        ref_cur_attr = 0;
+                    }
+                    Clrtoend();
+                }
+            }
+            ++cline;
+            ++pline;
+            ++dline;
+        }
+        if (pscreen.nlines > (unsigned int)dscreen.nlines) {
+            if (inprint == 1) {
+                lfvec[real_pos[0]].lfprint(opline, linelen);
+                linelen = 0;
+                inprint = 0;
+            }
+            if (!bg_equiv_map[8 * ((uint8_t)(ref_cur_attr & 0x1C) >> 2)] || !fg_equiv_map[4 * (ref_cur_attr & 3)]) {
+                Atset(0);
+                ref_cur_attr = 0;
+            }
+            if (dscreen.nlines) {
+                last = dscreen.nlines - 1;
+                maxy = dscreen.linedata[dscreen.nlines - 1].maxy;
+                if (dscreen.nlines - 1 != vpos[0] || maxy != vpos[1]) {
+                    vpos[0] = dscreen.nlines - 1;
+                    vpos[1] = maxy;
+                    lfvec[last].lfmove(last, maxy);
+                }
+                clearfunc = Clrtobot;
+            } else {
+                vpos[1] = 0;
+                vpos[0] = 0;
+                clearfunc = Clrandhome;
+            }
+            clearfunc();
+        }
+        if (inprint == 1) {
+            lfvec[real_pos[0]].lfprint(opline, linelen);
+            inprint = 0;
+        }
+        if (!bg_equiv_map[(uint8_t)(ref_cur_attr & 0x1C) >> 2] || !fg_equiv_map[ref_cur_attr & 3]) {
+            Atset(0);
+            ref_cur_attr = 0;
+        }
+    }
+    if (currpos[0] == vpos[0] && currpos[1] == vpos[1]) {
+        if ( !dscreen.dirty )
+            return;
+    } else {
+        if (currpos[0] || currpos[1])
+            lfvec[currpos[0]].lfmove(currpos[0], currpos[1]);
+        else
+            Home();
+        vpos[0] = currpos[0];
+        vpos[1] = currpos[1];
+    }
+    Check_cursor();
+    Flush();
+}
+
 int init_unix_display_code()
 {
     // The graph type should always be dumb.

@@ -10,6 +10,11 @@ enum {
 };
 
 extern uint8_t *vmr[];
+extern uint32_t vpos[2];
+extern uint32_t currpos[2];
+extern uint16_t inprint;
+extern uint32_t real_pos[2];
+extern uint8_t ref_cur_attr;
 
 extern uint16_t *displayed_window;
 
@@ -27,7 +32,14 @@ extern int disp_txt_init(char *bdlpath);
 
 extern char *char_set_bundle;
 extern void *Find_changes;
-extern void *Flush;
+extern void (*Flush)(void);
+extern void (*Check_cursor)(void);
+extern int (*Initsc)(void);
+extern int (*Clrandhome)(void);
+extern int (*Clrtoend)(void);
+extern int (*Clrtobot)(void);
+extern int (*Home)(void);
+extern int (*Atset)(char);
 extern void (*opcodes[])(void);
 extern uint16_t display_turned_off;
 extern void gen_disp_txt_clear();
@@ -51,7 +63,6 @@ extern void tty_disp_close();
 extern void tty_disp_close_retain_termcap();
 extern void tty_disp_post_system();
 extern void tty_disp_pre_system();
-extern void tty_find_changes();
 extern void *x_disp_close;
 extern void *x_disp_close_retain_termcap;
 extern void *x_disp_graph;
@@ -82,6 +93,7 @@ extern void *x_disp_txt_unlock;
 extern void *x_disp_txt_zone;
 extern void *dliopen;
 extern void *dliclose;
+extern int (*Replace_cursor)(void);
 
 extern int MapX(uint16_t);
 extern int MapY(uint16_t);
@@ -105,8 +117,9 @@ extern struct PSCREEN dscreen;
 extern uint8_t bg_equiv_map[36];
 extern uint8_t fg_equiv_map[36];
 
-extern uint8_t *lfvec;
-extern uint8_t *opline;
+extern struct LINEFUNCS *lfvec;
+extern char *opline;
+extern uint32_t scr_init_state;
 extern int get_screen_size();
 extern void *lts_malloc(size_t size);
 extern int clear_screen_buffer(struct PSCREEN *screenbuf);
@@ -132,4 +145,6 @@ extern void macro_buff_run(struct MACXRTNS *callbacks);
 extern int in_rdy_mode();
 extern void kfqueue_submit_kfun(uint16_t kfun);
 extern int macro_key_run(char key);
+extern struct CELLCOORD xyz2coord(uint8_t col, uint16_t row, uint16_t sheet);
+extern bool coord_in_range(struct CELLCOORD cell, struct CELLCOORD rngstart, struct CELLCOORD rngend);
 #endif

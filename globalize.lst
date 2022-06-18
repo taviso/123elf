@@ -65,3 +65,5 @@ slash_convert
 fname_real_len
 file_path_expand
 check_lengths
+vpos
+inprint
