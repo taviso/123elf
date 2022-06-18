@@ -5,6 +5,9 @@
 
 declare smpfiles="${ROOT:-..}/share/lotus/123.v10/smpfiles/"
 
+source macutil.sh
+source testutil.sh
+
 function lotus_print_file()
 {
     local output=$(mktemp -u)
@@ -34,7 +37,6 @@ function generate_gold_output()
     done
 }
 
-
 function verify_output_matches()
 {
     local base
@@ -45,84 +47,15 @@ function verify_output_matches()
         base=$(basename "${i}")
         real=$(realpath "${base}")
 
-        starttest "${base}"
-        lotus_print_file "${i}" "${real}.out"
-        verifymatch "${real}.out" "${real}.txt"
-        endtest "${real}.out"
+        starttest "${base}" md5sum && {
+            lotus_print_file "${i}" "${real}.txt"
+            if ! md5sum --quiet --check --ignore-missing smpfiles.txt; then
+                printf "error: file %s did not print correctly\n" "${i}" 1>&2
+                exit 1
+            fi
+            endtest "${real}.txt"
+        }
     done
-}
-
-# printrange file range
-function printrange()
-{
-    printf -- " -e '/pf{CE}%s~r{CE}%s~gq'" "${1}" "${2}"
-}
-
-function quit()
-{
-    printf -- " -e '/qyy'"
-}
-
-function escape()
-{
-    printf -- " -e '{ESC %s}'" "${1}"
-}
-
-function enter()
-{
-    printf -- " -e '~'"
-}
-
-function goto()
-{
-    printf -- " -e '{GOTO}{CE}%s~'" "${1}"
-}
-
-function sendkeys()
-{
-    printf -- " -e '%s'" "${@}"
-}
-
-function putstring()
-{
-    printf -- " -e '{PUT %s,0,0,%s}'" "${1}" "${2}"
-}
-
-# saveas filename
-function saveas()
-{
-    printf -- " -e '/fs{CE}%s~'" "${1}"
-}
-
-# retrieve filename
-function retrieve()
-{
-    printf -- " -e '/fr{CE}%s~'" "${1}"
-}
-
-function system()
-{
-    printf -- " -e '{SYSTEM %c%s%c}'" '"' "${*}" '"'
-}
-
-function macsleep()
-{
-    printf -- " -e '{WAIT @NOW+@TIME(0,0,%u)}'" "${1:-1}"
-}
-
-function screendump()
-{
-    printf -- " -e '{WINDOWSOFF}{SYSTEM +%s & @CHAR(36) & %s}{WINDOWSON}'" '"kill -USR1 "' '"{PPID}"'
-}
-
-# writerange file range
-function writerange()
-{
-    local o w c
-    printf -v o -- '{OPEN "%s","w"}' "${1}"
-    printf -v w -- '{WRITE %s}' "${2}"
-    printf -v c -- '{CLOSE}'
-    printf -- " -e '%s'" "${o}" "${w}" "${c}"
 }
 
 # Usage: value expected format width
@@ -147,78 +80,6 @@ function verify_result_contents()
 
     # Clean up
     rm -f "${output}"
-}
-
-function runmacro()
-{
-    if ! eval ../123 "${@}"; then
-        printf "error: 123 did not complete successfully\n" 1>&2
-        exit 1
-    fi
-}
-
-# verifyexist file [false]
-function verifyexist()
-{
-    if ! test -e "${1}"; then
-        if test ${2:-true} == "true"; then
-            printf "error: the file %s did not exist\n" "${1}" 1>&2
-            exit 1
-        fi
-    else
-        if test ${2:-true} == "false"; then
-            printf "error: the file %s did exist\n" "${1}" 1>&2
-            exit 1
-        fi
-    fi
-}
-# verifycontents file contents
-function verifycontents()
-{
-    local temp=$(mktemp -u)
-    local orig="${1}"
-
-    verifyexist "${orig}"
-    shift
-    printf -- "${*}" >> "${temp}"
-
-    verifymatch "${orig}" "${temp}"
-
-    # Clean up.
-    rm -f "${temp}"
-}
-
-function verifymatch()
-{
-    verifyexist "${1}"
-    verifyexist "${2}"
-
-    if ! cmp "${1}" "${2}"; then
-        printf "error: the contents of %s and %s did not match\n" "${1}" "${2}" 1>&2
-        diff -ruN "${1}" "${2}"
-        exit 1
-    fi
-}
-
-function starttest()
-{
-    printf "Testing %s..." "${1}"
-
-    if test ${#} -gt 1; then
-        if ! type "${2}" &> /dev/null; then
-            printf "skipped (no %s)\n" "${2}"
-            return 1
-        fi
-    fi
-
-    return 0
-}
-
-function endtest()
-{
-    printf "ok\n"
-    # Cleanup any temporary files specified
-    rm -f -- "${*}"
 }
 
 function verify_file_ops()
@@ -435,21 +296,12 @@ function start_stress_test()
     }
     starttest "Huge Display" && {
         printf -v macro -- " -e '/dfA1..IV8192~~~8192*8192~'"
+        macro+=$(noclock)
         macro+=$(screendump)
         macro+=$(quit)
         LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=1000 LINES=500 runmacro "${macro}"
         verifyexist "${scrdmp}"
-
-        if ! test $(wc -l < "${scrdmp}") -eq 500; then
-            printf "error: lines is wrong\n" 1>&2
-            exit 1
-        fi
-        if ! test $(awk 'END { print length }' "${scrdmp}") -eq 1000; then
-            printf "error: columns is wrong\n" 1>&2
-            exit 1
-        fi
-
-        # Check the long file is in there (truncated, but thats okay).
+        verifysum "${scrdmp}" 3822333104 500500
         endtest "${scrdmp}"
     }
     starttest "Scroll Huge Diagonal Line" && {
@@ -472,26 +324,22 @@ function start_stress_test()
         endtest "${scrdmp}" "${result}"
     }
     # This was tricky to get right, make sure it works.
-    starttest "Hilight Full Range From Prev Sheet" bc && {
-        printf -v macro -- " -e '/dfA1..IV8192~~~8192*8192~/wis~~'"
+    starttest "Hilight Full Range From Prev Sheet" && {
+        macro=$(noclock)
+        macro+=$(sendkeys '/dfA1..IV8192~~~8192*8192~/wis~~')
         macro+=$(sendkeys '/df')
         macro+=$(screendump)
         macro+=$(sendkeys '{ESC 5}')
         macro+=$(quit)
         LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=1000 LINES=100 runmacro "${macro}"
-        verifyexist "${scrdmp}"
-        awk '/^[0-9]+ / {print}' "${scrdmp}" | sed 's/\s\+/+/g' | tr -d '\n' | sed 's/+$/\n/g' > "${result}"
-        if ! test $(bc < "${result}") -eq 17249961775; then
-            printf "error: range not displayed correctly\n" 1>&2
-            exit 1
-        fi
-        endtest "${scrdmp}" "${result}"
+        verifysum "${scrdmp}" 3606002881 100100
+        endtest "${scrdmp}"
     }
     starttest "Split Large Window" && {
         macro=$(goto GG1)
         macro+=$(sendkeys '/wwv')
         macro+=$(sendkeys '/wwc')
-        macro=$(goto GG1024)
+        macro+=$(goto GG1024)
         macro+=$(sendkeys '/wwh')
         macro+=$(sendkeys '/wwc')
         macro+=$(quit)
@@ -499,10 +347,15 @@ function start_stress_test()
         endtest
     }
     starttest "Render Huuuuuge Map" && {
-        printf -v macro -- " -e '/dfA1..IV8192~~~8192*8192~/wwme~{ESC}'"
+        macro=$(noclock)
+        macro+=$(sendkeys "/dfA1..IV8192~~~8192*8192~")
+        macro+=$(sendkeys "/wwme")
+        macro+=$(screendump)
+        macro+=$(sendkeys "{ESC 5}")
         macro+=$(quit)
-        COLUMNS=8192 LINES=1024 runmacro "${macro}"
-        endtest
+        LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=1000 LINES=1024 runmacro "${macro}"
+        verifysum "${scrdmp}" 2846770937 1025024
+        endtest "${scrdmp}"
     }
     starttest "Huge 3D-Range" && {
         # Fill the sheet up with junk
@@ -530,18 +383,13 @@ function start_stress_test()
         done
         # Check that perspective mode is working.
         macro+=$(sendkeys "/wwp")
-        macro+=$(macsleep 1)
-        macro+=$(sendkeys "{PS}")
-        macro+=$(macsleep 1)
-        macro+=$(sendkeys "{PS}")
-        macro+=$(macsleep 1)
-        macro+=$(sendkeys "{PS}")
-        macro+=$(macsleep 1)
-        macro+=$(sendkeys "/wwc")
-        macro+=$(macsleep 1)
+        macro+=$(sendkeys "{PS 3}")
+        macro+=$(noclock)
+        macro+=$(screendump)
         macro+=$(quit)
-        runmacro "${macro}"
-        endtest
+        LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=100 LINES=50 runmacro "${macro}"
+        verifysum "${scrdmp}" 2609673608 5050
+        endtest "${scrdmp}"
     }
 }
 
@@ -555,6 +403,7 @@ function show_help()
     printf "    stress  - generate lots of data and check results\n"
     printf "    gold    - generate golden outputs\n"
     printf "    help    - print this message\n"
+    printf "    all     - run all available tests\n"
     printf "\n"
     printf "Your terminal may flicker or look frozen as the test macros play.\n"
     exit 1
@@ -562,6 +411,7 @@ function show_help()
 
 function check_menu_options()
 {
+    local scrdmp=$(mktemp -u)
     local result=$(mktemp -u)
 
     starttest "Signal Macro" && {
@@ -571,6 +421,21 @@ function check_menu_options()
         runmacro "${macro}"
         verifyexist "${result}"
         endtest "${result}"
+    }
+
+    starttest "Move Range Across Vertical Window" && {
+        macro=$(sendkeys '/dfA1..IV8192~~~256*8192~/wis~~')
+        macro+=$(goto B:AF1024)
+        macro+=$(sendkeys '{R 40}')
+        macro+=$(sendkeys '/wwv')
+        macro+=$(sendkeys '{PS}{WINDOW}{R 5}{D 5}')
+        macro+=$(sendkeys '/m.{R 10}{D 10}~{WINDOW}{L 20}{D 5}~')
+        macro+=$(noclock)
+        macro+=$(screendump)
+        macro+=$(quit)
+        LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=1000 LINES=100 runmacro "${macro}"
+        verifysum "${scrdmp}" 1287976195 100100
+        endtest "${scrdmp}"
     }
     return 0;
 }
@@ -638,13 +503,12 @@ function check_calculations()
     verify_result_contents "@FALSE" "0"
     verify_result_contents '@FIND("lo","hello world",0)' "3"
     verify_result_contents "@FV(123,0.08,100)" "3380595.432"
-
     verify_result_contents "@HOUR(0.9999)" "23"
     verify_result_contents "@HOUR(0)" "0"
     verify_result_contents "@IF(@FALSE,1,2)" "2"
     verify_result_contents "@IF(@TRUE,1,2)" "1"
     verify_result_contents '@INFO("system")' "systemv"
-    #verify_result_contents '{SYSTEM "exit 123"}@INFO("osreturncode")' "123"
+    verify_result_contents '{SYSTEM "exit 123"}@INFO("osreturncode")/2^8' "123"
     verify_result_contents "@INT(7/3)" "2"
     verify_result_contents "@ISERR(@ERR)" "1"
     verify_result_contents "@ISERR(@TRUE)" "0"
@@ -693,8 +557,7 @@ case "${1}" in
     menu) check_menu_options;;
     file) verify_file_ops;;
     stress) start_stress_test;;
-    *) show_help "${0##*/}" >&2;
-       ;;
+    *) show_help "${0##*/}" >&2;;
 esac
 
 exit 0

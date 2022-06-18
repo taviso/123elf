@@ -1,8 +1,0 @@
-    Costs and
-      Salary
-      Int
-      Rent
-      Ads
-      COG
-      Op Exp
-    Op Income
