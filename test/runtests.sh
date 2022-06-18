@@ -295,8 +295,8 @@ function start_stress_test()
         endtest "${result}"
     }
     starttest "Huge Display" && {
-        printf -v macro -- " -e '/dfA1..IV8192~~~8192*8192~'"
-        macro+=$(noclock)
+        macro=$(noclock)
+        macro+=$(sendkeys '/dfA1..IV8192~~~8192*8192~')
         macro+=$(screendump)
         macro+=$(quit)
         LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=1000 LINES=500 runmacro "${macro}"
@@ -374,17 +374,15 @@ function start_stress_test()
         endtest "${result}"
     }
     starttest "Full Perspective Sheets" && {
+        macro=$(noclock)
         # Fill the sheet up with junk
-        macro=""
         for sheet in {A..C}; do
             macro+=$(sendkeys "/df{CE}${sheet}:A1..${sheet}:IV8192~${i}~~8192*256+${i}~")
             macro+=$(sendkeys "/wisa~")
             let i++
         done
-        # Check that perspective mode is working.
         macro+=$(sendkeys "/wwp")
         macro+=$(sendkeys "{PS 3}")
-        macro+=$(noclock)
         macro+=$(screendump)
         macro+=$(quit)
         LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=100 LINES=50 runmacro "${macro}"
@@ -424,13 +422,13 @@ function check_menu_options()
     }
 
     starttest "Move Range Across Vertical Window" && {
-        macro=$(sendkeys '/dfA1..IV8192~~~256*8192~/wis~~')
+        macro=$(noclock)
+        macro+=$(sendkeys '/dfA1..IV8192~~~256*8192~/wis~~')
         macro+=$(goto B:AF1024)
         macro+=$(sendkeys '{R 40}')
         macro+=$(sendkeys '/wwv')
         macro+=$(sendkeys '{PS}{WINDOW}{R 5}{D 5}')
         macro+=$(sendkeys '/m.{R 10}{D 10}~{WINDOW}{L 20}{D 5}~')
-        macro+=$(noclock)
         macro+=$(screendump)
         macro+=$(quit)
         LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=1000 LINES=100 runmacro "${macro}"
