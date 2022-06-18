@@ -16,8 +16,7 @@ and may contain security bugs!
 ## Sealed Files
 
 There is a 1-2-3 feature called "Sealing", accessible via `/File Admin Seal`. In theory, this requires
-a password to alter protected ranges (see `/Worksheet Global Prot`) or to view hidden ranges (see `/Range Format
-Hidden`).
+a password to alter protected ranges (see `/Worksheet Global Prot`) or to view hidden ranges (see `/Worksheet Hide Enable`, among various others).
 
 This is not a supported security feature, the password is stored in the file in plaintext.
 
