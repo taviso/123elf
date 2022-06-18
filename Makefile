@@ -2,7 +2,8 @@ BFD_INP_TARGET = coff-i386
 BFD_OUT_TARGET = coff-i386
 OBJCOPY_FLAGS  = --wildcard --localize-symbols=localize.lst --globalize-symbols=globalize.lst --redefine-syms=redefine.lst
 OBJCOPY_FILES = localize.lst globalize.lst redefine.lst undefine.lst
-CFLAGS  = -W -Wall -m32 -ggdb3 -O0 -fno-stack-protector
+OPTFLAGS = -O2
+CFLAGS  = -W -Wall -m32 $(OPTFLAGS) -fno-stack-protector
 CPPFLAGS = -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I ttydraw -Wno-unused-parameter
 ASFLAGS = --32
 LDFLAGS = $(CFLAGS) -lc -B. -Wl,-b,$(BFD_OUT_TARGET) -no-pie
@@ -27,6 +28,9 @@ export BFD_TARGET_ERROR
 all: check 123 keymaps
 	@size 123
 
+debug: OPTFLAGS=-ggdb3 -O0
+debug: all
+
 check:
 	@objdump --info | egrep -q '^coff-i386$$' || (echo "$$BFD_TARGET_ERROR"; false)
 
@@ -43,10 +47,10 @@ dl_init.o: orig/dl_init.o
 	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) $< $@
 
 ttydraw/ttydraw.a:
-	$(MAKE) -C ttydraw
+	$(MAKE) -C ttydraw OPTFLAGS="$(OPTFLAGS)"
 
 atfuncs/atfuncs.a:
-	$(MAKE) -C atfuncs
+	$(MAKE) -C atfuncs OPTFLAGS="$(OPTFLAGS)"
 
 bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o filename.o showme.o | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
 	@mkdir -p $(@D)
