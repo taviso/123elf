@@ -35,6 +35,8 @@ uint16_t * find_row(int16_t sheet, int16_t row)
 
 int16_t init_showme(int16_t termrows)
 {
+    for (int i = 0; i < 255; i++)
+        set_column_bit(colflags, i);
     return 0;
 }
 

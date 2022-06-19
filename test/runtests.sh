@@ -280,9 +280,55 @@ function start_stress_test()
 {
     local scrdmp=$(mktemp -u)
     local result=$(mktemp -u)
+    local import=$(mktemp -u)
     local macro
     local -i i=0
 
+    starttest "Scroll Huge Sheet" && {
+        local scrdmpa=$(mktemp -u)
+        local scrdmpb=$(mktemp -u)
+        local scrdmpc=$(mktemp -u)
+        local scrdmpd=$(mktemp -u)
+        # Generate a huge sheet of words
+        egrep -i '^[a-z]+$' /usr/share/dict/words   \
+            | sed -e 's/^/"/g' -e 's/$/", /g'       \
+            | tr -d '\n'                            \
+            | fold -s -w 511 > "${import}"
+        # Verify it looks the same after scrolling.
+        macro=$(noclock)
+        macro+=$(import "${import}")
+        macro+=$(sendkeys '{R 50}')
+        macro+=$(sendkeys '{L 50}')
+        macro+=$(screendump)
+        macro+=$(saveas "${result}")
+        macro+=$(quit)
+        LOTUS_SCREEN_DUMP="${scrdmpa}" COLUMNS=380 LINES=72 runmacro "${macro}"
+        macro=$(noclock)
+        macro+=$(retrieve "${result}")
+        macro+=$(sendkeys '{R 50}')
+        macro+=$(sendkeys '{L 50}')
+        macro+=$(screendump)
+        macro+=$(quit)
+        LOTUS_SCREEN_DUMP="${scrdmpb}" COLUMNS=380 LINES=72 runmacro "${macro}"
+        macro=$(noclock)
+        macro+=$(retrieve "${result}")
+        macro+=$(sendkeys '{D 50}')
+        macro+=$(sendkeys '{U 50}')
+        macro+=$(screendump)
+        macro+=$(quit)
+        LOTUS_SCREEN_DUMP="${scrdmpc}" COLUMNS=380 LINES=72 runmacro "${macro}"
+        macro=$(noclock)
+        macro+=$(retrieve "${result}")
+        macro+=$(sendkeys '{END}{HOME}')
+        macro+=$(sendkeys '{HOME}')
+        macro+=$(screendump)
+        macro+=$(quit)
+        LOTUS_SCREEN_DUMP="${scrdmpd}" COLUMNS=380 LINES=72 runmacro "${macro}"
+        verifymatch "${scrdmpa}" "${scrdmpb}"
+        verifymatch "${scrdmpa}" "${scrdmpc}"
+        verifymatch "${scrdmpa}" "${scrdmpd}"
+        endtest "${scrdmpa}" "${scrdmpb}" "${scrdmpc}" "${scrdmpd}" "${result}" "${import}"
+    }
     starttest "@RAND Average" && {
         # Fill the sheet up with random numbers
         macro=$(sendkeys "@RAND~")

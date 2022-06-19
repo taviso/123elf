@@ -86,3 +86,9 @@ function noclock()
 {
     printf -- " -e '/wgdocnq'"
 }
+
+# import filename
+function import()
+{
+    printf -- " -e '/fin{CE}%s~'" "${1}"
+}
