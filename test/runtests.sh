@@ -405,18 +405,13 @@ function start_stress_test()
     }
     starttest "Huge 3D-Range" && {
         # Fill the sheet up with junk
-        macro=""
-        # Note: you can have more sheets, they continue past AA.
-        for sheet in {A..Z}; do
-            macro+=$(sendkeys "/df{CE}${sheet}:A1..${sheet}:IV8192~${i}~~8192*256+${i}~")
-            macro+=$(sendkeys "/wisa~")
-            let i++
-        done
+        macro=$(sendkeys "/wisa25~")
+        macro+=$(sendkeys "/df{CE}A:A1..Z:IV8192~~~8192*256*26~")
         # Now the 3d-range A:A1..Z:IV8192 is truly enormous
         macro+=$(writerange "${result}" '@STRING(@SUM(A:A1..Z:IV8192), 0)')
         macro+=$(quit)
         runmacro "${macro}"
-        verifycontents "${result}" "57175258955776"
+        verifycontents "${result}" "1486539693490180"
         endtest "${result}"
     }
     starttest "Full Perspective Sheets" && {
