@@ -427,7 +427,7 @@ function start_stress_test()
         macro+=$(screendump)
         macro+=$(quit)
         LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=100 LINES=50 runmacro "${macro}"
-        verifysum "${scrdmp}" 2609673608 5050
+        verifysum "${scrdmp}" 2002276367 5050
         endtest "${scrdmp}"
     }
 }
