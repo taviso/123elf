@@ -11,6 +11,7 @@
 #include <stddef.h>
 
 #include "keymap.h"
+#include "lmbcs.h"
 
 // It is safe to rearrange and change this array.
 //  - name is just a human readable description of the key sequence,
@@ -120,7 +121,7 @@ static int compare_keyseq(const void *a, const void *b)
 
 static bool append_key_sequence(PKEYINFO *base,
                                 PKEYMAP hdr,
-                                const char *keyseq,
+                                const uint8_t *keyseq,
                                 uint16_t kfun)
 {
     if (!base || !kfun) {
@@ -360,6 +361,14 @@ int main(int argc, char **argv)
         char sequpper[3] = { '\033', 'A' + c, '\0' };
         append_key_sequence(&keys, &hdr, seqlower, KFUN_MAC_A + c);
         append_key_sequence(&keys, &hdr, sequpper, KFUN_MAC_A + c);
+    }
+
+    // Now the UTF-8 sequences.
+    for (int i = 0; lmbcs_input_translate[i].str; i++) {
+        append_key_sequence(&keys,
+                            &hdr,
+                            lmbcs_input_translate[i].str,
+                            lmbcs_input_translate[i].lmbcs);
     }
 
     // Write the header and key tree out.
