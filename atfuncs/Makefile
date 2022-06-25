@@ -1,5 +1,5 @@
 CPPFLAGS=-I..
-CFLAGS=-m32 $(OPTFLAGS) -fno-stack-protector
+CFLAGS=-freg-struct-return -m32 $(OPTFLAGS) -fno-stack-protector
 LDFLAGS=$(CFLAGS)
 LDLIBS=
 
