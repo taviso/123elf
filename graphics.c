@@ -338,9 +338,9 @@ void tty_find_changes()
                             || !bg_equiv_map[8 * ((uint8_t)(*plineattr & 0x1C) >> 2)
                             + ((uint8_t)(*lineattr & 0x1C) >> 2)]
                             || !fg_equiv_map[4 * (*plineattr & 3) + (*lineattr & 3)] ) {
-                        if (cline != vpos[0] || y != vpos[1]) {
+                        if (cline != vpos.line || y != vpos.col) {
                             if (inprint == 1) {
-                                lfvec[real_pos[0]].lfprint(opline, linelen);
+                                lfvec[real_pos.line].lfprint(opline, linelen);
                                 linelen = 0;
                                 inprint = 0;
                             }
@@ -348,14 +348,14 @@ void tty_find_changes()
                                 lfvec[cline].lfmove(cline, y);
                             else
                                 Home();
-                            vpos[0] = cline;
-                            vpos[1] = y;
+                            vpos.line = cline;
+                            vpos.col = y;
                         }
                         if (!bg_equiv_map[8 * ((uint8_t)(*plineattr & 0x1C) >> 2)
                                 + ((uint8_t)(ref_cur_attr & 0x1C) >> 2)]
                                 || !fg_equiv_map[4 * (*plineattr & 3) + (ref_cur_attr & 3)]) {
                             if (inprint == 1) {
-                                lfvec[real_pos[0]].lfprint(opline, linelen);
+                                lfvec[real_pos.line].lfprint(opline, linelen);
                                 linelen = 0;
                                 inprint = 0;
                             }
@@ -367,8 +367,8 @@ void tty_find_changes()
                             inprint = 1;
                         }
                         *oplineptr++ = *plinebuf;
-                        ++linelen;
-                        ++vpos[1];
+                        linelen++;
+                        vpos.col++;
                     }
                     ++plinebuf;
                     ++linebuf;
@@ -378,17 +378,17 @@ void tty_find_changes()
                 if (pline->maxy > dline->maxy) {
                     if ( inprint == 1 )
                     {
-                        lfvec[real_pos[0]].lfprint(opline, linelen);
+                        lfvec[real_pos.line].lfprint(opline, linelen);
                         linelen = 0;
                         inprint = 0;
                     }
-                    if (cline != vpos[0] || dline->maxy != vpos[1]) {
+                    if (cline != vpos.line || dline->maxy != vpos.col) {
                         if ( cline || y )
                             lfvec[cline].lfmove(cline, dline->maxy);
                         else
                             Home();
-                        vpos[0] = cline;
-                        vpos[1] = dline->maxy;
+                        vpos.line = cline;
+                        vpos.col = dline->maxy;
                     }
                     if (!bg_equiv_map[8 * ((uint8_t)(ref_cur_attr & 0x1C) >> 2)] || !fg_equiv_map[4 * (ref_cur_attr & 3)]) {
                         Atset(0);
@@ -403,7 +403,7 @@ void tty_find_changes()
         }
         if (pscreen.nlines > (unsigned int)dscreen.nlines) {
             if (inprint == 1) {
-                lfvec[real_pos[0]].lfprint(opline, linelen);
+                lfvec[real_pos.line].lfprint(opline, linelen);
                 linelen = 0;
                 inprint = 0;
             }
@@ -414,21 +414,21 @@ void tty_find_changes()
             if (dscreen.nlines) {
                 last = dscreen.nlines - 1;
                 maxy = dscreen.linedata[dscreen.nlines - 1].maxy;
-                if (dscreen.nlines - 1 != vpos[0] || maxy != vpos[1]) {
-                    vpos[0] = dscreen.nlines - 1;
-                    vpos[1] = maxy;
+                if (dscreen.nlines - 1 != vpos.line || maxy != vpos.col) {
+                    vpos.line = dscreen.nlines - 1;
+                    vpos.col = maxy;
                     lfvec[last].lfmove(last, maxy);
                 }
                 clearfunc = Clrtobot;
             } else {
-                vpos[1] = 0;
-                vpos[0] = 0;
+                vpos.line = 0;
+                vpos.col = 0;
                 clearfunc = Clrandhome;
             }
             clearfunc();
         }
         if (inprint == 1) {
-            lfvec[real_pos[0]].lfprint(opline, linelen);
+            lfvec[real_pos.line].lfprint(opline, linelen);
             inprint = 0;
         }
         if (!bg_equiv_map[(uint8_t)(ref_cur_attr & 0x1C) >> 2] || !fg_equiv_map[ref_cur_attr & 3]) {
@@ -436,16 +436,15 @@ void tty_find_changes()
             ref_cur_attr = 0;
         }
     }
-    if (currpos[0] == vpos[0] && currpos[1] == vpos[1]) {
+    if (currpos.line == vpos.line && currpos.col == vpos.col) {
         if ( !dscreen.dirty )
             return;
     } else {
-        if (currpos[0] || currpos[1])
-            lfvec[currpos[0]].lfmove(currpos[0], currpos[1]);
+        if (currpos.line || currpos.col)
+            lfvec[currpos.line].lfmove(currpos.line, currpos.col);
         else
             Home();
-        vpos[0] = currpos[0];
-        vpos[1] = currpos[1];
+        vpos = currpos;
     }
     Check_cursor();
     Flush();

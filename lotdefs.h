@@ -10,10 +10,10 @@ enum {
 };
 
 extern uint8_t *vmr[];
-extern uint32_t vpos[2];
-extern uint32_t currpos[2];
+extern struct SCREENPOS vpos;
+extern struct SCREENPOS currpos;
+extern struct SCREENPOS real_pos;
 extern uint16_t inprint;
-extern uint32_t real_pos[2];
 extern uint8_t ref_cur_attr;
 
 extern uint16_t *displayed_window;

@@ -142,5 +142,10 @@ struct LINEFUNCS {
     int (*lfmove)(int ypos, int xpos);
 };
 
+struct SCREENPOS {
+    uint32_t line;
+    uint32_t col;
+};
+
 #pragma pack(pop)
 #endif
