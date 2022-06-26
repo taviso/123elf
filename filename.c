@@ -40,7 +40,7 @@ uint16_t file_name_split(struct PATHNAME *pstruct,
     char *extptr;
     int extlen;
     int pathend;
-    int16_t *fname_content_xlt_tbl;
+    uint16_t *fname_content_xlt_tbl;
     int16_t pathtype;
     uint16_t diroff_1;
     uint16_t diroff;
@@ -160,6 +160,7 @@ uint16_t file_name_split(struct PATHNAME *pstruct,
         fileext = 0;
 
     prepended_root_after_drv = 0;
+    prepended_root = NULL;
 
     if (file_mode != FILE_MODE_UNIX) {
         // This is an optional "root" to prepend
