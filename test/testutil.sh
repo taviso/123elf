@@ -88,5 +88,5 @@ function endtest()
 {
     printf "ok\n"
     # Cleanup any temporary files specified
-    rm -f -- "${*}"
+    rm -f -- "${@}"
 }
