@@ -273,7 +273,7 @@ void tty_find_changes()
     int j;
     struct LINE *k;
     struct LINE *dline;
-    unsigned int y;
+    unsigned int ccol;
     int (*clearfunc)(void);
     int last;
     unsigned maxy;
@@ -333,23 +333,23 @@ void tty_find_changes()
                 plinebuf = dline->linebuf;
                 linebuf = pline->linebuf;
                 lineattr = pline->lineattr;
-                for (y = 0; y < dline->maxy; ++plineattr) {
+                for (ccol = 0; ccol < dline->maxy; ++plineattr) {
                     if ( *plinebuf != *linebuf
                             || !bg_equiv_map[8 * ((uint8_t)(*plineattr & 0x1C) >> 2)
                             + ((uint8_t)(*lineattr & 0x1C) >> 2)]
                             || !fg_equiv_map[4 * (*plineattr & 3) + (*lineattr & 3)] ) {
-                        if (cline != vpos.line || y != vpos.col) {
+                        if (cline != vpos.line || ccol != vpos.col) {
                             if (inprint == 1) {
                                 lfvec[real_pos.line].lfprint(opline, linelen);
                                 linelen = 0;
                                 inprint = 0;
                             }
-                            if (cline || y)
-                                lfvec[cline].lfmove(cline, y);
+                            if (cline || ccol)
+                                lfvec[cline].lfmove(cline, ccol);
                             else
                                 Home();
                             vpos.line = cline;
-                            vpos.col = y;
+                            vpos.col = ccol;
                         }
                         if (!bg_equiv_map[8 * ((uint8_t)(*plineattr & 0x1C) >> 2)
                                 + ((uint8_t)(ref_cur_attr & 0x1C) >> 2)]
@@ -372,18 +372,17 @@ void tty_find_changes()
                     }
                     ++plinebuf;
                     ++linebuf;
-                    ++y;
+                    ++ccol;
                     ++lineattr;
                 }
                 if (pline->maxy > dline->maxy) {
-                    if ( inprint == 1 )
-                    {
+                    if ( inprint == 1 ) {
                         lfvec[real_pos.line].lfprint(opline, linelen);
                         linelen = 0;
                         inprint = 0;
                     }
                     if (cline != vpos.line || dline->maxy != vpos.col) {
-                        if ( cline || y )
+                        if ( cline || ccol )
                             lfvec[cline].lfmove(cline, dline->maxy);
                         else
                             Home();
