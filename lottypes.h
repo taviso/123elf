@@ -1,6 +1,9 @@
 #ifndef __LOTTYPES_H
 #define __LOTTYPES_H
 
+#define INVALID_HANDLE_VALUE ((struct SYSHANDLE *)-1)
+#define MAX_ROW 8191
+
 #pragma pack(push, 1)
 
 struct DISPLAYINFO
@@ -145,6 +148,12 @@ struct LINEFUNCS {
 struct SCREENPOS {
     uint32_t line;
     uint32_t col;
+};
+
+struct SYSHANDLE {
+    int fd;
+    uint16_t flags;
+    uint16_t _pad;
 };
 
 #pragma pack(pop)

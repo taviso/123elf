@@ -269,9 +269,84 @@ function verify_file_ops()
         sed 's/\s\+/ /g;$!d' "${scrdmp}" > "${result}"
 
         verifycontents "${result}" "${output##*/} RO CMD \n"
-        endtest
+        endtest "${result}" "${output}"
     }
 
+    # Read a few lines of varying length
+    starttest "/File Import Text" && {
+        printf "%c" {A..Z} $'\n' > ${result}
+        printf "%c" {a..z} $'\n' >> ${result}
+        printf "%c" {0..9} $'\n' >> ${result}
+
+        # Put some delimiters in there to make sure they're interpreted correctly.
+        printf "%s" {A..Z}, $'\n' >> ${result}
+        printf "%s" {A..Z}$'\t' $'\n' >> ${result}
+
+        # Put some special characters in there.
+        printf "#@[]_!'{}()*&!$%%^&*()\n" >> ${result}
+
+        # Add a very long line (note: it will be truncated)
+        printf "%s" {A..Z}{A..Z} $'\n' >> ${result}
+
+        # Read as text
+        printf -v macro -- "-e '/fit{CE}%s~'" "${result}"
+        macro+=$(printrange "${output}" A1..IV8192)
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifysum "${output}" 1980622935 10009
+        endtest "${result}" "${output}"
+    }
+    starttest "/File Import Numbers" && {
+        # Put some delimiters in there to make sure they're interpreted correctly.
+        printf "%s" {0..255}, $'\n' >> ${result}
+        printf "%s" {0..255}$'\t' $'\n' >> ${result}
+
+        # Read as values
+        printf -v macro -- "-e '/fin{CE}%s~'" "${result}"
+        macro+=$(writerange "${output}" '@STRING(@SUM(A1..IV8192), 0)')
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifycontents "${output}" "65280"
+        endtest "${result}" "${output}"
+    }
+    starttest "/Data Parse" && {
+        macro=$(putstring A1 123X456Y789)
+        macro+=$(putstring A2 321X654Y987)
+        macro+=$(goto A1)
+        macro+=$(sendkeys '/dpfcfeV>>SV>>SV>>~i{CE}A1..A3~o{R}~g')
+        macro+=$(writerange "${result}" '@STRING(@SUM(B1..D2), 0)')
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifycontents "${result}" "3330"
+        endtest "${result}"
+    }
+    starttest "/File Import Overwrite" && {
+        printf "%s" {0..255}, $'\n' >> ${result}
+        printf "%s" {1..255}, $'\n' >> ${result}
+        printf "%s" {2..255}, $'\n' >> ${result}
+        printf "%s" {3..255}, $'\n' >> ${result}
+        printf "%s" {4..255}, $'\n' >> ${result}
+        macro=$(sendkeys "/fin{CE}${result}~")
+        macro+=$(goto A2)
+        # repeat at different offset
+        macro+=$(sendkeys "/fin{CE}${result}~")
+        macro+=$(writerange "${output}" '@STRING(@SUM(A1..IV8192), 0)')
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifycontents "${output}" "195830"
+        endtest "${result}" "${output}"
+    }
+    starttest "/File Import Numbers Mixed Labels/Values" && {
+        printf '"foo",123,"bar","245"\n' > ${result}
+        macro=$(sendkeys "/fin{CE}${result}~")
+        macro+=$(writerange "${output}" '@STRING(@SUM(A1..IV8192), 0)')
+        macro+=$(writerange "${result}" '@STRING(@VALUE(D1), 0)')
+        macro+=$(quit)
+        runmacro "${macro}"
+        verifycontents "${output}" "123"
+        verifycontents "${result}" "245"
+        endtest "${result}" "${output}"
+    }
     # Cleanup
     rm -rf "${output}" "${result}" "${lotdir}"
 }

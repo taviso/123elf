@@ -15,6 +15,7 @@
 #include <sys/ioctl.h>
 
 #include "unixterm.h"
+#include "unixtypes.h"
 #include "filemap.h"
 
 // The Lotus view of errno.
@@ -103,16 +104,6 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
     __unix_errno = errno;
     return -1;
 }
-
-#pragma pack(push, 1)
-struct unixflock {
-    uint16_t    l_type;
-    uint16_t    l_whence;
-    uint32_t    l_start;
-    uint32_t    l_len;
-    uint16_t    l_pid;
-};
-#pragma pack(pop)
 
 int __unix_fcntl(int fd, int cmd, void *arg)
 {
@@ -220,28 +211,6 @@ int __unix_fcntl(int fd, int cmd, void *arg)
     return -1;
 }
 
-struct unixstat {
-    uint16_t    st_dev;
-    uint16_t    st_ino;
-    uint16_t    st_mode;
-    uint16_t    st_nlink;
-    uint16_t    st_uid;
-    uint16_t    st_gid;
-    uint16_t    st_rdev;
-    uint16_t    pad;
-    uint32_t    st_size;
-    uint32_t    st_uatime;
-    uint32_t    st_umtime;
-    uint32_t    st_uctime;
-};
-
-#define UNIX_S_IFBLK 0x6000
-#define UNIX_S_IFREG 0x8000
-#define UNIX_S_IFLNK 0xA000
-#define UNIX_S_IFDIR 0x4000
-#define UNIX_S_IFCHR 0x2000
-#define UNIX_S_IFIFO 0x1000
-
 static int translate_linux_stat(const struct stat *linuxstat, struct unixstat *unixstat)
 {
     memset(unixstat, 0, sizeof *unixstat);
@@ -323,13 +292,17 @@ int __unix_open(const char *pathname, int flags, mode_t mode)
     return -1;
 }
 
+#define UNIX_SYSNAME_LEN 48
+
 int __unix_uname(char *sysname)
 {
     struct utsname name;
     if (uname(&name) != 0) {
         return -1;
     }
-    strncpy(sysname, name.sysname, 48);
+
+    strncpy(sysname, name.sysname, UNIX_SYSNAME_LEN);
+    sysname[UNIX_SYSNAME_LEN - 1] = 0;
     return 0;
 }
 
@@ -379,16 +352,6 @@ int __unix_access(const char *pathname, int mode)
 
     return 0;
 }
-
-#pragma pack(push, 1)
-struct unixdirent {
-    uint16_t    d_ino;
-    uint32_t    d_off;
-    uint16_t    d_reclen;
-    uint16_t    d_type;
-    char        d_name[256];
-};
-#pragma pack(pop)
 
 struct unixdirent * __unix_readdir(DIR *dirp)
 {

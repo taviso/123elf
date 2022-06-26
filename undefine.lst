@@ -276,3 +276,4 @@ adjust_showme_cols
 scan_showme_rows
 reset_showme
 tty_find_changes
+fm_file_import
