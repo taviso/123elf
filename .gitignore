@@ -16,3 +16,4 @@ drawtest
 binutils-*
 gzip-*
 keymap/keymap
+compile_commands.json
