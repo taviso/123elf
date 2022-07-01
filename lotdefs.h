@@ -3,11 +3,26 @@
 
 #include <stdint.h>
 
+#define MAX_ROW  8191
+#define MAX_ROWS (MAX_ROW + 1)
+#define MAX_COL  255
+#define MAX_COLS (MAX_COL + 1)
+#define NUM_WIN 26
+
 enum {
     FILE_MODE_UNIX,
     FILE_MODE_DOSUPPER,
     FILE_MODE_DOSLOWER,
 };
+
+enum {
+    VMR_0,
+    VMR_1,
+    VMR_2,
+    VMR_3,
+};
+
+#define LpiVmr(type, v) ((type)(vmr[v]))
 
 extern uint8_t *vmr[];
 extern struct SCREENPOS vpos;
@@ -15,12 +30,20 @@ extern struct SCREENPOS currpos;
 extern struct SCREENPOS real_pos;
 extern uint16_t inprint;
 extern uint8_t ref_cur_attr;
+extern struct DISPLAYWINDOW win[NUM_WIN];
+extern int8_t cell_col_invalid[MAX_COLS];
 
-extern uint16_t *displayed_window;
+extern struct DISPLAYWINDOW *displayed_window;
+extern struct RECT *region;
+extern uint16_t origx;
+extern uint16_t origy;
+extern uint16_t origz;
+extern uint16_t region_top;
+extern uint16_t row_valid;
 
 extern int get_column_labels(uint16_t, uint16_t, char *, uint16_t);
 
-extern int (*x_disp_txt_set_pos)(uint16_t, uint16_t);
+extern void (*x_disp_txt_set_pos)(uint16_t col, uint16_t line);
 extern int (*x_disp_txt_write)(uint16_t byteslen, char *lmbcsptr, int attrs);
 
 extern int V3_disp_grph_compute_view(void *);
@@ -43,21 +66,21 @@ extern int (*Atset)(char);
 extern void (*opcodes[])(void);
 extern uint16_t display_turned_off;
 extern void gen_disp_txt_clear();
-extern void gen_disp_txt_copy();
+extern int gen_disp_txt_copy(uint16_t width, uint16_t height, uint16_t dstx, uint16_t dsty);
 extern void gen_disp_txt_curs_off();
 extern void gen_disp_txt_curs_on();
 extern void gen_disp_txt_curs_type();
-extern void gen_disp_txt_fg_clear();
+extern void gen_disp_txt_fg_clear(uint16_t cols, uint16_t lines);
 extern void gen_disp_txt_fit();
 extern void gen_disp_txt_lock();
 extern void gen_disp_txt_set_bg();
-extern int gen_disp_txt_set_pos(uint16_t, uint16_t);
+extern void gen_disp_txt_set_pos(uint16_t col, uint16_t line);
 extern void gen_disp_txt_set_pos_hpu();
 extern void gen_disp_txt_size();
 extern void gen_disp_txt_sync();
 extern void gen_disp_txt_unlock();
 extern int gen_disp_txt_write(uint16_t, char *, int);
-extern void gen_disp_txt_zone();
+extern void gen_disp_txt_zone(int16_t byteslen, char *lmbcsptr, int attrs, int16_t startpad, int16_t endpad);
 extern void stdio_flush();
 extern void tty_disp_close();
 extern void tty_disp_close_retain_termcap();
@@ -78,11 +101,11 @@ extern void *x_disp_post_system;
 extern void *x_disp_pre_system;
 extern void *x_disp_text;
 extern void *x_disp_txt_clear;
-extern void *x_disp_txt_copy;
+extern int (*x_disp_txt_copy)(uint16_t width, uint16_t height, uint16_t dstx, uint16_t dsty);
 extern void (*x_disp_txt_curs_off)();
 extern void (*x_disp_txt_curs_on)();
-extern void *x_disp_txt_curs_type;
-extern void *x_disp_txt_fg_clear;
+extern void (*x_disp_txt_curs_type)();
+extern void (*x_disp_txt_fg_clear)(uint16_t cols, uint16_t lines);
 extern void *x_disp_txt_fit;
 extern void *x_disp_txt_lock;
 extern void *x_disp_txt_set_bg;
@@ -90,7 +113,7 @@ extern void *x_disp_txt_set_pos_hpu;
 extern void *x_disp_txt_size;
 extern void *x_disp_txt_sync;
 extern void *x_disp_txt_unlock;
-extern void *x_disp_txt_zone;
+extern void (*x_disp_txt_zone)(int16_t byteslen, char *lmbcsptr, int attrs, int16_t startpad, int16_t endpad);
 extern void *dliopen;
 extern void *dliclose;
 extern int (*Replace_cursor)(void);
@@ -110,6 +133,15 @@ extern void full_redisplay();
 extern int erase_screen();
 extern int invalidate_screen();
 extern int16_t need_to_close;
+extern int16_t screen_width_hpus;
+extern int16_t row_label_hpus;
+extern int16_t separate_graph_window;
+extern struct {
+    uint16_t hpu_per_col;
+    uint16_t _pad;
+    void *disp_txt_size;
+    void *disp_txt_fit;
+} display_metrics;
 
 extern struct PSCREEN pscreen;
 extern struct PSCREEN dscreen;
@@ -122,12 +154,17 @@ extern char *opline;
 extern uint32_t scr_init_state;
 extern int get_screen_size();
 extern void *lts_malloc(size_t size);
+extern void *alloc_mptr(char tag, uint16_t size, int vmr);
 extern int clear_screen_buffer(struct PSCREEN *screenbuf);
 extern char *tc_setup_line_funcs();
 
 extern struct LOTUSFUNCS *core_funcs;
 extern int RastHandle;
 extern int16_t file_mode;
+extern uint16_t num_text_cols;
+extern uint16_t num_text_rows;
+extern uint16_t hpu_per_col;
+extern uint8_t flags[8];
 
 extern void slash_convert(char *path, uint16_t len);
 extern uint16_t fname_real_len(const char *start, const char *end);
@@ -167,4 +204,21 @@ extern int16_t make_number_cell(struct CELLCOORD cell);
 extern int file_finished_shell(struct SYSHANDLE **fd, uint16_t result);
 extern int drop_one();
 extern int sheet_modified(int16_t sheetnum);
+extern int erase_window_cellhighlight(struct DISPLAYWINDOW *dp);
+extern int set_dspcache(uint16_t size);
+extern int16_t init_showme(int16_t termrows);
+extern void map_win_screen_info(struct DISPLAYWINDOW *dp);
+extern void map_row_invalid(struct DISPLAYWINDOW *dp);
+extern void map_col_invalid(struct DISPLAYWINDOW *dp);
+extern void set_dirty(unsigned int line, unsigned int col, int len, int, int16_t dirty);
+extern uint16_t check_hidden_columns(uint16_t, int16_t);
+extern void setup_column_widths(uint16_t, int16_t);
+extern int16_t get_col_title_width();
+extern void reset_dspcache(uint16_t basecol, uint16_t baserow, uint16_t endrow);
+extern void row_set_pos();
+extern int16_t get_row_label(int16_t row, char *buf);
+extern void display_scan_row(struct CELLCOORD start, int16_t numcols);
+extern int win_column_width(uint16_t, int16_t);
+extern void tty_disp_info(struct DISPLAYINFO *dpyinfo);
+
 #endif

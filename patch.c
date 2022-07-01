@@ -46,16 +46,16 @@ int display_column_labels()
         column_labels = get_column_labels(dspinfo[10],
                                           dspinfo[11],
                                           buf,
-                                          displayed_window[30]);
+                                          displayed_window->regiona.width);
     }
 
     get_column_labels(dspinfo[9],
-                      displayed_window[13],
+                      displayed_window->field_1A,
                       &buf[column_labels],
-                      displayed_window[11]);
-    x_disp_txt_set_pos(displayed_window[19],
-                       displayed_window[18] - 1);
-    return x_disp_txt_write(displayed_window[21], buf, 0);
+                      displayed_window->regionb.width);
+    x_disp_txt_set_pos(displayed_window->ypos,
+                       displayed_window->xpos - 1);
+    return x_disp_txt_write(displayed_window->columns, buf, 0);
 }
 
 // This routine normally installs the original termios state but I would

@@ -156,5 +156,35 @@ struct SYSHANDLE {
     uint16_t _pad;
 };
 
+struct RECT {
+    uint16_t topleftrow;
+    uint16_t topleftcol;
+    uint16_t height;
+    uint16_t width;
+};
+
+struct DISPLAYWINDOW {
+    uint16_t *row_invalid;
+    uint16_t *col_invalid;
+    struct RECT win;
+    struct RECT regionb;
+    uint16_t sheetnum;
+    uint16_t field_1A;
+    uint16_t field_1C;
+    uint16_t field_1E;
+    uint16_t field_20;
+    uint16_t field_22;
+    uint16_t xpos;
+    uint16_t ypos;
+    uint16_t real_height;
+    uint16_t columns;
+    uint8_t field_2C;
+    uint8_t field_2D;
+    struct RECT regionc;
+    struct RECT regiona;
+    struct RECT regiond;
+    uint16_t field_46;
+};
+
 #pragma pack(pop)
 #endif

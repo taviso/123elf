@@ -4,7 +4,7 @@ OBJCOPY_FLAGS  = --wildcard --localize-symbols=localize.lst --globalize-symbols=
 OBJCOPY_FILES = localize.lst globalize.lst redefine.lst undefine.lst
 OPTFLAGS = -O2
 CFLAGS  = -freg-struct-return -W -Wall -m32 $(OPTFLAGS) -fno-stack-protector
-CPPFLAGS = -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I ttydraw -Wno-unused-parameter
+CPPFLAGS = -I. -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I ttydraw -Wno-unused-parameter
 ASFLAGS = --32
 LDFLAGS = $(CFLAGS) -lc -B. -Wl,-b,$(BFD_OUT_TARGET) -no-pie
 LDLIBS = -lncurses -ltinfo -lm
@@ -52,7 +52,10 @@ ttydraw/ttydraw.a:
 atfuncs/atfuncs.a:
 	$(MAKE) -C atfuncs OPTFLAGS="$(OPTFLAGS)"
 
-bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o filename.o showme.o import.o | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
+123OBJS=src/showme.o   \
+        src/invalid.o
+
+bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o filename.o import.o $(123OBJS) | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
 	@mkdir -p $(@D)
 	$(CC) forceplt.o $(CFLAGS) $(LDFLAGS) $^ -Wl,--whole-archive,ttydraw/ttydraw.a,atfuncs/atfuncs.a,--no-whole-archive -o $@ $(LDLIBS)
 
@@ -70,7 +73,7 @@ $(sort $(KEYMAPS)): keymap/keymap
 keymaps: $(KEYMAPS)
 
 clean:
-	$(RM) *.o coffsyrup 123
+	$(RM) *.o src/*.o coffsyrup 123
 	$(RM) vgcore.* core.* core
 	$(RM) -r bin share/lotus/keymaps
 	$(MAKE) -C ttydraw clean

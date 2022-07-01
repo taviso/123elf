@@ -7,6 +7,7 @@ enum {
     LOTERR_WORKSHEET_UNNAMED    = 9130,
     LOTERR_FILE_IN_USE          = 9043,
     LOTERR_CELL_IMMUTABLE       = 9034,
+    LOTERR_MEMORY_FULL          = 8962,
 };
 
 #endif

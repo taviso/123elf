@@ -67,3 +67,6 @@ setjmp
 file_name_split
 ready_to_read
 find_row
+reset_screen_dimensions
+init_invalidation
+find_invalid_column

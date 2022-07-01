@@ -45,7 +45,6 @@ x_disp_close
 x_disp_close_retain_termcap
 x_disp_grph_load_font
 tty_disp_open
-reset_screen_dimensions
 core_funcs
 dliopen
 dliclose
@@ -67,3 +66,15 @@ file_path_expand
 check_lengths
 vpos
 inprint
+display_region
+origx
+origy
+origz
+region
+setup_column_widths
+setup_invalid_columns
+display_scan_row
+region_top
+row_set_pos
+row_valid
+cell_col_invalid
