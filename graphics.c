@@ -7,6 +7,7 @@
 #include "lottypes.h"
 #include "lotdefs.h"
 #include "lotfuncs.h"
+#include "loterrs.h"
 #include "ttydraw.h"
 #include "graphics.h"
 #include "draw.h"
@@ -122,7 +123,7 @@ static int tty_disp_grph_txt_size(size_t strarglen, const char *strarg)
 
 // The Lotus implementation of this reports that no graphics are supported
 // so we must override it to report graphics support.
-static void tty_disp_info(struct DISPLAYINFO *dpyinfo)
+void tty_disp_info(struct DISPLAYINFO *dpyinfo)
 {
     dpyinfo->num_text_cols = COLS;
     dpyinfo->num_text_rows = LINES;
