@@ -551,6 +551,48 @@ function check_menu_options()
         verifysum "${scrdmp}" 1287976195 100100
         endtest "${scrdmp}"
     }
+
+    starttest "/dpfe Scrolling" && {
+        macro=$(noclock)
+        macro+=$(sendkeys '/dfA1..IU8191~~~256*8192~')
+        macro+=$(goto J512)
+        macro+=$(sendkeys '{D 5}')
+        macro+=$(sendkeys 'labellabellabel~')
+        macro+=$(sendkeys '/dpfcfe{D 20}')
+        macro+=$(screendump)
+        macro+=$(sendkeys '~q')
+        macro+=$(quit)
+        LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=1000 LINES=100 runmacro "${macro}"
+        verifysum "${scrdmp}" 3851079398 100100
+        endtest "${scrdmp}"
+    }
+
+    starttest "Insert Columns" && {
+        macro=$(noclock)
+        macro+=$(sendkeys '/dfA1..IU8191~~~256*8192~')
+        macro+=$(goto J512)
+        macro+=$(sendkeys '/wic~')
+        macro+=$(screendump)
+        macro+=$(quit)
+        LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=1000 LINES=100 runmacro "${macro}"
+        verifysum "${scrdmp}" 1776183038 100100
+        endtest "${scrdmp}"
+    }
+
+    starttest "Scroll Titles" && {
+        macro=$(noclock)
+        macro+=$(sendkeys '/dfA1..IU8191~~~256*8192~')
+        macro+=$(goto J512)
+        macro+=$(sendkeys '{R 5}{D 5}')
+        macro+=$(sendkeys '/wtb')
+        macro+=$(sendkeys '{R 50}{D 50}{L 10}{U 10}')
+        macro+=$(screendump)
+        macro+=$(quit)
+        LOTUS_SCREEN_DUMP="${scrdmp}" COLUMNS=1000 LINES=100 runmacro "${macro}"
+        verifysum "${scrdmp}" 3930003828 100100
+        endtest "${scrdmp}"
+    }
+
     return 0;
 }
 
