@@ -87,6 +87,7 @@ static int tty_disp_text()
     clear();
     refresh();
     move(0, 0);
+    repaint();
     return 2;
 }
 
@@ -128,12 +129,13 @@ void tty_disp_info(struct DISPLAYINFO *dpyinfo)
     dpyinfo->num_text_cols = COLS;
     dpyinfo->num_text_rows = LINES;
     dpyinfo->graphics = true;
-    dpyinfo->full_screen_graph = true;
+    dpyinfo->full_screen_graph = false;
     dpyinfo->hpu_per_col = 1;
     dpyinfo->graph_cols = COLS;
     dpyinfo->graph_rows = LINES;
     dpyinfo->graph_col_res = 1;
     dpyinfo->graph_row_res = 1;
+    // This is the size of a data structure and must be 178.
     dpyinfo->view_set_size = 178;
     dpyinfo->iscolor = true;
     dpyinfo->sep_graph_win = false;
@@ -239,7 +241,14 @@ static void draw_text_label()
         case 4:
                 warnx("unsupported text angle, please report this!");
     }
+
     refresh();
+
+    // When we refresh, we might clear the parts of the window we don't manage,
+    // so let 123 know it should redraw them.
+    if (graph_in_window()) {
+        repaint();
+    }
     return;
 }
 
@@ -322,8 +331,11 @@ void tty_find_changes()
             ++linedata;
         }
         if (dscreen.nlines) {
-            for (k = &dscreen.linedata[dscreen.nlines - 1]; dscreen.nlines && !k->maxy; --k)
+            for (k = &dscreen.linedata[dscreen.nlines - 1];
+                 dscreen.nlines && !k->maxy;
+                 --k) {
                 --dscreen.nlines;
+            }
         }
         cline = 0;
         dline = dscreen.linedata;
@@ -354,7 +366,7 @@ void tty_find_changes()
                         }
                         if (!bg_equiv_map[8 * ((uint8_t)(*plineattr & 0x1C) >> 2)
                                 + ((uint8_t)(ref_cur_attr & 0x1C) >> 2)]
-                                || !fg_equiv_map[4 * (*plineattr & 3) + (ref_cur_attr & 3)]) {
+                         || !fg_equiv_map[4 * (*plineattr & 3) + (ref_cur_attr & 3)]) {
                             if (inprint == 1) {
                                 lfvec[real_pos.line].lfprint(opline, linelen);
                                 linelen = 0;
@@ -383,18 +395,43 @@ void tty_find_changes()
                         inprint = 0;
                     }
                     if (cline != vpos.line || dline->maxy != vpos.col) {
-                        if ( cline || ccol )
+                        if (cline || ccol) {
                             lfvec[cline].lfmove(cline, dline->maxy);
-                        else
+                        } else {
                             Home();
+                        }
                         vpos.line = cline;
                         vpos.col = dline->maxy;
                     }
-                    if (!bg_equiv_map[8 * ((uint8_t)(ref_cur_attr & 0x1C) >> 2)] || !fg_equiv_map[4 * (ref_cur_attr & 3)]) {
+                    if (!bg_equiv_map[8 * ((uint8_t)(ref_cur_attr & 0x1C) >> 2)]
+                     || !fg_equiv_map[4 * (ref_cur_attr & 3)]) {
                         Atset(0);
                         ref_cur_attr = 0;
                     }
-                    Clrtoend();
+
+                    // Clrtoend uses "ce" termcap sequence to clear the rest
+                    // of the line efficiently. The problem is, what if we
+                    // have a graph window open?
+                    if (graph_in_window() == true) {
+                        // Okay, there might be a graph window open.
+                        // Are we in the graph rect?
+                        if (real_pos.line <= gview_srect.topleftrow)
+                            goto nographwin;
+
+                        if (real_pos.line >= gview_srect.topleftrow
+                                + gview_srect.height)
+                            goto nographwin;
+
+                        // It does look like we have a graph window. Let's pad
+                        // the rest of the link with blanks instead of using
+                        // termcaps.
+                        while (real_pos.col < gview_srect.topleftcol) {
+                            lfvec[real_pos.line].lfprint(" ", 1);
+                        }
+                    } else {
+                      nographwin:
+                        Clrtoend();
+                    }
                 }
             }
             ++cline;
@@ -407,7 +444,8 @@ void tty_find_changes()
                 linelen = 0;
                 inprint = 0;
             }
-            if (!bg_equiv_map[8 * ((uint8_t)(ref_cur_attr & 0x1C) >> 2)] || !fg_equiv_map[4 * (ref_cur_attr & 3)]) {
+            if (!bg_equiv_map[8 * ((uint8_t)(ref_cur_attr & 0x1C) >> 2)]
+             || !fg_equiv_map[4 * (ref_cur_attr & 3)]) {
                 Atset(0);
                 ref_cur_attr = 0;
             }
@@ -431,7 +469,8 @@ void tty_find_changes()
             lfvec[real_pos.line].lfprint(opline, linelen);
             inprint = 0;
         }
-        if (!bg_equiv_map[(uint8_t)(ref_cur_attr & 0x1C) >> 2] || !fg_equiv_map[ref_cur_attr & 3]) {
+        if (!bg_equiv_map[(uint8_t)(ref_cur_attr & 0x1C) >> 2]
+         || !fg_equiv_map[ref_cur_attr & 3]) {
             Atset(0);
             ref_cur_attr = 0;
         }

@@ -35,6 +35,7 @@ extern int8_t cell_col_invalid[MAX_COLS];
 
 extern struct DISPLAYWINDOW *displayed_window;
 extern struct RECT *region;
+extern struct RECT gview_srect;
 extern uint16_t origx;
 extern uint16_t origy;
 extern uint16_t origz;
@@ -136,6 +137,9 @@ extern int16_t need_to_close;
 extern int16_t screen_width_hpus;
 extern int16_t row_label_hpus;
 extern int16_t separate_graph_window;
+extern int16_t graph_in_window();
+extern void redraw();
+extern void repaint();
 extern struct {
     uint16_t hpu_per_col;
     uint16_t _pad;
@@ -148,6 +152,8 @@ extern struct PSCREEN dscreen;
 // Note: these are structures.
 extern uint8_t bg_equiv_map[64];
 extern uint8_t fg_equiv_map[16];
+
+extern int16_t gph_display_flag;
 
 extern struct LINEFUNCS *lfvec;
 extern char *opline;

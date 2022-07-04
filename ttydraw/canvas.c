@@ -27,17 +27,22 @@ caca_canvas_t * caca_create_canvas(int width, int height)
 {
     static caca_canvas_t canvas;
     static struct caca_frame frame;
-    caca_canvas_t * cv;
+    caca_canvas_t * cv = &canvas;
 
-    if (canvas.refcount != 0)
-        return NULL;
+    if (cv->refcount != 0) {
+        // It is not currently possible to change the width/height.
+        if (cv->frames[0].width != width || cv->frames[0].height != height)
+            return NULL;
+        // Just increment the refcount.
+        cv->refcount++;
+        return cv;
+    }
 
     if (width < 0 || height < 0) {
         seterrno(EINVAL);
         return NULL;
     }
 
-    cv = &canvas;
     cv->refcount++;
     cv->autoinc = 0;
     cv->resize_callback = NULL;
@@ -73,7 +78,9 @@ int caca_get_canvas_height(caca_canvas_t const *cv)
 
 int caca_free_canvas(caca_canvas_t *cv)
 {
-    cv->refcount--;
+    if (cv) {
+        cv->refcount--;
+    }
     return 0;
 }
 
