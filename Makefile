@@ -68,7 +68,7 @@ keymap/keymap:
 # This generates the keymaps in a seperate directory based on the first letter.
 $(sort $(KEYMAPS)): keymap/keymap
 	mkdir -p share/lotus/keymaps/$(shell printf "%c" $@)
-	keymap/keymap $@ > share/lotus/keymaps/$(shell printf "%c" $@)/$@
+	-keymap/keymap $@ > share/lotus/keymaps/$(shell printf "%c" $@)/$@
 
 keymaps: $(KEYMAPS)
 
