@@ -45,7 +45,7 @@ void __attribute__((destructor)) fini_terminal_settings()
 int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
 {
     int action;
-    struct termios tio = {0};
+    struct termios tio;
 
     if (argp == NULL) {
         return -1;
