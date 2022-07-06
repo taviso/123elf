@@ -415,7 +415,7 @@ void tty_find_changes()
                     if (graph_in_window() == true) {
                         // Okay, there might be a graph window open.
                         // Are we in the graph rect?
-                        if (real_pos.line <= gview_srect.topleftrow)
+                        if (real_pos.line < gview_srect.topleftrow)
                             goto nographwin;
 
                         if (real_pos.line >= gview_srect.topleftrow
