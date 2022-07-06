@@ -13,6 +13,8 @@ Here are some screenshots of Lotus 1-2-3 on Linux.
 |--|--|--|--|
 | Interactive, live updating charts. | Context sensitive help. | Configurable graphs. | Working with multiple sheets.
 
+See more screenshots and gifs in the [wiki](https://github.com/taviso/123elf/wiki/Getting-Started).
+
 ## Building
 
 ### Dependencies
