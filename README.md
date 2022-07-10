@@ -11,7 +11,7 @@ Here are some screenshots of Lotus 1-2-3 on Linux.
 
 | ![liveupdate_small](https://user-images.githubusercontent.com/123814/177441429-ee4ec586-46f5-45bf-96a0-0715215d2a0d.png) | ![help_small](https://user-images.githubusercontent.com/123814/177441458-435be771-2934-4199-9115-5b81311d89d2.png) | ![stock_small](https://user-images.githubusercontent.com/123814/177441483-f52fc2d3-9c3b-4c74-b805-99922c7c8b16.png) | ![perspective](https://user-images.githubusercontent.com/123814/173251674-cb29357d-8686-4dde-83bc-17c441957512.png)
 |--|--|--|--|
-| Interactive, live updating charts. | Context sensitive help. | Configurable graphs. | Working with multiple sheets.
+| Interactive, live-updating ASCII-art charts. | Context sensitive help. | Highly configurable graphs. | Work with multiple sheets.
 
 See more screenshots and gifs in the [wiki](https://github.com/taviso/123elf/wiki/Getting-Started).
 
