@@ -14,6 +14,8 @@ The 123 command is a spreadsheet application for UNIX-based systems that can
 be used in interactive mode to create and modify financial and  scientific
 models.
 
+%global debug_package %{nil}
+
 %prep
 %setup -q -n 123elf-%{version} -a 1 -a 2
 
