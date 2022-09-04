@@ -1,5 +1,5 @@
 Name:           lotus123r3
-Version:        1.0.0rc2
+Version:        1.0.0rc3
 Release:        1%{?dist}
 Summary:        Create, modify, and process financial or scientific models.
 License:        Abandonware
