@@ -1,0 +1,1 @@
+--add-symbol fmt_cpy=.text:0x6e530,function,local

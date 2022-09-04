@@ -516,6 +516,7 @@ function show_help()
     printf "    file    - check that file management works\n"
     printf "    stress  - generate lots of data and check results\n"
     printf "    gold    - generate golden outputs\n"
+    printf "    crash   - verify testcases for fixed bugs work\n"
     printf "    help    - print this message\n"
     printf "    all     - run all available tests\n"
     printf "\n"
@@ -592,6 +593,14 @@ function check_menu_options()
         verifysum "${scrdmp}" 3930003828 100100
         endtest "${scrdmp}"
     }
+
+   #starttest "View Graph" && {
+   #    macro=$(sendkeys '/dfA1..A32~~~64~')
+   #    macro+=$(sendkeys '{GRAPH}')
+   #    macro+=$(sendkeys '{GRAPH}')
+   #    macro+=$(quit)
+   #    runmacro "${macro}"
+   #}
 
     return 0;
 }
@@ -695,6 +704,14 @@ function check_calculations()
     verify_result_contents '@UPPER("hello")' "HELLO"
 }
 
+function check_crash_bugs()
+{
+    starttest "issue #103" && {
+        runmacro "~$(quit)" "testcases/bug103.wk3"
+        endtest
+    }
+}
+
 function run_all_tests()
 {
     verify_output_matches
@@ -702,6 +719,7 @@ function run_all_tests()
     check_menu_options
     verify_file_ops
     start_stress_test
+    check_crash_bugs
     exit 0
 }
 
@@ -713,6 +731,7 @@ case "${1}" in
     menu) check_menu_options;;
     file) verify_file_ops;;
     stress) start_stress_test;;
+    crash) check_crash_bugs;;
     *) show_help "${0##*/}" >&2;;
 esac
 

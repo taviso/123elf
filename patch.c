@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <alloca.h>
 #include <curses.h>
+#include <string.h>
 
 #include "lottypes.h"
 #include "lotdefs.h"
@@ -76,4 +77,31 @@ int set_raw_mode()
 int unset_raw_mode()
 {
     return 0;
+}
+
+uint32_t fmt_cpy(uint32_t *dst, uint32_t *src, uint16_t src_len)
+{
+    static const uint32_t dst_max = 256;
+    uint32_t *dptr, *dst_end = dst + dst_max / 4;
+
+    for (dptr = dst; src_len >= 4 && dptr < dst_end; dptr++) {
+        *dptr = *src++;
+        src_len -= 4;
+        if (*dptr > 0x80000000) {
+            *dptr &= 0x7fffffff;
+            if (src_len != 0) {
+                uint8_t *sptr = (uint8_t *)src;
+                uint8_t reps = *sptr;
+                if (dptr + reps + 1 >= dst_end) {
+                    // prevent overflow
+                    break;
+                }
+                memdup(dptr, 4, reps*4 + 4);
+                src_len -= 1;
+                dptr += reps;
+                src = (uint32_t *)(sptr+1);
+            }
+        }
+    }
+    return dptr - dst;
 }

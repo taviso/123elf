@@ -1,7 +1,7 @@
 BFD_INP_TARGET = coff-i386
 BFD_OUT_TARGET = coff-i386
-OBJCOPY_FLAGS  = --wildcard --localize-symbols=localize.lst --globalize-symbols=globalize.lst --redefine-syms=redefine.lst
-OBJCOPY_FILES = localize.lst globalize.lst redefine.lst undefine.lst
+OBJCOPY_FLAGS  = --wildcard --localize-symbols=localize.lst --globalize-symbols=globalize.lst --redefine-syms=redefine.lst $(shell cat symbols.lst)
+OBJCOPY_FILES = localize.lst globalize.lst redefine.lst undefine.lst symbols.lst
 OPTFLAGS = -O2
 CFLAGS  = -freg-struct-return -W -Wall -m32 $(OPTFLAGS) -fno-stack-protector
 CPPFLAGS = -I. -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I ttydraw -Wno-unused-parameter
