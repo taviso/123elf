@@ -292,3 +292,4 @@ setup_invalid_columns
 invalidate_cell_cols
 find_invalid_column
 tty_disp_info
+FUN_080bb148

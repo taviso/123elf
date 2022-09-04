@@ -39,7 +39,7 @@ orig/123.o:
 	@false
 
 123.o: orig/123.o $(OBJCOPY_FILES) | coffsyrup
-	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) $< $@
+	objcopy -I $(BFD_INP_TARGET) -O $(BFD_OUT_TARGET) $(OBJCOPY_FLAGS) --add-symbol FUN_080bb148=.text:0x6e530,function,local $< $@
 	coffsyrup $@ $(@:.o=.tmp.o) $$(cat undefine.lst)
 	mv $(@:.o=.tmp.o) $@
 
