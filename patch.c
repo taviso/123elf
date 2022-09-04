@@ -79,19 +79,10 @@ int unset_raw_mode()
     return 0;
 }
 
-uint32_t FUN_080bb148(uint32_t *dst, uint32_t *src, uint16_t src_len)
+uint32_t fmt_cpy(uint32_t *dst, uint32_t *src, uint16_t src_len)
 {
-    void *retaddr =  __builtin_extract_return_addr(__builtin_return_address(0));
-
-    // determine the right buffer size based on the function that called us
-    uint32_t dst_len = 0;
-    if (memcmp(retaddr,"\x66\x89\x85\xec\xfb\xff\xff",7) == 0) { // MOV word ptr [EBP + local_418],AX (process_fmt())
-        dst_len = 1024;
-    } else if (memcmp(retaddr,"\x83\xc4\x0c",3) == 0) { // ADD ESP, 0xc (fmt_cell_combine())
-        dst_len = 256;
-    }
-
-    uint32_t *dptr, *dst_end = dst + dst_len/4;
+    static const uint32_t dst_max = 256;
+    uint32_t *dptr, *dst_end = dst + dst_max / 4;
 
     for (dptr = dst; src_len >= 4 && dptr < dst_end; dptr++) {
         *dptr = *src++;
