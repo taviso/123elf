@@ -293,3 +293,4 @@ invalidate_cell_cols
 find_invalid_column
 tty_disp_info
 fmt_cpy
+mr_step_wait

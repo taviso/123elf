@@ -1,6 +1,6 @@
 LDLIBS = -lncurses -ltinfo
 CFLAGS = -ggdb3 -O0
-CPPFLAGS = -W -Wall -Wno-missing-field-initializers -Wno-sign-compare -Wno-unused-parameter -Wno-pointer-sign
+CPPFLAGS = -I.. -W -Wall -Wno-missing-field-initializers -Wno-sign-compare -Wno-unused-parameter -Wno-pointer-sign
 LDFLAGS = $(CFLAGS)
 
 .PHONY: clean

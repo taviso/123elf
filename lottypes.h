@@ -130,7 +130,7 @@ struct PATHNAME {
 struct MACXRTNS {
     const char * (*get_mac_text)(int16_t n);
     uint32_t mac_stop;
-    uint32_t get_mac_name;
+    void (*get_mac_name)(char **str);
     uint32_t mac_restart;
 };
 

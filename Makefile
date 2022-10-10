@@ -53,7 +53,8 @@ atfuncs/atfuncs.a:
 	$(MAKE) -C atfuncs OPTFLAGS="$(OPTFLAGS)"
 
 123OBJS=src/showme.o   \
-        src/invalid.o
+        src/invalid.o  \
+        src/display.o
 
 bin/123: 123.o dl_init.o main.o wrappers.o patch.o filemap.o graphics.o draw.o filename.o import.o $(123OBJS) | ttydraw/ttydraw.a atfuncs/atfuncs.a forceplt.o
 	@mkdir -p $(@D)

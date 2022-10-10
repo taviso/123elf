@@ -78,3 +78,8 @@ region_top
 row_set_pos
 row_valid
 cell_col_invalid
+display_date
+display_filename
+filename_length
+mac_nobreak
+mac_str

@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+#include "kfun.h"
 #include "keymap.h"
 #include "lmbcs.h"
 

@@ -118,6 +118,8 @@ extern void (*x_disp_txt_zone)(int16_t byteslen, char *lmbcsptr, int attrs, int1
 extern void *dliopen;
 extern void *dliclose;
 extern int (*Replace_cursor)(void);
+extern void set_error_string(char *errstr, int16_t, uint8_t hlpmsgid);
+extern int mac_nobreak(void);
 
 extern int MapX(uint16_t);
 extern int MapY(uint16_t);
@@ -154,6 +156,7 @@ extern uint8_t bg_equiv_map[64];
 extern uint8_t fg_equiv_map[16];
 
 extern int16_t gph_display_flag;
+extern int16_t cmdhandle;
 
 extern struct LINEFUNCS *lfvec;
 extern char *opline;
@@ -171,6 +174,22 @@ extern uint16_t num_text_cols;
 extern uint16_t num_text_rows;
 extern uint16_t hpu_per_col;
 extern uint8_t flags[8];
+extern int gbl_clock_status;
+extern uint16_t clock_invalid;
+extern int display_filename(void);
+extern uint16_t filename_length;
+extern int display_date(void);
+extern int erase_background(uint16_t x,
+                            uint16_t y,
+                            uint16_t width,
+                            uint16_t height,
+                            int);
+extern int input_key(void);
+extern char *mac_str;
+extern struct CELLCOORD mac_cell;
+extern struct CELLCOORD mac_lastgoodcell;
+extern struct MACXRTNS mac_xrtns;
+extern int dspcref(uint8_t, struct CELLCOORD, int, char **, int16_t);
 
 extern void slash_convert(char *path, uint16_t len);
 extern uint16_t fname_real_len(const char *start, const char *end);
