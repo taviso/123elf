@@ -77,7 +77,7 @@ If you've used any spreadsheet before, you should be able to get started quickly
 If the status indicator in the top right says `READY`, try `/Quit Yes`.
 
 If it doesn't say `READY` (it might say `ERROR`, `HELP` `POINT`, `MENU` or
-something else), try hitting `Esc` until it goes back to `READY`.
+something else), try hitting <kbd>Esc</kbd> until it goes back to `READY`.
 
 - Q. I get the error 'invalid compressed data--code out of range'.
 
@@ -92,7 +92,7 @@ See the full [FAQ](https://github.com/taviso/123elf/wiki/FAQ) for more.
 - ~~The keyboard map seems to be incomplete~~ (XTerm compatible terminals should be [working](https://github.com/taviso/123elf/wiki/Keybindings), please test others!)
 - ~~Graphs don't work yet~~ (Partially working!, see [#5](https://github.com/taviso/123elf/issues/5)).
 - ~~Printing doesn't work yet~~ (Print to file works, print to lpr is being worked on, see [#50](https://github.com/taviso/123elf/issues/50)).
-- `STEP` mode does not display the current step (Nearly working! see [#101](https://github.com/taviso/123elf/issues/101).
+- `STEP` mode does not display the current step (Nearly working! see [#101](https://github.com/taviso/123elf/issues/101)).
 - There is limited i18n support (We're working on it, see [#73](https://github.com/taviso/123elf/issues/73)).
 - File an issue if you notice something, there are probably lots of minor issues that can be fixed!
 
