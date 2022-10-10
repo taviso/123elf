@@ -85,11 +85,14 @@ You have a *very* old gzip with broken lzw/pack support. You can try running
 the `gzip.sh` script to build a more recent gzip, then rerun the extract
 script.
 
+See the full [FAQ](https://github.com/taviso/123elf/wiki/FAQ) for more.
+
 ## Bugs
 
 - ~~The keyboard map seems to be incomplete~~ (XTerm compatible terminals should be [working](https://github.com/taviso/123elf/wiki/Keybindings), please test others!)
 - ~~Graphs don't work yet~~ (Partially working!, see [#5](https://github.com/taviso/123elf/issues/5)).
 - ~~Printing doesn't work yet~~ (Print to file works, print to lpr is being worked on, see [#50](https://github.com/taviso/123elf/issues/50)).
+- `STEP` mode does not display the current step (Nearly working! see [#101](https://github.com/taviso/123elf/issues/101).
 - There is limited i18n support (We're working on it, see [#73](https://github.com/taviso/123elf/issues/73)).
 - File an issue if you notice something, there are probably lots of minor issues that can be fixed!
 
