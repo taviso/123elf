@@ -20,9 +20,16 @@ static inline bool is_cell_valid(struct CELLCOORD cell)
           && cell.sheet == 0xFF);
 }
 
+static inline bool compare_cell(struct CELLCOORD a, struct CELLCOORD b)
+{
+    return a.row == b.row
+       &&  a.col == b.col
+       &&  a.sheet == b.sheet;
+}
+
 int mr_step_wait()
 {
-    static char stpstatus[256];
+    char stpstatus[64];
     uint32_t key  = input_key();
     uint16_t wkey = key;
     char *p;
@@ -48,22 +55,31 @@ int mr_step_wait()
         strcat(stpstatus, ": {");
         strcat(stpstatus, cmdname);
         strcat(stpstatus, "}");
+
+        if (mac_str) {
+            strcat(stpstatus, " (");
+            strncat(stpstatus, mac_str, 16);
+
+            // If the string is very long, truncate it.
+            if (strlen(mac_str) > 16)
+                strcat(stpstatus, "...");
+
+            strcat(stpstatus, ")");
+        }
     }
 
-    if (mac_str) {
-        strcat(stpstatus, " (");
-        strncat(stpstatus, mac_str, 16);
-
-        // If the string is very long, truncate it.
-        if (strlen(mac_str) > 16)
-            strcat(stpstatus, "...");
-
-        strcat(stpstatus, ")");
-    }
-
-    // Display it.
+    // Display it in the indicator panel.
     if (strlen(stpstatus)) {
-        set_error_string(stpstatus, 0, 0);
+        int16_t szneeded;
+        x_disp_txt_fit(strlen(stpstatus),
+                       stpstatus,
+                       32,
+                       &szneeded);
+
+        stpstatus[szneeded] = '\0';
+        x_disp_txt_set_pos(0, num_text_rows - 1);
+        x_disp_txt_set_bg(32 * hpu_per_col, 1, 0);
+        x_disp_txt_zone(strlen(stpstatus), stpstatus, 0, 0, 32 * hpu_per_col);
     }
 
     // Check if a key has been pressed.

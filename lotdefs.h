@@ -72,9 +72,12 @@ extern void gen_disp_txt_curs_off();
 extern void gen_disp_txt_curs_on();
 extern void gen_disp_txt_curs_type();
 extern void gen_disp_txt_fg_clear(uint16_t cols, uint16_t lines);
-extern void gen_disp_txt_fit();
+extern int gen_disp_txt_fit(int16_t strarglen,
+                            char *strarg,
+                            int16_t ncols,
+                            int16_t *bytesneeded);
 extern void gen_disp_txt_lock();
-extern void gen_disp_txt_set_bg();
+extern void gen_disp_txt_set_bg(uint16_t cols, uint16_t lines, int attrs);
 extern void gen_disp_txt_set_pos(uint16_t col, uint16_t line);
 extern void gen_disp_txt_set_pos_hpu();
 extern void gen_disp_txt_size();
@@ -107,9 +110,12 @@ extern void (*x_disp_txt_curs_off)();
 extern void (*x_disp_txt_curs_on)();
 extern void (*x_disp_txt_curs_type)();
 extern void (*x_disp_txt_fg_clear)(uint16_t cols, uint16_t lines);
-extern void *x_disp_txt_fit;
+extern int (*x_disp_txt_fit)(int16_t strarglen,
+                             char *strarg,
+                             int16_t ncols,
+                             int16_t *bytesneeded);
 extern void *x_disp_txt_lock;
-extern void *x_disp_txt_set_bg;
+extern void (*x_disp_txt_set_bg)(uint16_t cols, uint16_t lines, int attrs);
 extern void *x_disp_txt_set_pos_hpu;
 extern void *x_disp_txt_size;
 extern void *x_disp_txt_sync;
