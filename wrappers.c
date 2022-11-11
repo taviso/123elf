@@ -108,6 +108,9 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
 int __unix_fcntl(int fd, int cmd, void *arg)
 {
     static int unix_cmd_table[32] = {
+        [0] = F_DUPFD,
+        [1] = F_GETFD,
+        [2] = F_SETFD,
         [3] = F_GETFL,
         [4] = F_SETFL,
         [5] = F_GETLK,
@@ -205,8 +208,15 @@ int __unix_fcntl(int fd, int cmd, void *arg)
             ufl->l_pid = lfl.l_pid;
             return 0;
         }
+        case F_DUPFD: {
+            if (fcntl(fd, cmd, (int) arg) == -1) {
+                __unix_errno = errno;
+                return -1;
+            }
+            return 0;
+        }
         default:
-            err(EXIT_FAILURE, "fcntl: unknown cmd %u requested.\n", cmd);
+            err(EXIT_FAILURE, "fcntl: unknown cmd %u requested.", cmd);
     }
     return -1;
 }
