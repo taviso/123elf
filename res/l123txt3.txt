@@ -1,0 +1,4422 @@
+=group 0, 344 bytes
+; 0 <missing>
+1 "WAIT"
+2 "READY"
+3 "LABEL"
+4 "MENU"
+5 "VALUE"
+6 "POINT"
+7 "EDIT"
+8 "ERROR"
+9 "FIND"
+10 "FILES"
+11 "HELP"
+12 "STAT"
+13 "FRMT"
+14 "NAMES"
+; 15 <missing>
+16 "END "
+17 "FILE"
+18 "SCROLL"
+19 "CAP"
+20 "NUM"
+21 "OVR"
+22 "CALC"
+23 "CIRC"
+24 "STEP"
+25 "CMD "
+26 "SST "
+27 "ZOOM"
+28 "GROUP"
+29 "MEM"
+30 "HAL \"
+31 "RO"
+32 "SHIFT1"
+33 "SHIFT2"
+34 "SHIFT3"
+; 35 <missing>
+; 36 <missing>
+37 "Billionths"
+38 "Millionths"
+39 "Thousandths"
+40 "Thousands"
+41 "Millions"
+42 "Billions"
+43 "Trillions"
+44 "Times"
+
+=group 1, 4400 bytes
+; 0 <missing>
+1 "Porksheet"
+2 "Global  Insert  Delete  Column  Erase  Titles  Window  Status  Page  Hide"
+3 "Range"
+4 "Format Label Erase Name Justify Prot Unprot Input Value Trans Search"
+5 "Copy"
+6 "Copy a cell or range of cells"
+7 "Move"
+8 "Move a cell or range of cells"
+9 "File"
+10 "Retrieve Save Combine Xtract Erase List Import Dir New Open Admin"
+11 "Print"
+12 "Printer  File  Encoded  Suspend  Resume  Cancel  Quit"
+13 "Graph"
+14 "Type  X  A  B  C  D  E  F  Reset  View  Save  Options  Name  Group  Quit"
+15 "Data"
+16 "Fill Table Sort Query Distribution Matrix Regression Parse External"
+17 "System"
+18 "Run an operating system"
+19 "Quit"
+20 "End the 1-2-3 session"
+; 21 <missing>
+22 "Global"
+23 "Format  Label  Col-Width  Prot  Zero  Recalc  Default  Group"
+24 "Insert"
+25 "Column  Row  Sheet"
+26 "Delete"
+27 "Column  Row  Sheet  File"
+28 "Column"
+29 "Set-Width  Reset-Width  Hide  Display  Column-Range"
+30 "Erase"
+31 "Clear all worksheets and files from memory"
+32 "Titles"
+33 "Both  Horizontal  Vertical  Clear "
+34 "Window"
+35 "Horizontal Vertical Sync Unsync Clear Map Perspective Graph Display"
+36 "Status"
+37 "Display worksheet settings"
+38 "Page"
+39 "Insert a row containing a page-break symbol above the cell pointer"
+40 "Hide"
+41 "Hide or redisplay one or more worksheets"
+; 42 <missing>
+43 "Format"
+44 "Fixed  Sci  Currency  ,  General  +/-  Percent  Date  Text  Hidden  Other"
+45 "Label"
+46 "Select the label alignment for the current worksheet"
+47 "Col-Width"
+48 "Specify the column width for the current worksheet"
+49 "Prot"
+50 "Turn worksheet protection on or off"
+51 "Zero"
+52 "Change the way cells of zero value appear on the screen"
+53 "Recalc"
+54 "Natural  Columnwise  Rowwise  Automatic  Manual  Iteration"
+55 "Default"
+56 "Printer  Dir  Status  Update  Other  Graph  Temp  Ext  Autoexec  Quit"
+57 "Group"
+58 "Turn GROUP mode on or off"
+; 59 <missing>
+60 "Fixed"
+61 "Fixed number of decimal places (x.xx)"
+62 "Sci"
+63 "Exponential format (x.xxE+xx)"
+64 "Currency"
+65 "Currency format ($x,xxx.xx)"
+66 ","
+67 "Commas inserted (x,xxx.xx)"
+68 "General"
+69 "Standard format (x.xx or x.xxE+xx)"
+70 "+/-"
+71 "Horizontal bar graph format (+++ or ---)"
+72 "Percent"
+73 "Percent format (x.xx%)"
+74 "Date"
+75 "Date and time formats"
+76 "Text"
+77 "Display formulas instead of values"
+78 "Hidden"
+79 "Do not display cell contents"
+80 "Other"
+81 "Automatic  Color  Label  Parentheses"
+; 82 <missing>
+83 "1 (DD-MMM-YY)"
+84 "Lotus standard long form"
+85 "2 (DD-MMM)"
+86 "Lotus standard short form"
+87 "3 (MMM-YY)"
+88 "Lotus standard short form"
+89 "4 (Long Intn'l)"
+90 "For current configuration see /Worksheet Global Default Status screen."
+91 "5 (Short Intn'l)"
+92 "For current configuration see /Worksheet Global Default Status screen."
+93 "Time"
+94 "Time formats"
+; 95 <missing>
+96 "1 (HH:MM:SS AM/PM)"
+97 "Lotus standard long form"
+98 "2 (HH:MM AM/PM)"
+99 "Lotus standard short form"
+100 "3 (Long Intn'l)"
+101 "For current configuration see /Worksheet Global Default Status screen"
+102 "4 (Short Intn'l)"
+103 "For current configuration see /Worksheet Global Default Status screen"
+; 104 <missing>
+105 "Automatic"
+106 "Automatically format cell when data is entered"
+107 "Color"
+108 "Display negative numbers in color"
+109 "Label"
+110 "Store all entries as labels"
+111 "Parentheses"
+112 "Enclose values in parentheses"
+; 113 <missing>
+114 "Negative"
+115 "Display negative numbers in color"
+116 "Reset"
+117 "Do not display negative numbers in color"
+; 118 <missing>
+119 "Yes"
+120 "Enclose values in parentheses"
+121 "No"
+122 "Do not enclose values in parentheses"
+; 123 <missing>
+124 "On"
+125 "Off"
+; 126 <missing>
+127 "Left"
+128 "Left-align labels in cells"
+129 "Right"
+130 "Right-align labels in cells"
+131 "Center"
+132 "Center labels in cells"
+; 133 <missing>
+134 "Enable"
+135 "Turn worksheet protection on"
+136 "Disable"
+137 "Turn worksheet protection off"
+; 138 <missing>
+139 "Natural"
+140 "Recalculate in natural order"
+141 "Columnwise"
+142 "Recalculate column by column"
+143 "Rowwise"
+144 "Recalculate row by row"
+145 "Automatic"
+146 "Recalculate every time entries change"
+147 "Manual"
+148 "Press CALC to recalculate formulas"
+149 "Iteration"
+150 "Specify number of recalculation passes"
+151 "<* MENU_WGN *>"
+152 "Edit"
+153 "Edit title page"
+154 "Reset"
+155 "Reset title page"
+156 "Auto-Display"
+157 "Automatically display title page in File Save or File Put"
+158 "Quit"
+159 "Return to READY mode"
+; 160 <missing>
+161 "NOTE - MENU_WGD has been moved to the "Other Menus" table"
+; 162 <missing>
+; 163 <missing>
+; 164 <missing>
+; 165 <missing>
+; 166 <missing>
+; 167 <missing>
+; 168 <missing>
+; 169 <missing>
+; 170 <missing>
+; 171 <missing>
+; 172 <missing>
+; 173 <missing>
+; 174 <missing>
+; 175 <missing>
+; 176 <missing>
+; 177 <missing>
+178 "Interface"
+179 "Change the default UNIX print spooler"
+180 "AutoLf"
+181 "Automatic linefeed at end of line"
+182 "Left"
+183 "Set left margin"
+184 "Right"
+185 "Set right margin"
+186 "Top"
+187 "Set top margin"
+188 "Bottom"
+189 "Set bottom margin"
+190 "Pg-Length"
+191 "Set number of lines per page"
+192 "Wait"
+193 "Menu option not available "
+194 "Setup"
+195 "Specify default setup string"
+196 "Name"
+197 "Change current printer device"
+198 "Quit"
+199 "Return to previous menu"
+200 "<* RS submenus *>"
+201 "Formulas"
+202 "Search for string in formulas only"
+203 "Labels"
+204 "Search for string in labels only"
+205 "Both"
+206 "Search for string in formulas and labels"
+; 207 <missing>
+208 "Standard"
+209 "Use standard Lotus date and time: DD-MMM-YY HH:MM AM/PM"
+210 "International"
+211 "Use current International settings for date (D4) and time (D9)"
+212 "None"
+213 "Hide the file-and-clock indicator"
+214 "Clock"
+215 "Always display date-and-time indicator"
+216 "Filename"
+217 "Display current file name in the file-and-clock indicator"
+
+=group 2, 4882 bytes
+; 0 <missing>
+1 "File"
+2 "Name of file for storing keystrokes"
+3 "Keystrokes"
+4 "Number of keystrokes to retain in memory"
+; 5 <missing>
+6 "Enable"
+7 "Turn undo on"
+8 "Disable"
+9 "Turn undo off"
+; 10 <missing>
+11 "Columnwise"
+12 "Automatic graph data ranges arranged by column"
+13 "Rowwise"
+14 "Automatic graph data ranges arranged by row"
+15 "Metafile"
+16 "Use metafile format for graphs"
+17 "PIC"
+18 "Use picture file format for graphs"
+19 "Quit"
+20 "Return to previous menu"
+; 21 <missing>
+; 22 <missing>
+; 23 <missing>
+24 "Column"
+25 "Insert one or more blank columns to the left of the cell pointer"
+26 "Row"
+27 "Insert one or more blank rows above the cell pointer"
+28 "Sheet"
+29 "Insert one or more blank worksheets before or after the current worksheet"
+; 30 <missing>
+31 "Column"
+32 "Delete one or more columns"
+33 "Row"
+34 "Delete one or more rows"
+35 "Sheet"
+36 "Delete one or more worksheets"
+37 "File"
+38 "Delete an active file"
+; 39 <missing>
+; 40 <missing>
+; 41 <missing>
+; 42 <missing>
+; 43 <missing>
+; 44 <missing>
+; 45 <missing>
+46 "No"
+47 "Do not erase worksheets; return to READY mode"
+48 "Yes"
+49 "Erase all worksheets and files in memory"
+50 "Instant"
+51 "Obsolete menu option - has no effect in Release 3."
+52 "Removable"
+53 "Obsolete menu option - has no effect in Release 3."
+54 "No"
+55 "WORKSHEET CHANGES NOT SAVED!  Erase worksheets anyway?"
+56 "Yes"
+57 "WORKSHEET CHANGES NOT SAVED!  Erase worksheets anyway?"
+; 58 <missing>
+; 59 <missing>
+; 60 <missing>
+; 61 <missing>
+; 62 <missing>
+; 63 <missing>
+64 "Horizontal"
+65 "Split the screen horizontally at the current row"
+66 "Vertical"
+67 "Split the screen vertically at the current column"
+68 "Sync"
+69 "Synchronize scrolling in windows"
+70 "Unsync"
+71 "Scroll windows independently"
+72 "Clear"
+73 "Return to full-screen display"
+74 "Map"
+75 "Turn mapping on or off"
+76 "Perspective"
+77 "Display multiple worksheets on screen"
+78 "Graph"
+79 "Display current graph in graph window"
+80 "Display"
+81 "Menu option not available"
+; 82 <missing>
+83 "Enable"
+84 "Turn worksheet mapping on"
+85 "Disable"
+86 "Turn worksheet mapping off"
+; 87 <missing>
+88 "Enable"
+89 "Hide selected worksheets"
+90 "Disable"
+91 "Redisplay hidden worksheets"
+; 92 <missing>
+93 "Disable"
+94 "Turn off GROUP mode"
+95 "Enable"
+96 "Format all worksheets in current file with the same format"
+; 97 <missing>
+98 "Format"
+99 "Fixed Sci Currency , General +/- Percent Date Text Hidden Other Reset"
+100 "Label"
+101 "Select alignment for a label or range of labels"
+102 "Erase"
+103 "Erase a cell or range of cells"
+104 "Name"
+105 "Create  Delete  Labels  Reset  Table  Note  Undefine"
+106 "Justify"
+107 "Adjust a column of labels to a specified width"
+108 "Prot"
+109 "Prevent changes to a range if global protection is on"
+110 "Unprot"
+111 "Allow changes to a range, even though global protection is on"
+112 "Input"
+113 "Restrict data entry to unprotected cells"
+114 "Value"
+115 "Copy a range, converting formulas to values"
+116 "Trans"
+117 "Copy a range, switching columns, rows, or worksheets"
+118 "Search"
+119 "Find or replace a specified string in a range"
+; 120 <missing>
+; 121 <missing>
+122 "Fixed"
+123 "Fixed number of decimal places (x.xx)"
+124 "Sci"
+125 "Exponential format (x.xxE+xx)"
+126 "Currency"
+127 "Currency format ($x,xxx.xx)"
+128 ","
+129 "Commas inserted (x,xxx.xx)"
+130 "General"
+131 "Standard format (x.xx or x.xxE+xx)"
+132 "+/-"
+133 "Horizontal bar graph format (+++ or ---)"
+134 "Percent"
+135 "Percent format (x.xx%)"
+136 "Date"
+137 "Date and time formats"
+138 "Text"
+139 "Display formulas instead of values"
+140 "Hidden"
+141 "Do not display cell contents"
+142 "Other"
+143 "Automatic  Color  Label  Parentheses"
+144 "Reset"
+145 "Return specified cells to global cell format"
+; 146 <missing>
+147 "1 (DD-MMM-YY)"
+148 "Lotus standard long form"
+149 "2 (DD-MMM)"
+150 "Lotus standard short form"
+151 "3 (MMM-YY)"
+152 "Lotus standard short form"
+153 "4 (Long Intn'l)"
+154 "For current configuration see /Worksheet Global Default Status screen"
+155 "5 (Short Intn'l)"
+156 "For current configuration see /Worksheet Global Default Status screen"
+157 "Time"
+158 "Time formats"
+; 159 <missing>
+160 "1 (HH:MM:SS AM/PM)"
+161 "Lotus standard long form"
+162 "2 (HH:MM AM/PM)"
+163 "Lotus standard short form"
+164 "3 (Long Intn'l)"
+165 "For current configuration see /Worksheet Global Default Status screen"
+166 "4 (Short Intn'l)"
+167 "For current configuration see /Worksheet Global Default Status screen"
+; 168 <missing>
+169 "Automatic"
+170 "Automatically format cell when data is entered"
+171 "Color"
+172 "Display negative numbers in color"
+173 "Label"
+174 "Store entries in range as labels"
+175 "Parentheses"
+176 "Enclose values in parentheses"
+; 177 <missing>
+178 "Negative"
+179 "Display negative numbers in color"
+180 "Reset"
+181 "Do not display negative numbers in color"
+; 182 <missing>
+183 "Yes"
+184 "Enclose values in parentheses"
+185 "No"
+186 "Do not enclose values in parentheses"
+; 187 <missing>
+188 "Left"
+189 "Left-align labels in cells"
+190 "Right"
+191 "Right-align labels in cells"
+192 "Center"
+193 "Center labels in cells"
+; 194 <missing>
+195 "Create"
+196 "Create or modify a range name"
+197 "Delete"
+198 "Delete a range name and its note, if any"
+199 "Labels"
+200 "Create range names from a range of labels"
+201 "Reset"
+202 "Delete all range names and their notes, if any, in the current file"
+203 "Table"
+204 "Create a table of range names in the current file"
+205 "Note"
+206 "Create  Delete  Reset  Table  Quit"
+207 "Undefine"
+208 "Cancel the link between a range name and a range address"
+; 209 <missing>
+; 210 <missing>
+; 211 <missing>
+212 "Enter justify range:"
+; 213 <missing>
+214 "No"
+215 "Display zero values"
+216 "Yes"
+217 "Display blanks for zero values"
+218 "Label"
+219 "Replace zero values with a label"
+220 "Enter string to replace zeros (in Label format):"
+; 221 <missing>
+222 "Set-Width"
+223 "Specify current column width"
+224 "Reset-Width"
+225 "Return current column to global column width"
+226 "Hide"
+227 "Hide a range of columns"
+228 "Display"
+229 "Display a range of hidden columns"
+230 "Column-Range"
+231 "Change the width of a range of columns"
+232 "Set-Width"
+233 "Specify width of range of columns"
+234 "Reset-Width"
+235 "Return a range of columns to global column width"
+; 236 <missing>
+237 "Both"
+238 "Freeze all rows and columns above and to the left of the cell pointer"
+239 "Horizontal"
+240 "Freeze all rows above the cell pointer"
+241 "Vertical"
+242 "Freeze all columns to the left of the cell pointer"
+243 "Clear"
+244 "Unfreeze all title rows and columns"
+; 245 <missing>
+246 "Enter FROM range for transpose:"
+247 "Enter TO range for transpose:"
+248 "Rows/Columns"
+249 "Transpose rows and columns"
+250 "Columns/Worksheets"
+251 "Transpose columns and worksheets"
+252 "Worksheets/Rows"
+253 "Transpose worksheets and rows"
+
+=group 3, 4277 bytes
+0 "Printer"
+1 "Send print output to a print spooler"
+2 "File"
+3 "Send print output to a text file"
+4 "Encoded"
+5 "Send print output to an encoded file"
+6 "Suspend"
+7 "Menu option not available"
+8 "Resume"
+9 "Menu option not available"
+10 "Cancel"
+11 "Menu option not available"
+12 "Quit"
+13 "Close the print job and return to READY mode"
+14 "Range"
+15 "Specify a range to print"
+16 "Line"
+17 "Advance paper one line"
+18 "Page"
+19 "Advance paper to top of next page"
+20 "Options"
+21 "Header Footer Margins Borders Setup Pg-Length Other Name Advanced Quit"
+22 "Clear"
+23 "All  Range  Borders  Format  Image  Device"
+24 "Align"
+25 "Reset to top of page (after adjusting paper)"
+26 "Go"
+27 "Print the specified graph, range, or sample"
+28 "Image"
+29 "Specify a graph to print"
+30 "Sample"
+31 "Specify sample pages to print"
+32 "Hold"
+33 "Return to READY mode without closing current print job"
+34 "Quit"
+35 "Return to READY mode"
+; 36 <missing>
+; 37 <missing>
+38 "Header"
+39 "Create a header"
+40 "Footer"
+41 "Create a footer"
+42 "Margins"
+43 "Left  Right  Top  Bottom  None"
+44 "Borders"
+45 "Columns  Rows  Frame  No-Frame"
+46 "Setup"
+47 "Enter printer setup string"
+48 "Pg-Length"
+49 "Specify number of lines per page"
+50 "Other"
+51 "As-Displayed  Cell-Formulas  Formatted  Unformatted  Blank-Header"
+52 "Name"
+53 "Use  Create  Delete  Reset  Table"
+54 "Advanced"
+55 "Device  Layout  Fonts  Color  Image  Priority  AutoLf  Wait  Quit"
+56 "Quit"
+57 "Return to previous menu"
+58 "Left"
+59 "Set left margin  "
+60 "Right"
+61 "Set right margin "
+62 "Top"
+63 "Set top margin "
+64 "Bottom"
+65 "Set bottom margin "
+66 "None"
+67 "Clear all margin settings"
+; 68 <missing>
+69 "Columns"
+70 "Print border columns to the left of each print range"
+71 "Rows"
+72 "Print border rows above each print range"
+73 "Frame"
+74 "Print worksheet frame with print range"
+75 "No-Frame"
+76 "Do not print worksheet frame with print range"
+; 77 <missing>
+78 "As-Displayed"
+79 "Print range as displayed"
+80 "Cell-Formulas"
+81 "List entries, one per line"
+82 "Formatted"
+83 "Print headers, footers, and page breaks"
+84 "Unformatted"
+85 "Do not print headers, footers, and page breaks"
+86 "Blank-Header"
+87 "Print or suppress blank headers and footers"
+; 88 <missing>
+89 "Suppress"
+90 "Do not leave space for blank headers and footers"
+91 "Print"
+92 "Leave space for blank headers and footers"
+; 93 <missing>
+94 "Device"
+95 "Select printer driver and UNIX print spooler"
+96 "Layout"
+97 "Pitch  Line-Spacing  Orientation  Quit"
+98 "Fonts"
+99 "Range  Header/Footer  Border  Frame  Quit"
+100 "Color"
+101 "Select color for range"
+102 "Image"
+103 "Rotate  Image-Sz  Density  Quit"
+104 "Priority"
+105 "Set priority for print job"
+106 "AutoLf"
+107 "Automatic linefeed at end of line"
+108 "Wait"
+109 "Menu option not available"
+110 "Quit"
+111 "Return to previous menu"
+; 112 <missing>
+; 113 <missing>
+; 114 <missing>
+; 115 <missing>
+; 116 <missing>
+; 117 <missing>
+118 "Pitch"
+119 "Standard  Compressed  Expanded"
+120 "Line-Spacing"
+121 "Standard  Compressed"
+122 "Orientation"
+123 "Portrait  Landscape"
+124 "Quit"
+125 "Return to previous menu"
+; 126 <missing>
+; 127 <missing>
+; 128 <missing>
+129 "Range"
+130 "Select font for print range"
+131 "Header/Footer"
+132 "Select font for header and footer"
+133 "Border"
+134 "Select font for range borders"
+135 "Frame"
+136 "Select font for range frame"
+137 "Quit"
+138 "Return to previous menu"
+; 139 <missing>
+140 "1"
+141 "Regular serif, if available"
+142 "2"
+143 "Bold serif, if available"
+144 "3"
+145 "Italic serif, if available"
+146 "4"
+147 "Bold italic serif, if available"
+148 "5"
+149 "Regular sans serif, if available"
+150 "6"
+151 "Bold sans serif, if available"
+152 "7"
+153 "Italic sans serif, if available"
+154 "8"
+155 "Bold italic sans serif, if available"
+; 156 <missing>
+157 "1"
+158 "Color number 1"
+159 "2"
+160 "Color number 2"
+161 "3"
+162 "Color number 3"
+163 "4"
+164 "Color number 4"
+165 "5"
+166 "Color number 5"
+167 "6"
+168 "Color number 6"
+169 "7"
+170 "Color number 7"
+171 "8"
+172 "Color number 8"
+; 173 <missing>
+174 "Portrait"
+175 "Print from top to bottom of the page"
+176 "Landscape"
+177 "Print sideways on the page"
+; 178 <missing>
+179 "Rotate"
+180 "Print the graph sideways on the page"
+181 "Image-Sz"
+182 "Specify size of printed graph"
+183 "Density"
+184 "Specify density of printed graph"
+185 "Quit"
+186 "Return to previous menu"
+; 187 <missing>
+; 188 <missing>
+; 189 <missing>
+190 "No"
+191 "Print the graph upright on the page"
+192 "Yes"
+193 "Print the graph sideways on the page"
+; 194 <missing>
+195 "Margin-Fill"
+196 "Fill the page from left to right margin with the printed graph"
+197 "Length-Fill"
+198 "Specify length of printed graph"
+199 "Reshape"
+200 "Specify width and length of printed graph"
+; 201 <missing>
+202 "Width"
+203 "Specify number of characters per line"
+204 "Length (Height)"
+205 "Specify number of lines per page"
+; 206 <missing>
+207 "Use"
+208 "Use a named group of print settings"
+209 "Create"
+210 "Create a print settings name"
+211 "Delete"
+212 "Delete a print settings name"
+213 "Reset"
+214 "Delete all print settings names in the current file"
+215 "Table"
+216 "Create a table of print settings names in the current file"
+217 "Standard"
+218 "Standard line spacing"
+219 "Compressed"
+220 "Compressed line spacing"
+221 "Standard"
+222 "Standard character spacing"
+223 "Compressed"
+224 "Compressed character spacing"
+225 "Expanded"
+226 "Expanded character spacing"
+; 227 <missing>
+228 "No"
+229 "Let 1-2-3 control character and line spacing"
+230 "Yes"
+231 "Set character and line spacing manually"
+; 232 <missing>
+233 "Name"
+234 "Change current print driver"
+235 "Interface"
+236 "Change current UNIX print spooler"
+237 "Quit"
+238 "Return to previous menu"
+; 239 <missing>
+240 "Final"
+241 "Final-quality density"
+242 "Draft"
+243 "Draft-quality density"
+
+=group 4, 4520 bytes
+; 0 <missing>
+1 "Type"
+2 "Line  Bar  XY  Stack-Bar  Pie  HLCO  Mixed  Features"
+3 "X"
+4 "Set X data range"
+5 "A"
+6 "Set first data range"
+7 "B"
+8 "Set second data range"
+9 "C"
+10 "Set third data range"
+11 "D"
+12 "Set fourth data range"
+13 "E"
+14 "Set fifth data range"
+15 "F"
+16 "Set sixth data range"
+17 "Reset"
+18 "Graph  X  A  B  C  D  E  F  Ranges  Options  Quit"
+19 "View"
+20 "View the current graph"
+21 "Save"
+22 "Save the current graph in a file"
+23 "Options"
+24 "Legend  Format  Titles  Grid  Scale  Color  B&W  Data-Labels  Advanced"
+25 "Name"
+26 "Use  Create  Delete  Reset  Table"
+27 "Group"
+28 "Set all data ranges at once"
+29 "Quit"
+30 "Return to READY mode"
+; 31 <missing>
+; 32 <missing>
+; 33 <missing>
+34 "Line"
+35 "Line graph"
+36 "Bar"
+37 "Bar graph      "
+38 "XY"
+39 "XY (scatter) graph      "
+40 "Stack-Bar"
+41 "Stacked bar graph"
+42 "Pie"
+43 "Pie chart       "
+44 "HLCO"
+45 "High-low-close-open (stock market) graph"
+46 "Mixed"
+47 "Combined bar (ranges A,B,C) and line (ranges D,E,F) graph"
+48 "Features"
+49 "Vertical  Horizontal  Stacked  100%  2Y-Ranges  Y-Ranges  Quit"
+; 50 <missing>
+; 51 <missing>
+; 52 <missing>
+; 53 <missing>
+; 54 <missing>
+55 "Graph"
+56 "Assign all data ranges to second y-axis"
+57 "A"
+58 "Assign first data range to second y-axis"
+59 "B"
+60 "Assign second data range to second y-axis"
+61 "C"
+62 "Assign third data range to second y-axis"
+63 "D"
+64 "Assign fourth data range to second y-axis"
+65 "E"
+66 "Assign fifth data range to second y-axis"
+67 "F"
+68 "Assign sixth data range to second y-axis"
+69 "Quit"
+70 "Return to previous menu"
+; 71 <missing>
+72 "Graph"
+73 "Clear all current graph settings"
+74 "X"
+75 "Clear X data range"
+76 "A"
+77 "Clear first data range"
+78 "B"
+79 "Clear second data range"
+80 "C"
+81 "Clear third data range"
+82 "D"
+83 "Clear fourth data range"
+84 "E"
+85 "Clear fifth data range"
+86 "F"
+87 "Clear sixth data range"
+88 "Ranges"
+89 "Clear A-F, X, and group ranges"
+90 "Options"
+91 "Clear all /Graph Options settings"
+92 "Quit"
+93 "Return to /Graph menu"
+; 94 <missing>
+; 95 <missing>
+; 96 <missing>
+97 "Graph"
+98 "Assign all data ranges to first y-axis"
+99 "A"
+100 "Assign first data range to first y-axis"
+101 "B"
+102 "Assign second data range to first y-axis"
+103 "C"
+104 "Assign third data range to first y-axis"
+105 "D"
+106 "Assign fourth data range to first y-axis"
+107 "E"
+108 "Assign fifth data range to first y-axis"
+109 "F"
+110 "Assign sixth data range to first y-axis"
+111 "Quit"
+112 "Return to previous menu"
+; 113 <missing>
+114 "Legend"
+115 "Create data-range legends"
+116 "Format"
+117 "Draw lines or symbols, or fill area in line, XY, mixed, or HLCO graph"
+118 "Titles"
+119 "Add graph titles, axis titles, or footnotes to graph"
+120 "Grid"
+121 "Set horizontal and/or vertical grid lines"
+122 "Scale"
+123 "Set scaling options along axes"
+124 "Color"
+125 "Display graph in color"
+126 "B&W"
+127 "Display graph in black and white"
+128 "Data-Labels"
+129 "Specify range contents as data labels"
+130 "Advanced"
+131 "Colors  Text  Hatches  Quit"
+132 "Quit"
+133 "Return to /Graph menu"
+; 134 <missing>
+135 "A"
+136 "Assign first data-range legend"
+137 "B"
+138 "Assign second data-range legend"
+139 "C"
+140 "Assign third data-range legend"
+141 "D"
+142 "Assign fourth data-range legend"
+143 "E"
+144 "Assign fifth data-range legend"
+145 "F"
+146 "Assign sixth data-range legend"
+147 "Range"
+148 "Specify the range that contains all legends"
+; 149 <missing>
+150 "Graph"
+151 "Set format for all data ranges"
+152 "A"
+153 "Set first data-range format"
+154 "B"
+155 "Set second data-range format"
+156 "C"
+157 "Set third data-range format"
+158 "D"
+159 "Set fourth data-range format"
+160 "E"
+161 "Set fifth data-range format"
+162 "F"
+163 "Set sixth data-range format"
+164 "Quit"
+165 "Return to previous menu"
+; 166 <missing>
+167 "First"
+168 "Assign first line of graph title"
+169 "Second"
+170 "Assign second line of graph title"
+171 "X-Axis"
+172 "Assign x-axis title"
+173 "Y-Axis"
+174 "Assign y-axis title"
+175 "2Y-Axis"
+176 "Assign second y-axis title"
+177 "Note"
+178 "Assign first line of footnote"
+179 "Other-Note"
+180 "Assign second line of footnote"
+; 181 <missing>
+182 "Horizontal"
+183 "Draw grid lines across the graph"
+184 "Vertical"
+185 "Draw grid lines up the graph"
+186 "Both"
+187 "Draw grid lines both across and up the graph"
+188 "Clear"
+189 "Clear all grid lines"
+190 "Y-Axis"
+191 "Specify y-axis to be used for horizontal grid lines"
+; 192 <missing>
+193 "Y-Scale"
+194 "Set y-axis scaling"
+195 "X-Scale"
+196 "Set x-axis scaling"
+197 "Skip"
+198 "Display every nth cell in X range"
+199 "2Y-Scale"
+200 "Set second y-axis scaling"
+; 201 <missing>
+202 "Automatic"
+203 "Scale automatically based on data ranges"
+204 "Manual"
+205 "Scale according to specified lower and upper limits"
+206 "Lower"
+207 "Specify lower scale limit"
+208 "Upper"
+209 "Specify upper scale limit"
+210 "Format"
+211 "Select cell format for scale numbers"
+212 "Indicator"
+213 "Display, hide, or manually set scale indicator"
+214 "Type"
+215 "Select linear or logarithmic scaling"
+216 "Exponent"
+217 "Set scaling factor for scale numbers"
+218 "Width"
+219 "Set width for scale numbers"
+220 "Quit"
+221 "Return to Options menu"
+; 222 <missing>
+223 "Yes"
+224 "Display automatic scale indicator"
+225 "None"
+226 "Do not display scale indicator"
+227 "Manual"
+228 "Specify text of scale indicator"
+; 229 <missing>
+230 "Standard"
+231 "Linear scale"
+232 "Logarithmic"
+233 "Logarithmic scale      "
+; 234 <missing>
+235 "Automatic"
+236 "1-2-3 sets scaling factor automatically"
+237 "Manual"
+238 "Specify the scaling factor"
+; 239 <missing>
+240 "A"
+241 "Assign first data-range data labels"
+242 "B"
+243 "Assign second data-range data labels"
+244 "C"
+245 "Assign third data-range data labels"
+246 "D"
+247 "Assign fourth data-range data labels"
+248 "E"
+249 "Assign fifth data-range data labels"
+250 "F"
+251 "Assign sixth data-range data labels"
+252 "Group"
+253 "Assign all data labels"
+
+=group 5, 4332 bytes
+; 0 <missing>
+1 "Colors"
+2 "Select colors for data ranges"
+3 "Text"
+4 "Select text attributes"
+5 "Hatches"
+6 "Select hatch patterns for data ranges"
+7 "Quit"
+8 "Return to previous menu"
+; 9 <missing>
+; 10 <missing>
+; 11 <missing>
+12 "A"
+13 "Select color for first data range"
+14 "B"
+15 "Select color for second data range"
+16 "C"
+17 "Select color for third data range"
+18 "D"
+19 "Select color for fourth data range"
+20 "E"
+21 "Select color for fifth data range"
+22 "F"
+23 "Select color for sixth data range"
+24 "Quit"
+25 "Return to previous menu"
+; 26 <missing>
+27 "1"
+28 "Color number 1"
+29 "2"
+30 "Color number 2"
+31 "3"
+32 "Color number 3"
+33 "4"
+34 "Color number 4"
+35 "5"
+36 "Color number 5"
+37 "6"
+38 "Color number 6"
+39 "7"
+40 "Color number 7"
+41 "8"
+42 "Color number 8"
+43 "Hide"
+44 "Do not display"
+45 "Range"
+46 "Specify a range that contains color values"
+; 47 <missing>
+48 "First"
+49 "Set text attributes for first graph title"
+50 "Second"
+51 "Set text attributes for second graph title, axis titles, and legends"
+52 "Third"
+53 "Set text attributes for scale indicators, axis and data labels, footnotes"
+54 "Quit"
+55 "Return to previous menu"
+; 56 <missing>
+57 "Color"
+58 "Set text color"
+59 "Font"
+60 "Set text font"
+61 "Size"
+62 "Set text size"
+63 "Quit"
+64 "Return to previous menu"
+; 65 <missing>
+; 66 <missing>
+; 67 <missing>
+; 68 <missing>
+; 69 <missing>
+; 70 <missing>
+; 71 <missing>
+72 "Use"
+73 "Make a named graph current"
+74 "Create"
+75 "Name the current graph"
+76 "Delete"
+77 "Delete a named graph"
+78 "Reset"
+79 "Delete all named graphs in the current file"
+80 "Table"
+81 "Create a table of named graphs in the current file"
+; 82 <missing>
+; 83 <missing>
+; 84 <missing>
+; 85 <missing>
+; 86 <missing>
+87 "Fill"
+88 "Fill a range with a sequence of values"
+89 "Table"
+90 "Create a table of values"
+91 "Sort"
+92 "Sort database table records"
+93 "Query"
+94 "Find all records that satisfy given criteria"
+95 "Distribution"
+96 "Calculate frequency distribution of the values in a range"
+97 "Matrix"
+98 "Multiply and invert matrices"
+99 "Regression"
+100 "Calculate linear regressions"
+101 "Parse"
+102 "Convert a column of long labels into a range of labels or numbers"
+103 "External"
+104 "Work with an external table in an external database"
+; 105 <missing>
+106 "1"
+107 "One input cell, one or more dependent formulas"
+108 "2"
+109 "Two input cells, one dependent formula"
+110 "3"
+111 "Three input cells, one dependent formula"
+112 "Labeled"
+113 "One or more input cells, one or more labeled formulas in cross-tabs format"
+114 "Reset"
+115 "Clear table ranges and input cells for all data tables"
+; 116 <missing>
+117 "Data-Range"
+118 "Select records to be sorted"
+119 "Primary-Key"
+120 "Specify primary order for records"
+121 "Secondary-Key"
+122 "Specify order for records with same primary key"
+123 "Extra-Key"
+124 "Specify additional sort keys"
+125 "Reset"
+126 "Clear data range and sort keys"
+127 "Go"
+128 "Sort data and return to READY mode"
+129 "Quit"
+130 "Return to READY mode"
+; 131 <missing>
+132 "Input"
+133 "Specify ranges or external tables that contain records to manipulate"
+134 "Criteria"
+135 "Specify the range that contains criteria"
+136 "Output"
+137 "Specify the range to which extracted records are copied"
+138 "Find"
+139 "Highlight each record that matches criteria"
+140 "Extract"
+141 "Copy to output range all records that match criteria"
+142 "Unique"
+143 "Copy to output range all nonduplicate records that match criteria"
+144 "Del"
+145 "Delete all records that match criteria"
+146 "Modify"
+147 "Replace records in the input range with records from the output range"
+148 "Reset"
+149 "Clear input, criteria, and output ranges"
+150 "Quit"
+151 "Return to READY mode"
+; 152 <missing>
+; 153 <missing>
+; 154 <missing>
+; 155 <missing>
+; 156 <missing>
+; 157 <missing>
+; 158 <missing>
+; 159 <missing>
+; 160 <missing>
+; 161 <missing>
+; 162 <missing>
+; 163 <missing>
+; 164 <missing>
+; 165 <missing>
+166 "Cancel"
+167 "Do not delete any records; return to previous menu"
+168 "Delete"
+169 "Delete records and close up spaces in input range"
+; 170 <missing>
+171 "Invert"
+172 "Create the inverse of a matrix"
+173 "Multiply"
+174 "Multiply two ranges as matrices"
+; 175 <missing>
+176 "X-Range"
+177 "Specify independent variables (X range)"
+178 "Y-Range"
+179 "Specify dependent variable (Y range)"
+180 "Output-Range"
+181 "Specify the output range"
+182 "Intercept"
+183 "Compute  Zero"
+184 "Reset"
+185 "Clear the X range, Y range, output range, and reset Intercept to Compute"
+186 "Go"
+187 "Calculate a data regression for specified ranges"
+188 "Quit"
+189 "Return to READY mode"
+; 190 <missing>
+191 "Compute"
+192 "Calculate the y-axis intercept automatically"
+193 "Zero"
+194 "Use zero as the y-axis intercept"
+; 195 <missing>
+196 "Y"
+197 "Draw horizontal grid lines using y-axis"
+198 "2Y"
+199 "Draw horizontal grid lines using second y-axis"
+200 "Both"
+201 "Draw horizontal grid lines using both y-axes"
+; 202 <missing>
+203 "A"
+204 "Set hatch pattern for first data range"
+205 "B"
+206 "Set hatch pattern for second data range"
+207 "C"
+208 "Set hatch pattern for third data range"
+209 "D"
+210 "Set hatch pattern for fourth data range"
+211 "E"
+212 "Set hatch pattern for fifth data range"
+213 "F"
+214 "Set hatch pattern for sixth data range"
+215 "Quit"
+216 "Return to previous menu"
+; 217 <missing>
+218 "1"
+219 "Solid"
+220 "2"
+221 "Fine crosshatching"
+222 "3"
+223 "Fine double hatching"
+224 "4"
+225 "Fine triple hatching"
+226 "5"
+227 "Coarse crosshatching"
+228 "6"
+229 "Coarse double hatching"
+230 "7"
+231 "Coarse single hatching"
+232 "8"
+233 "Hollow"
+234 "Range"
+235 "Specify a range that contains hatch values"
+; 236 <missing>
+; 237 <missing>
+238 "Center"
+239 "Place label on data point"
+240 "Left"
+241 "Place label to the left of data point"
+242 "Above"
+243 "Place label above data point"
+244 "Right"
+245 "Place label to the right of data point"
+246 "Below"
+247 "Place label below data point"
+
+=group 6, 2638 bytes
+0 "Use"
+1 "Start using a table in an external database"
+2 "List"
+3 "List the tables in an external database or the fields in an external table"
+4 "Create"
+5 "Create a new table in an external database"
+6 "Delete"
+7 "Delete a table from an external database"
+8 "Other"
+9 "Perform special operations on an external database"
+10 "Reset"
+11 "Stop using a table in an external database"
+12 "Quit"
+13 "Return to READY mode"
+14 "Tables"
+15 "List the names of the tables in an external database"
+16 "Fields"
+17 "List the names of the fields in an external table"
+; 18 <missing>
+19 "Name"
+20 "Specify the name of the table to create"
+21 "Definition"
+22 "Specify the definition of the table to create"
+23 "Go"
+24 "Create an external table"
+25 "Quit"
+26 "Return to READY mode"
+27 "No"
+28 "Do not delete the table"
+29 "Yes"
+30 "Delete the table"
+; 31 <missing>
+; 32 <missing>
+; 33 <missing>
+34 "Create-Definition"
+35 "Create a new table definition from a model range"
+36 "Use-Definition"
+37 "Use an existing table definition range"
+; 38 <missing>
+39 "Refresh"
+40 "Control automatic external query execution"
+41 "Command"
+42 "Send a command to a database management program"
+43 "Translation"
+44 "Specify native database character set"
+; 45 <missing>
+46 "Automatic"
+47 "Refresh worksheets continuously"
+48 "Manual"
+49 "Refresh worksheets only on command"
+50 "Interval"
+51 "Specify the number of seconds to pause between refresh cycles"
+; 52 <missing>
+; 53 <missing>
+; 54 <missing>
+; 55 <missing>
+; 56 <missing>
+; 57 <missing>
+; 58 <missing>
+; 59 <missing>
+; 60 <missing>
+; 61 <missing>
+62 "Enter data range:"
+63 "Primary sort key:"
+64 "Secondary sort key:"
+65 "Extra sort key:"
+66 "Sort order (A or D):"
+67 "A"
+68 "D"
+69 "Extra key:"
+; 70 <missing>
+71 "Format-Line"
+72 "Create or edit a format line at the current cell"
+73 "Input-Column"
+74 "Specify a column of labels to parse"
+75 "Output-Range"
+76 "Specify the range in which parsed data is placed"
+77 "Reset"
+78 "Clear input column and output range"
+79 "Go"
+80 "Parse labels in the input column and place them in the output range"
+81 "Quit"
+82 "Return to READY mode"
+83 "Create"
+84 "Create a format line at the current cell"
+85 "Edit"
+86 "Edit format line at the current cell"
+87 "Enter column of labels to parse:"
+88 "Enter output range:"
+89 "V"
+90 "L"
+91 "D"
+92 "T"
+93 "S"
+; 94 <missing>
+95 "Extract"
+96 "Copy to the output range all records that match criteria"
+97 "Replace"
+98 "Replace records in the input range with extracted records"
+99 "Insert"
+100 "Insert records from the output range into the input range"
+101 "Cancel"
+102 "Cancel the current command; do not update records"
+; 103 <missing>
+; 104 <missing>
+; 105 <missing>
+; 106 <missing>
+107 "Sort"
+108 "Specify sort keys"
+109 "Formulas"
+110 "Specify the range that contains the summary formulas"
+111 "Duplicate-Suppress"
+112 "Do not display duplicate sort key values"
+113 "Reset"
+114 "Clear summarize sort keys and formula range"
+115 "Quit"
+116 "Return to previous menu"
+; 117 <missing>
+; 118 <missing>
+; 119 <missing>
+120 "Primary-Key"
+121 "Specify primary order for records"
+122 "Secondary-Key"
+123 "Specify order for records with same primary key"
+124 "Extra-Key"
+125 "Specify additional sort keys"
+126 "Reset"
+127 "Clear sort keys"
+128 "Quit"
+129 "Return to previous menu"
+; 130 <missing>
+; 131 <missing>
+132 "Enter formula range:"
+133 "Summary (Y or N):"
+134 "Primary key:"
+135 "Secondary key:"
+136 "Extra key:"
+; 137 <missing>
+138 "Y"
+139 "N"
+; 140 <missing>
+141 "Yes"
+142 "Display duplicate sort key values"
+
+=group 7, 365 bytes
+0 "Jan"
+1 "Feb"
+2 "Mar"
+3 "Apr"
+4 "May"
+5 "Jun"
+6 "Jul"
+7 "Aug"
+8 "Sep"
+9 "Oct"
+10 "Nov"
+11 "Dec"
+12 "ERR"
+13 "NA"
+14 ":: AM"
+15 ":: PM"
+16 "::"
+17 ".."
+18 ",,"
+19 "hms"
+20 "PR "
+21 "FSCP,???"
+22 "+ G D1D2D3T H D6D7D4D5D8D9L A   "
+23 "U "
+; 24 <missing>
+25 "y"
+26 "q"
+27 "m"
+28 "w"
+29 "d"
+30 "h"
+31 "min"
+32 "s"
+; 33 <missing>
+34 "PACKED"
+35 "BOOLEAN"
+36 "CHARF"
+37 "CHARV"
+38 "CHARZ"
+39 "DATETIME"
+40 "DATE"
+41 "DOUBLE"
+42 "FLOAT"
+43 "FRACTION"
+44 "INTEGER"
+45 "SHORT"
+46 "UNSIGNED"
+47 "TIME"
+48 "NUMF"
+49 "NUMZ"
+; 50 <missing>
+51 "-"
+52 "()"
+
+=group 8, 4499 bytes
+; 0 <missing>
+1 "No"
+2 "Do not end 1-2-3 session; return to READY mode"
+3 "Yes"
+4 "End 1-2-3 session"
+; 5 <missing>
+6 "Playback"
+7 "Select keystrokes to play back"
+8 "Copy"
+9 "Copy selected keystrokes to the worksheet"
+10 "Erase"
+11 "Clear the record buffer"
+12 "Step"
+13 "Turn STEP mode on or off"
+; 14 <missing>
+15 "Enter name:"
+16 "No"
+17 "PRINTING NOT FINISHED!  End 1-2-3 anyway?"
+18 "Yes"
+19 "PRINTING NOT FINISHED!  End 1-2-3 anyway?"
+20 "Find"
+21 "Highlight search string in the search range"
+22 "Replace"
+23 "Replace each occurrence of search string with specified text"
+; 24 <missing>
+25 "International"
+26 "Punctuation Currency Date Time Negative Release-2 File-Translation Quit"
+27 "Help"
+28 "Instant Removable"
+29 "Clock"
+30 "Standard  International  None  Clock  Filename"
+31 "Undo"
+32 "Turn undo feature on or off"
+33 "Beep"
+34 "Determine if computer bell will sound when error occurs"
+; 35 <missing>
+; 36 <missing>
+; 37 <missing>
+38 "Yes"
+39 "Computer bell will sound when an error occurs"
+40 "No"
+41 "Computer bell will not sound when an error occurs"
+42 "Replace"
+43 "Replace string and proceed to next matching string in range"
+44 "All"
+45 "Replace all remaining matching strings in range with replacement string"
+46 "Next"
+47 "Find next matching string without replacing current string"
+48 "Quit"
+49 "Do not replace current string; return to READY mode"
+50 "Enter range to search:"
+51 "String to search for:"
+52 "Replacement string:"
+53 "Right"
+54 "Each label in the range names the cell to its right"
+55 "Down"
+56 "Each label in the range names the cell below it"
+57 "Left"
+58 "Each label in the range names the cell to its left"
+59 "Up"
+60 "Each label in the range names the cell above it"
+; 61 <missing>
+62 "Enter label range:"
+; 63 <missing>
+64 "Create"
+65 "Create or modify a range name note"
+66 "Delete"
+67 "Delete a range name note"
+68 "Reset"
+69 "Delete all range name notes in the current file"
+70 "Table"
+71 "Create a table of range names and range name notes in the current file"
+72 "Quit"
+73 "Return to READY mode"
+; 74 <missing>
+75 "Enter range name note:"
+; 76 <missing>
+; 77 <missing>
+; 78 <missing>
+79 "1"
+80 "Menu option not available"
+81 "2"
+82 "Menu option not available"
+; 83 <missing>
+84 "Before"
+85 "Insert blank worksheets in front of the current worksheet"
+86 "After"
+87 "Insert blank worksheets behind the current worksheet"
+; 88 <missing>
+; 89 <missing>
+90 "Press TAB to anchor cursor, then highlight keystrokes to copy:"
+91 "Select range to copy TO:"
+92 "Press TAB to anchor cursor, then highlight keystrokes to play back:"
+; 93 <missing>
+94 "Select the macro to run:"
+; 95 <missing>
+; 96 <missing>
+; 97 <missing>
+98 "Printer"
+99 "Change default UNIX print spooler and settings"
+100 "Dir"
+101 "Specify default directory"
+102 "Status"
+103 "Display all default settings"
+104 "Update"
+105 "Save new default settings in configuration file"
+106 "Other"
+107 "International  Help  Clock  Undo  Beep"
+108 "Graph"
+109 "Specify default graph settings"
+110 "Temp"
+111 "Specify directory for temporary 1-2-3 files"
+112 "Ext"
+113 "Specify default extension for listing or saving files"
+114 "Autoexec"
+115 "Run autoexecute macros when files are read into memory"
+116 "Quit"
+117 "Return to READY mode"
+; 118 <missing>
+119 "List"
+120 "Specify the default extension for listing files"
+121 "Save"
+122 "Specify the default extension for saving files"
+; 123 <missing>
+124 "Yes"
+125 "Run autoexecute macros when files are read into memory"
+126 "No"
+127 "Do not run autoexecute macros when files are read into memory"
+; 128 <missing>
+129 "Punctuation"
+130 "Specify numeric punctuation"
+131 "Currency"
+132 "Specify currency sign"
+133 "Date"
+134 "Set Date formats D4 and D5"
+135 "Time"
+136 "Set Time formats D8 and D9"
+137 "Negative"
+138 "Select display of negative numbers in , (Comma) and Currency formats"
+139 "Release-2"
+140 "Select LICS or ASCII for 1-2-3 Release 2 files"
+141 "File-Translation"
+142 "Select a file translation for text files"
+143 "Quit"
+144 "Return to /Worksheet Global Default menu"
+; 145 <missing>
+146 "A (MM/DD/YY)"
+147 "Format D4 will be MM/DD/YY   Format D5 will be MM/DD"
+148 "B (DD/MM/YY)"
+149 "Format D4 will be DD/MM/YY   Format D5 will be DD/MM"
+150 "C (DD.MM.YY)"
+151 "Format D4 will be DD.MM.YY   Format D5 will be DD.MM"
+152 "D (YY-MM-DD)"
+153 "Format D4 will be YY-MM-DD   Format D5 will be MM-DD"
+; 154 <missing>
+155 "A (HH:MM:SS)"
+156 "Format D8 will be HH:MM:SS   Format D9 will be HH:MM"
+157 "B (HH.MM.SS)"
+158 "Format D8 will be HH.MM.SS   Format D9 will be HH.MM"
+159 "C (HH,MM,SS)"
+160 "Format D8 will be HH,MM,SS   Format D9 will be HH,MM"
+161 "D (HHhMMmSSs)"
+162 "Format D8 will be HHhMMmSSs  Format D9 will be HHhMMm"
+; 163 <missing>
+164 "Parentheses"
+165 "Display parentheses around negative numbers"
+166 "Sign"
+167 "Display minus sign in front of negative numbers"
+; 168 <missing>
+169 "LICS"
+170 "Release 2 files contain strings in LICS format"
+171 "ASCII"
+172 "Release 2 files contain strings in ASCII format"
+; 173 <missing>
+174 "Country"
+175 "Set country-specific code page for translating text files"
+176 "International"
+177 "Set international code page for translating text files"
+178 "No"
+179 "WORKSHEET CHANGES NOT SAVED!  End 1-2-3 anyway?"
+180 "Yes"
+181 "WORKSHEET CHANGES NOT SAVED!  End 1-2-3 anyway?"
+; 182 <missing>
+183 "Proceed"
+184 "Release the memory used by UNDO until end of command and proceed"
+185 "Disable"
+186 "Disable the UNDO feature and proceed"
+187 "Quit"
+188 "Quit the current command and return to READY mode"
+; 189 <missing>
+; 190 <missing>
+191 "No"
+192 "WORKSHEET CHANGES NOT SAVED!  PRINTING NOT FINISHED!  End 1-2-3 anyway?"
+193 "Yes"
+194 "WORKSHEET CHANGES NOT SAVED!  PRINTING NOT FINISHED!  End 1-2-3 anyway?"
+195 "No"
+196 "Do not undo any modifications to the worksheet"
+197 "Yes"
+198 "Undo most recent modifications to worksheet data"
+
+=group 9, 2052 bytes
+; 0 <missing>
+1 "Enter x-axis range:"
+2 "Enter first data range:"
+3 "Enter second data range:"
+4 "Enter third data range:"
+5 "Enter fourth data range:"
+6 "Enter fifth data range:"
+7 "Enter sixth data range:"
+8 "Enter legend for first data range:"
+9 "Enter legend for second data range:"
+10 "Enter legend for third data range:"
+11 "Enter legend for fourth data range:"
+12 "Enter legend for fifth data range:"
+13 "Enter legend for sixth data range:"
+14 "Enter skip factor (1..8192):"
+15 "Enter lower limit:"
+16 "Enter upper limit:"
+17 "Enter exponent (-95 to 95):"
+18 "Enter first line of graph title:"
+19 "Enter second line of graph title:"
+20 "Enter x-axis title:"
+21 "Enter y-axis title:"
+22 "Enter second y-axis title:"
+23 "Enter first line of footnote:"
+24 "Enter second line of footnote:"
+25 "Enter data-label range for first data range:"
+26 "Enter data-label range for second data range:"
+27 "Enter data-label range for third data range:"
+28 "Enter data-label range for fourth data range:"
+29 "Enter data-label range for fifth data range:"
+30 "Enter data-label range for sixth data range:"
+31 "Enter data-label range for all data ranges:"
+32 "Enter group range:"
+33 "Enter indicator text:"
+34 "Enter legend range:"
+35 "Enter hatches range:"
+36 "Enter colors range:"
+37 "Enter width (1..50):"
+38 "Enter font range:"
+39 "Enter name of graph to make current:"
+40 "Enter graph name:"
+41 "Enter name of graph to delete:"
+42 "Directory for saving graphs:"
+43 "Enter graph file name:"
+44 "Enter range for name table:"
+; 45 <missing>
+; 46 <missing>
+; 47 <missing>
+; 48 <missing>
+; 49 <missing>
+; 50 <missing>
+; 51 <missing>
+; 52 <missing>
+; 53 <missing>
+; 54 <missing>
+; 55 <missing>
+56 "Enter print range:"
+57 "Enter lines per page (1..1000):"
+58 "Enter header:"
+59 "Enter footer:"
+60 "Enter graph width:"
+61 "Enter graph length:"
+62 "Enter setup string:"
+63 "Enter left margin (0..1000):"
+64 "Enter right margin (0..1000):"
+65 "Enter top margin (0..240):"
+66 "Enter bottom margin (0..240):"
+67 "Enter border columns:"
+68 "Enter border rows:"
+69 "Enter print settings name to use:"
+70 "Enter print settings name:"
+71 "Enter print settings name to delete:"
+72 "Enter name of graph to print:"
+73 "Enter name of print file:"
+74 "Enter name of encoded file:"
+75 "Enter range for name table:"
+76 "Default left margin (0..1000):"
+77 "Default right margin (0..1000):"
+78 "Default top margin (0..240):"
+79 "Default bottom margin (0..240):"
+
+=group 10, 146 bytes
+0 "Release Level: "
+1 "  {B1007}"
+2 "3.00.00"
+3 "UV.06.26.90"
+4 "@INFO("release"): "
+; 5 <missing>
+6 "/* what follows is platform-specific release info */"
+7 "1.0.0.0"
+
+=group 11, 1999 bytes
+; 0 <missing>
+1 "Lines"
+2 "Connect data points with lines"
+3 "Symbols"
+4 "Display a symbol at each data point"
+5 "Both"
+6 "Display a symbol at each data point and draw lines between data points"
+7 "Neither"
+8 "Display neither symbols nor lines"
+9 "Area"
+10 "Fill area between lines"
+; 11 <missing>
+12 "Columnwise"
+13 "Use columns as data ranges"
+14 "Rowwise"
+15 "Use rows as data ranges"
+; 16 <missing>
+17 "Columnwise"
+18 "Use columns as data ranges"
+19 "Rowwise"
+20 "Use rows as data ranges"
+; 21 <missing>
+22 "Automatic"
+23 "1-2-3 sets width for scale numbers automatically"
+24 "Manual"
+25 "Specify the maximum width for scale numbers"
+; 26 <missing>
+27 "Default"
+28 "Default font"
+29 "1"
+30 "Font number 1"
+31 "2"
+32 "Font number 2"
+33 "3"
+34 "Font number 3"
+35 "4"
+36 "Font number 4"
+37 "5"
+38 "Font number 5"
+39 "6"
+40 "Font number 6"
+41 "7"
+42 "Font number 7"
+43 "8"
+44 "Font number 8"
+; 45 <missing>
+; 46 <missing>
+; 47 <missing>
+48 "Default"
+49 "Default text size"
+50 "1"
+51 "Text size 1"
+52 "2"
+53 "Text size 2"
+54 "3"
+55 "Text size 3"
+56 "4"
+57 "Text size 4"
+58 "5"
+59 "Text size 5"
+60 "6"
+61 "Text size 6"
+62 "7"
+63 "Text size 7"
+64 "8"
+65 "Text size 8"
+66 "9"
+67 "Text size 9"
+; 68 <missing>
+69 "Vertical"
+70 "Draw the graph upright"
+71 "Horizontal"
+72 "Draw the graph sideways"
+73 "Stacked"
+74 "Stack the data ranges"
+75 "100%"
+76 "Graph each data range as a percentage of the total for all ranges"
+77 "2Y-Ranges"
+78 "Set ranges for second y-axis"
+79 "Y-Ranges"
+80 "Set ranges for y-axis"
+81 "Quit"
+82 "Return to /Graph menu"
+; 83 <missing>
+84 "No"
+85 "Do not stack the data ranges"
+86 "Yes"
+87 "Stack the data ranges"
+; 88 <missing>
+89 "No"
+90 "Do not graph the data ranges as percentages of all ranges"
+91 "Yes"
+92 "Graph the data ranges as percentages of all ranges"
+; 93 <missing>
+; 94 <missing>
+; 95 <missing>
+96 "Cancel"
+97 "Cancel command; leave existing file on disk intact"
+98 "Replace"
+99 "Updates the file on disk with the current file"
+; 100 <missing>
+101 "1"
+102 "Color number 1"
+103 "2"
+104 "Color number 2"
+105 "3"
+106 "Color number 3"
+107 "4"
+108 "Color number 4"
+109 "5"
+110 "Color number 5"
+111 "6"
+112 "Color number 6"
+113 "7"
+114 "Color number 7"
+115 "8"
+116 "Color number 8"
+117 "Hide"
+118 "Do not display text"
+; 119 <missing>
+120 "Fixed"
+121 "Fixed number of decimal places (x.xx)"
+122 "Sci"
+123 "Exponential format (x.xxE+xx)"
+124 "Currency"
+125 "Currency format ($x,xxx.xx)"
+126 ","
+127 "Commas inserted (x,xxx.xx)"
+128 "General"
+129 "Standard format (x.xx or x.xxE+xx)"
+130 "+/-"
+131 "Horizontal bar graph format (+++ or ---)"
+132 "Percent"
+133 "Percent format (x.xx%)"
+134 "Date"
+135 "Date and time formats"
+136 "Text"
+137 "Display formulas instead of values"
+138 "Hidden"
+139 "Do not display scale numbers"
+
+=group 12, 524 bytes
+0 "WKS"
+1 "WK1"
+2 "WK3"
+3 "WRK"
+4 "WR1"
+5 "WR3"
+6 "CNF"
+7 "CCF"
+8 "CTF"
+9 "PRN"
+10 "DLD"
+11 "PIC"
+; 12 <missing>
+13 "<DIR>"
+14 "SCREEN"
+15 "KEYBOARD"
+16 "SYSTEM"
+17 "WK*"
+18 "123.CNF"
+19 "LEAF.CNF"
+20 "wk?"
+21 "*"
+22 "ENC"
+23 "PLC"
+24 "CGM"
+25 "(no name)"
+26 "BAK"
+27 "WJ1"
+; 28 <missing>
+; 29 <missing>
+30 "TMP"
+31 "*"
+; 32 <missing>
+33 "MOD"
+34 "UNMOD"
+35 " "
+36 "RO"
+37 "CMD.TMP"
+38 "ATR.TMP"
+39 "DAT.TMP"
+40 " [PASSWORD PROTECTED]"
+41 "Enter password:"
+42 "Verify password:"
+43 " p"
+; 44 <missing>
+; 45 <missing>
+46 " ."/\[]:|<>+=;,"
+47 "*?"
+; 48 <missing>
+49 "$I$"
+50 "$M$"
+51 "$R$"
+52 "$N$"
+53 "cmd0000"
+54 "CMD0000"
+55 "auto123"
+56 "AUTO123"
+57 "bak"
+58 "ccf"
+59 "cnf"
+60 "ctf"
+61 "dld"
+62 "enc"
+63 "cgm"
+64 "pic"
+65 "plc"
+66 "prn"
+67 "tmp"
+68 "wj1"
+69 "wk1"
+70 "wk3"
+71 "wks"
+72 "wr1"
+73 "wr3"
+74 "wrk"
+
+=group 13, 1031 bytes
+; 0 <missing>
+1 "U"
+2 "D"
+3 "L"
+4 "R"
+5 "BS"
+6 "INS"
+7 "ESC"
+8 "DEL"
+9 "CE"
+10 "PS"
+11 "NS"
+12 "FC"
+13 "LC"
+14 "HOME"
+15 "END"
+16 "PGUP"
+17 "PGDN"
+18 "BIGLEFT"
+19 "BIGRIGHT"
+20 "BIGRIGHT"
+21 "WINDOW"
+22 "HELP"
+23 "EDIT"
+24 "GOTO"
+25 "CALC"
+26 "ZOOM"
+27 "GRAPH"
+28 "ABS"
+29 "NAME"
+30 "TABLE"
+31 "QUERY"
+32 "UP"
+33 "DOWN"
+34 "LEFT"
+35 "RIGHT"
+36 "INSERT"
+37 "ESCAPE"
+38 "BACKSPACE"
+39 "DELETE"
+40 "CLEARENTRY"
+41 "MENU"
+42 "NEXTSHEET"
+43 "PREVSHEET"
+44 "PF"
+45 "NF"
+46 "FF"
+47 "LF"
+48 "NEXTFILE"
+49 "PREVFILE"
+50 "FIRSTFILE"
+51 "LASTFILE"
+52 "FIRSTCELL"
+53 "LASTCELL"
+54 "ADDIN"
+55 "APP1"
+56 "APP2"
+57 "APP3"
+58 "APP4"
+59 "FILE"
+60 "~"
+61 "{"
+62 "}"
+63 "IF"
+64 "BRANCH"
+65 "RETURN"
+66 "QUIT"
+67 "GETLABEL"
+68 "GETNUMBER"
+69 "MENUBRANCH"
+70 "?"
+71 "RESTART"
+72 "BREAKON"
+73 "BREAKOFF"
+74 "PANELON"
+75 "PANELOFF"
+76 "WINDOWSON"
+77 "WINDOWSOFF"
+78 "FRAMEON"
+79 "FRAMEOFF"
+80 "FOR"
+81 "FORBREAK"
+82 "BLANK"
+83 "GET"
+84 "LOOK"
+85 "MENUCALL"
+86 "WAIT"
+87 "DISPATCH"
+88 "FILESIZE"
+89 "GETPOS"
+90 "SETPOS"
+91 "READLN"
+92 "WRITE"
+93 "WRITELN"
+94 "CLOSE"
+95 "OPEN"
+96 "READ"
+97 "IFKEY"
+98 "LET"
+99 "PUT"
+100 "BEEP"
+101 "INDICATE"
+102 "ONERROR"
+103 "CONTENTS"
+104 "RECALC"
+105 "RECALCCOL"
+106 "DEFINE"
+107 "APPENDBELOW"
+108 "APPENDRIGHT"
+109 "GRAPHON"
+110 "GRAPHOFF"
+111 "BREAK"
+112 "FORM"
+113 "SYSTEM"
+114 "BORDERSON"
+115 "BORDERSOFF"
+116 "WOOF"
+117 "UNDO"
+; 118 <missing>
+119 "SUBRTN"
+120 "..."
+121 "Macro:"
+122 ";:}"
+123 "NODISPLAY"
+124 "RAMW"
+125 "CLEAR"
+126 "S"
+127 "V"
+
+=group 14, 3143 bytes
+; 0 <missing>
+1 "Enter range to copy FROM:"
+2 "Enter range to copy TO:"
+; 3 <missing>
+4 "Stop:"
+5 "Step:"
+6 "Start:"
+7 "Enter fill range:"
+; 8 <missing>
+9 "Enter address to go to:"
+; 10 <missing>
+11 "Enter input range:"
+12 "Enter criteria range:"
+13 "Enter output range:"
+; 14 <missing>
+15 "Enter column width (1..240):"
+16 "Enter global column width (1..240):"
+; 17 <missing>
+18 "[W"
+19 "] "
+; 20 <missing>
+21 "Enter range to erase:"
+; 22 <missing>
+23 "Enter values range:"
+24 "Enter bin range:"
+; 25 <missing>
+26 "Specify columns to hide:"
+27 "Specify hidden columns to redisplay:"
+; 28 <missing>
+29 "Enter first range to multiply:"
+30 "Enter second range to multiply:"
+31 "Enter output range:"
+; 32 <missing>
+33 "Enter range to invert:"
+34 "Enter output range:"
+35 "Enter name:"
+36 "Enter range:"
+37 "Enter name to delete:"
+38 "Enter name to create:"
+39 "Enter number of decimal places (0..15):"
+40 "Enter range to format:"
+41 "Enter range of labels:"
+42 "Enter range to move FROM:"
+43 "Enter range to move TO:"
+44 "Enter range for column-width change:"
+; 45 <missing>
+46 "Enter table range:"
+47 "Enter input cell 1:"
+48 "Enter input cell 2:"
+49 "Enter input cell 3:"
+50 "Enter formula cell:"
+; 51 <missing>
+; 52 <missing>
+; 53 <missing>
+; 54 <missing>
+; 55 <missing>
+56 "Enter name of database whose tables are to be listed:"
+57 "Enter range where table names will be copied:"
+58 "Enter name of database to which command will be sent:"
+59 "Enter command:"
+60 "Enter name of table to use:"
+61 "Enter range name for table:"
+62 "Enter name of range to stop using:"
+63 "Enter name of range whose fields are to be listed:"
+64 "Enter range where field names will be copied:"
+65 "Enter model table range:"
+; 66 <missing>
+67 "Enter character set to use:"
+68 "Enter name of table to create:"
+69 "Enter name of database whose character set will be chosen:"
+70 "Enter name of table to delete:"
+71 "Enter range for table definition:"
+72 "Enter range containing table definition:"
+73 "Enter range of columns to reset:"
+74 "Enter range for setting both titles:"
+75 "Enter range for setting horizontal titles:"
+76 "Enter range for setting vertical titles:"
+77 "Enter range for clearing titles:"
+; 78 <missing>
+79 "Enter table creation string (if required):"
+80 "Enter name of file to create:"
+81 "Enter name of file to open:"
+82 "Enter name of file to retrieve:"
+83 "Enter name of file to save:"
+84 "Enter name of file to combine:"
+85 "Enter name of file to extract to:"
+86 "Enter name of file to erase:"
+87 "Enter name of file to import:"
+88 "Enter current directory:"
+89 "Default directory:"
+90 "Enter range name or address:"
+91 "[ALL FILES]"
+92 "Enter password:"
+93 "Enter data-input range:"
+94 "Enter names of files to list:"
+95 "Enter name of file in memory to delete:"
+96 "Enter extract range:"
+97 "Directory for temporary files:"
+; 98 <missing>
+; 99 <missing>
+; 100 <missing>
+; 101 <missing>
+; 102 <missing>
+; 103 <missing>
+104 "[ALL MODIFIED FILES]"
+; 105 <missing>
+; 106 <missing>
+; 107 <missing>
+; 108 <missing>
+109 "Enter formula range:"
+110 "Enter formula label range:"
+111 "Enter row variable range:"
+112 "Enter column variable range:"
+113 "Enter worksheet variable range:"
+114 "Press ENTER to accept highlighted input values:"
+115 "Press ENTER to accept highlighted input values:"
+116 "Enter label-fill character:"
+117 "-"
+118 "Press ENTER to accept highlighted input values:"
+119 "Enter corresponding input cell:"
+120 "Press ENTER to accept highlighted input values:"
+121 "Enter range to protect:"
+122 "Enter range to unprotect:"
+; 123 <missing>
+124 "Enter iteration count (1..50):"
+; 125 <missing>
+126 "Enter column insert range:"
+127 "Enter row insert range:"
+128 "Enter worksheet insert range:"
+129 "Enter range of columns to delete:"
+130 "Enter range of rows to delete:"
+131 "Enter range of worksheets to delete:"
+132 "Enter number of worksheets to insert:"
+; 133 <missing>
+134 "Specify worksheets to hide:"
+135 "Specify worksheets to redisplay:"
+; 136 <missing>
+137 "Enter default extension of files to list:"
+138 "Enter default extension of files to save:"
+; 139 <missing>
+140 "Enter wait interval in seconds:"
+
+=group 15, 1059 bytes
+; 0 <missing>
+1 "Default"
+2 "Set default priority"
+3 "High"
+4 "Set highest priority"
+5 "Low"
+6 "Set lowest priority"
+; 7 <missing>
+8 "No"
+9 "Menu option not available"
+10 "Yes"
+11 "Menu option not available"
+; 12 <missing>
+13 "Yes"
+14 "Printer automatically issues a line feed after a carriage return"
+15 "No"
+16 "Printer does not automatically issue a line feed after a carriage return"
+; 17 <missing>
+18 "No"
+19 "Menu option not available"
+20 "Yes"
+21 "Menu option not available"
+; 22 <missing>
+23 "1"
+24 "2"
+25 "3"
+26 "4"
+27 "5"
+28 "6"
+29 "7"
+30 "8"
+31 "9"
+32 "a"
+33 "b"
+34 "c"
+35 "d"
+36 "e"
+37 "f"
+38 "g"
+39 "1"
+40 "110 baud"
+41 "2"
+42 "150 baud"
+43 "3"
+44 "300 baud"
+45 "4"
+46 "600 baud"
+47 "5"
+48 "1200 baud"
+49 "6"
+50 "2400 baud"
+51 "7"
+52 "4800 baud"
+53 "8"
+54 "9600 baud"
+55 "9"
+56 "19200 baud"
+; 57 <missing>
+; 58 <missing>
+; 59 <missing>
+; 60 <missing>
+; 61 <missing>
+; 62 <missing>
+; 63 <missing>
+; 64 <missing>
+; 65 <missing>
+; 66 <missing>
+; 67 <missing>
+68 "All"
+69 "Return all printer settings to defaults"
+70 "Range"
+71 "Clear current print range"
+72 "Borders"
+73 "Clear all border settings"
+74 "Format"
+75 "Return Margins Pg-Length Fonts Color Setup Layout and Image to defaults"
+76 "Image"
+77 "Clear graphs selected for printing"
+78 "Device"
+79 "Reset current UNIX print spooler and print driver to defaults"
+; 80 <missing>
+; 81 <missing>
+; 82 <missing>
+; 83 <missing>
+; 84 <missing>
+; 85 <missing>
+; 86 <missing>
+87 "Current"
+88 "Print the current graph"
+89 "Named-Graph"
+90 "Specify a named graph to print"
+91 " (9600 baud)"
+92 " (110 baud)"
+93 " (150 baud)"
+94 " (300 baud)"
+95 " (600 baud)"
+96 " (1200 baud)"
+97 " (2400 baud)"
+98 " (4800 baud)"
+99 " (9600 baud)"
+100 " (19200 baud)"
+
+=group 16, 2225 bytes
+; 0 <missing>
+1 "Load"
+2 "Read an add-in into memory"
+3 "Remove"
+4 "Remove an add-in from memory"
+5 "Invoke"
+6 "Start an add-in application"
+7 "Table"
+8 "Create a table of add-in applications, @functions, or macros in memory"
+9 "Clear"
+10 "Remove all add-ins from memory"
+11 "Settings"
+12 "System  File"
+13 "Quit"
+14 "Return to READY mode"
+15 "Choose a key to assign to an add-in application"
+16 "No-Key"
+17 "1 (ALT-F7)"
+18 "2 (ALT-F8)"
+19 "3 (ALT-F9)"
+20 "1 (LEAF1)"
+21 "2 (LEAF2)"
+22 "3 (LEAF3)"
+; 23 <missing>
+; 24 <missing>
+; 25 <missing>
+; 26 <missing>
+; 27 <missing>
+; 28 <missing>
+29 "LTSLEAF"
+30 "Specify an add-in to read into memory:"
+31 "Specify an add-in to remove from memory:"
+32 "Specify an add-in to start:"
+; 33 <missing>
+; 34 <missing>
+; 35 <missing>
+; 36 <missing>
+; 37 <missing>
+; 38 <missing>
+; 39 <missing>
+; 40 <missing>
+; 41 <missing>
+; 42 <missing>
+; 43 <missing>
+; 44 <missing>
+; 45 <missing>
+; 46 <missing>
+; 47 <missing>
+; 48 <missing>
+; 49 <missing>
+; 50 <missing>
+; 51 <missing>
+; 52 <missing>
+; 53 <missing>
+; 54 <missing>
+; 55 <missing>
+; 56 <missing>
+; 57 <missing>
+; 58 <missing>
+; 59 <missing>
+; 60 <missing>
+; 61 <missing>
+; 62 <missing>
+; 63 <missing>
+; 64 <missing>
+; 65 <missing>
+; 66 <missing>
+; 67 <missing>
+; 68 <missing>
+; 69 <missing>
+; 70 <missing>
+; 71 <missing>
+; 72 <missing>
+; 73 <missing>
+; 74 <missing>
+; 75 <missing>
+; 76 <missing>
+; 77 <missing>
+; 78 <missing>
+; 79 <missing>
+; 80 <missing>
+; 81 <missing>
+; 82 <missing>
+; 83 <missing>
+; 84 <missing>
+; 85 <missing>
+; 86 <missing>
+; 87 <missing>
+; 88 <missing>
+; 89 <missing>
+90 "Specify an add-in directory for 1-2-3 to search:"
+; 91 <missing>
+92 "Enter the name of the add-in to remove from the settings sheet:"
+93 "Enter the name of the add-in to be read into memory automatically:"
+; 94 <missing>
+95 "Enter add-in to read into memory automatically:"
+; 96 <missing>
+; 97 <missing>
+; 98 <missing>
+; 99 <missing>
+100 "System"
+101 "Specify 1-2-3 / add-in startup parameters"
+102 "File"
+103 "Specify add-ins to read into memory with the current file"
+; 104 <missing>
+; 105 <missing>
+; 106 <missing>
+; 107 <missing>
+; 108 <missing>
+; 109 <missing>
+110 "Set"
+111 "Specify an add-in file to read into memory with 1-2-3"
+112 "Cancel"
+113 "Remove an add-in from the settings sheet"
+114 "Directory"
+115 "Specify the default add-in directory"
+116 "Update"
+117 "Save the system settings in the add-in configuration file"
+118 "Quit"
+119 "Return to the add-in (ALT-F10) menu"
+; 120 <missing>
+; 121 <missing>
+; 122 <missing>
+; 123 <missing>
+; 124 <missing>
+; 125 <missing>
+; 126 <missing>
+; 127 <missing>
+; 128 <missing>
+; 129 <missing>
+130 "Set"
+131 "Specify an add-in file to read into memory with the current file"
+132 "Cancel"
+133 "Remove an add-in from the settings sheet for this file"
+134 "Quit"
+135 "Return to the add-in (ALT-F10) menu"
+; 136 <missing>
+; 137 <missing>
+; 138 <missing>
+; 139 <missing>
+; 140 <missing>
+; 141 <missing>
+; 142 <missing>
+; 143 <missing>
+; 144 <missing>
+; 145 <missing>
+; 146 <missing>
+; 147 <missing>
+; 148 <missing>
+; 149 <missing>
+150 "Yes"
+151 "Automatically start this application when it is read into memory"
+152 "No"
+153 "Do not start this application when it is read into memory"
+; 154 <missing>
+; 155 <missing>
+; 156 <missing>
+; 157 <missing>
+; 158 <missing>
+; 159 <missing>
+160 "Program name"
+161 "Auto-invoke"
+162 "Key"
+163 "1:"
+164 "2:"
+165 "3:"
+166 "4:"
+167 "5:"
+168 "6:"
+169 "7:"
+170 "8:"
+171 "9:"
+172 "10:"
+173 "11:"
+174 "12:"
+175 "13:"
+176 "14:"
+177 "15:"
+178 "Yes"
+179 "No"
+; 180 <missing>
+; 181 <missing>
+; 182 <missing>
+; 183 <missing>
+; 184 <missing>
+185 "No-Key"
+186 "Do not assign a function key to this application"
+187 "1"
+188 "Assign APP1 (ALT-F7) to this application"
+189 "2"
+190 "Assign APP2 (ALT-F8) to this application"
+191 "3"
+192 "Assign APP3 (ALT-F9) to this application"
+; 193 <missing>
+; 194 <missing>
+; 195 <missing>
+; 196 <missing>
+; 197 <missing>
+; 198 <missing>
+; 199 <missing>
+200 "@Functions"
+201 "Create a table of add-in @functions in the current file"
+202 "Macros"
+203 "Create a table of add-in macro commands in the current file"
+204 "Applications"
+205 "Create a table of add-in applications in the current file"
+
+=group 17, 794 bytes
+; 0 <missing>
+1 "A (.,,)"
+2 "Decimal: Period   Argument separator: Comma   Thousands separator: Comma"
+3 "B (,..)"
+4 "Decimal: Comma   Argument separator: Period   Thousands separator: Period"
+5 "C (.;,)"
+6 "Decimal: Period  Argument separator: Semicolon  Thousands separator: Comma"
+7 "D (,;.)"
+8 "Decimal: Comma  Argument separator: Semicolon  Thousands separator: Period"
+9 "E (., )"
+10 "Decimal: Period   Argument separator: Comma   Thousands separator: Space"
+11 "F (,. )"
+12 "Decimal: Comma   Argument separator: Period   Thousands separator: Space"
+13 "G (.; )"
+14 "Decimal: Period  Argument separator: Semicolon  Thousands separator: Space"
+15 "H (,; )"
+16 "Decimal: Comma  Argument separator: Semicolon  Thousands separator: Space"
+; 17 <missing>
+18 "Currency symbol:"
+; 19 <missing>
+20 "Prefix"
+21 "Currency sign precedes values"
+22 "Suffix"
+23 "Currency sign follows values"
+
+=group 18, 94 bytes
+0 "0123456789"
+1 "0123456789+-@(#"
+; 2 <missing>
+3 ";)+-*/^#<>=&"
+; 4 <missing>
+5 "!;(+-*/^=<>#&"
+6 "!;)+-*/^=<>#&"
+7 "+"
+8 "#"
+9 """
+
+=group 19, 106 bytes
+0 "-"
+1 "+"
+2 "-"
+3 "*"
+4 "/"
+5 "^"
+6 "="
+7 "<>"
+8 "<="
+9 ">="
+10 "<"
+11 ">"
+12 "#AND#"
+13 "#OR#"
+14 "#NOT#"
+15 "+"
+16 "&"
+17 "("
+18 ")"
+19 ";"
+20 ","
+; 21 <missing>
+22 "<<"
+23 ">>"
+
+=group 20, 1135 bytes
+0 "NA"
+1 "ERR"
+2 "ABS"
+3 "INT"
+4 "SQRT"
+5 "LOG"
+6 "LN"
+7 "PI"
+8 "SIN"
+9 "COS"
+10 "TAN"
+11 "ATAN2"
+12 "ATAN"
+13 "ASIN"
+14 "ACOS"
+15 "EXP"
+16 "MOD"
+17 "CHOOSE"
+18 "ISNA"
+19 "ISERR"
+20 "FALSE"
+21 "TRUE"
+22 "RAND"
+23 "DATE"
+24 "NOW"
+25 "PMT"
+26 "PV"
+27 "FV"
+28 "IF"
+29 "DAY"
+30 "MONTH"
+31 "YEAR"
+32 "ROUND"
+33 "TIME"
+34 "HOUR"
+35 "MINUTE"
+36 "SECOND"
+37 "ISNUMBER"
+38 "ISSTRING"
+39 "LENGTH"
+40 "VALUE"
+41 "STRING"
+42 "MID"
+43 "CHAR"
+44 "CODE"
+45 "FIND"
+46 "DATEVALUE"
+47 "TIMEVALUE"
+48 "CELLPOINTER"
+49 "SUM"
+50 "AVG"
+51 "COUNT"
+52 "MIN"
+53 "MAX"
+54 "VLOOKUP"
+55 "NPV"
+56 "VAR"
+57 "STD"
+58 "IRR"
+59 "HLOOKUP"
+60 "DSUM"
+61 "DAVG"
+62 "DCOUNT"
+63 "DMIN"
+64 "DMAX"
+65 "DVAR"
+66 "DSTD"
+67 "INDEX"
+68 "COLS"
+69 "ROWS"
+70 "REPEAT"
+71 "UPPER"
+72 "LOWER"
+73 "LEFT"
+74 "RIGHT"
+75 "REPLACE"
+76 "PROPER"
+77 "CELL"
+78 "TRIM"
+79 "CLEAN"
+80 "S"
+81 "N"
+82 "EXACT"
+83 "-CALL"
+84 "@"
+85 "RATE"
+86 "TERM"
+87 "CTERM"
+88 "SLN"
+89 "SYD"
+90 "DDB"
+91 "-SPLFUNCS"
+92 "SHEETS"
+93 "INFO"
+94 "SUMPRODUCT"
+95 "ISRANGE"
+96 "DGET"
+97 "DQUERY"
+98 "COORD"
+99 "-MATCH"
+100 "TODAY"
+101 "VDB"
+102 "DVARS"
+103 "DSTDS"
+104 "VARS"
+105 "STDS"
+106 "D360"
+107 "-BLANK"
+108 "ISAPP"
+109 "ISAAF"
+110 "WEEKDAY"
+111 "DATEDIF"
+112 "RANK"
+113 "NUMBERSTRING"
+114 "DATESTRING"
+115 "DECIMAL"
+116 "HEX"
+117 "DB"
+118 "PMTI"
+119 "SPI"
+120 "FULLP"
+121 "HALFP"
+122 "PUREAVG"
+123 "PURECOUNT"
+124 "PUREMAX"
+125 "PUREMIN"
+126 "PURESTD"
+127 "PUREVAR"
+128 "PURESTDS"
+129 "PUREVARS"
+130 "PMT2"
+131 "PV2"
+132 "FV2"
+133 "TERM2"
+134 "?"
+
+=group 21, 256 bytes
+0 "l"
+1 "b"
+2 "v"
+3 "(Type 'log' and press ENTER or CTRL-D to return to 1-2-3)"
+4 "(Type 'exit' and press ENTER to return to 1-2-3)"
+; 5 <missing>
+; 6 <missing>
+; 7 <missing>
+; 8 <missing>
+9 "address"
+10 "col"
+11 "contents"
+12 "format"
+13 "prefix"
+14 "protect"
+15 "row"
+16 "sheet"
+17 "type"
+18 "width"
+19 "coord"
+20 "filename"
+21 "parentheses"
+22 "color"
+
+=group 22, 11 bytes
+; 0 <missing>
+1 "IBM RT"
+
+=group 23, 2996 bytes
+; 0 <missing>
+1 "Retrieve"
+2 "Replace the current file with a file from disk"
+3 "Save"
+4 "Copy a file from memory to a file on disk"
+5 "Combine"
+6 "Incorporate data from a file on disk into the current file"
+7 "Xtract"
+8 "Save a specified range in a file on disk"
+9 "Erase"
+10 "Erase a file from disk"
+11 "List"
+12 "Display the names of files in the current directory"
+13 "Import"
+14 "Read text or numbers from a text file into the current worksheet"
+15 "Dir"
+16 "Display and/or change the current directory"
+17 "New"
+18 "Create a new file in memory and on disk"
+19 "Open"
+20 "Read a file into memory before or after the current file"
+21 "Admin"
+22 "Reservation  Table  Seal  Link-Refresh"
+; 23 <missing>
+; 24 <missing>
+25 "Yes"
+26 "Retrieve the file without a reservation"
+27 "No"
+28 "Do not retrieve the file; return to READY mode"
+; 29 <missing>
+; 30 <missing>
+31 "Cancel"
+32 "Cancel command; leave existing file on disk intact"
+33 "Replace"
+34 "Update the file on disk with the current file"
+35 "Backup"
+36 "Create a backup file from a file on disk (with a .BAK extension)"
+; 37 <missing>
+; 38 <missing>
+39 "Copy"
+40 "Copy data from a file on disk to the current file"
+41 "Add"
+42 "Add values from a file on disk to numbers in the current file"
+43 "Subtract"
+44 "Subtract values from a file on disk from numbers in the current file"
+; 45 <missing>
+; 46 <missing>
+47 "Entire-File"
+48 "Incorporate entire file into the current file"
+49 "Named/Specified-Range"
+50 "Incorporate specified range from a file into the current file"
+; 51 <missing>
+; 52 <missing>
+53 "Before"
+54 "Create a file on disk and in front of the current file in memory"
+55 "After"
+56 "Create a file on disk and behind the current file in memory"
+; 57 <missing>
+; 58 <missing>
+59 "Formulas"
+60 "Save data including formulas "
+61 "Values"
+62 "Save current values and labels"
+; 63 <missing>
+; 64 <missing>
+65 "Before"
+66 "Read a file into memory in front of the current file"
+67 "After"
+68 "Read a file into memory behind the current file"
+69 "Poopsheet"
+70 "Erase a worksheet file "
+71 "Print"
+72 "Erase a print file "
+73 "Graph"
+74 "Erase a graph file "
+75 "Other"
+76 "Erase any file   "
+; 77 <missing>
+; 78 <missing>
+79 "No"
+80 "Cancel command; do not erase the file"
+81 "Yes"
+82 "Erase the file"
+; 83 <missing>
+; 84 <missing>
+85 "Porksheet"
+86 "List worksheet files"
+87 "Print"
+88 "List print files"
+89 "Graph"
+90 "List graph files"
+91 "Other"
+92 "List all files"
+93 "Active"
+94 "List files in memory"
+95 "Linked"
+96 "List files linked to the current file"
+; 97 <missing>
+; 98 <missing>
+99 "Text"
+100 "Import each line of data as a single label"
+101 "Numbers"
+102 "Import numbers and quoted text into separate columns"
+; 103 <missing>
+; 104 <missing>
+105 "Reservation"
+106 "Get or release the current file's reservation"
+107 "Table"
+108 "Enter a table of file information in the current worksheet"
+109 "Seal"
+110 "Prevent changes to worksheet and reservation settings"
+111 "Link-Refresh"
+112 "Update linked formulas and recalculate active files"
+; 113 <missing>
+; 114 <missing>
+115 "Get"
+116 "Secure a reservation for saving the file"
+117 "Release"
+118 "Release a reservation for saving the file"
+119 "Setting"
+120 "Set default file reservation status"
+; 121 <missing>
+122 "Automatic"
+123 "Set default file reservation status to automatic"
+124 "Manual"
+125 "Set default file reservation status to manual"
+; 126 <missing>
+; 127 <missing>
+; 128 <missing>
+; 129 <missing>
+130 "(same as MENU_FL)"
+; 131 <missing>
+; 132 <missing>
+133 "File"
+134 "Seal a file with a password"
+135 "Reservation-Setting"
+136 "Seal a file's reservation setting with a password"
+137 "Disable"
+138 "Unseal a file with a password"
+; 139 <missing>
+; 140 <missing>
+; 141 <missing>
+; 142 <missing>
+; 143 <missing>
+; 144 <missing>
+; 145 <missing>
+146 "<* MENU_FROXL *>"
+147 "Strip"
+148 "Remove foreign characters from strings"
+149 "Translate"
+150 "Translate foreign characters in strings"
+
+=group 24, 710 bytes
+; 0 <missing>
+; 1 <missing>
+; 2 <missing>
+; 3 <missing>
+; 4 <missing>
+; 5 <missing>
+; 6 <missing>
+; 7 <missing>
+; 8 <missing>
+; 9 <missing>
+; 10 <missing>
+; 11 <missing>
+; 12 <missing>
+; 13 <missing>
+; 14 <missing>
+; 15 <missing>
+16 "Enter independent variable(s), or X range:"
+17 "Enter dependent variable, or Y range:"
+18 "Enter output range:"
+19 "Regression Output:"
+20 "Constant"
+21 "Std Err of Y Est"
+22 "R Squared"
+23 "No. of Observations"
+24 "Degrees of Freedom"
+25 "X Coefficient(s)"
+26 "Std Err of Coef."
+; 27 <missing>
+28 "Formulas"
+29 "Specify the range containing the labeled formulas"
+30 "Down"
+31 "Specify the range containing the row variables"
+32 "Across"
+33 "Specify the range containing the column variables"
+34 "Sheets"
+35 "Specify the range containing the worksheet variables"
+36 "Input-Cells"
+37 "Connect row, column, and worksheet variables to input cells"
+38 "Label-Fill"
+39 "Specify the label-fill character"
+40 "Go"
+41 "Calculate the table"
+42 "Quit"
+43 "Return to READY mode"
+
+=group 25, 1615 bytes
+0 "Processor:"
+1 "Available memory:"
+2 "Math coprocessor:"
+3 "Recalculation:"
+4 "File name mode:"
+5 "Method..........."
+6 "Order............"
+7 "Iterations......."
+8 "Circular reference:"
+9 "Cell display:"
+10 "Format..........."
+11 "Label prefix....."
+12 "Column width....."
+13 "Zero setting....."
+14 "Global protection:"
+15 " of "
+16 " Bytes ("
+17 "%)"
+18 "No"
+19 "Yes"
+20 "(None)"
+21 "Label"
+22 "Automatic"
+23 "Manual"
+24 "Natural"
+25 "Column-by-column"
+26 "Row-by-row"
+27 "DOS upper"
+28 "DOS lower"
+29 "UNIX"
+; 30 <missing>
+31 "Printer:"
+32 "Interface....."
+33 "Auto linefeed."
+34 "Margins"
+35 "Left"
+36 "Right"
+37 "Top"
+38 "Bottom"
+39 "Page length..."
+40 "Wait.........."
+41 "Setup string.."
+42 "Name.........."
+43 "Default directory:"
+44 "Clock on screen:"
+45 "International:"
+46 "Punctuation....."
+47 "Decimal"
+48 "Argument"
+49 "Thousands"
+50 "Currency........"
+51 "Date format D4.."
+52 "Time format D8.."
+53 "File list extension:"
+54 "File save extension:"
+55 "Date format D5.."
+56 "Yes"
+57 "No"
+58 "Standard"
+59 "International"
+60 "None"
+61 "File name"
+62 "Time format D9.."
+63 "A"
+64 "B"
+65 "C"
+66 "D"
+67 "E"
+68 "F"
+69 "G"
+70 "H"
+; 71 <missing>
+72 "Period"
+73 "Comma"
+74 "Dot"
+75 "Comma"
+76 "Dot"
+77 "Comma"
+78 "Dot"
+79 "Comma"
+; 80 <missing>
+81 "Comma"
+82 "Dot"
+83 "Semicolon"
+84 "Semicolon"
+85 "Comma"
+86 "Dot"
+87 "Semicolon"
+88 "Semicolon"
+; 89 <missing>
+90 "Comma"
+91 "Dot"
+92 "Comma"
+93 "Dot"
+94 "Space"
+95 "Space"
+96 "Space"
+97 "Space"
+; 98 <missing>
+99 " (Prefix)"
+100 " (Suffix)"
+; 101 <missing>
+102 "A (MM/DD/YY)"
+103 "B (DD/MM/YY)"
+104 "C (DD.MM.YY)"
+105 "D (YY-MM-DD)"
+; 106 <missing>
+107 "A (HH:MM:SS)"
+108 "B (HH.MM.SS)"
+109 "C (HH,MM,SS)"
+110 "D (HHhMMmSSs)"
+; 111 <missing>
+112 "Rowwise"
+113 "Columnwise"
+114 "Automatic graph:"
+115 "Graph save extension:"
+116 "Temporary directory:"
+117 "Negative........"
+118 "Parentheses"
+119 "Sign"
+120 "Release 2......."
+121 "File translate.."
+122 "LICS"
+123 "ASCII"
+124 "PIC"
+125 "CGM"
+126 "pic"
+127 "cgm"
+128 "Country"
+129 "International"
+130 "Undo:"
+131 "Autoexec:"
+132 "Beep:"
+133 "None"
+; 134 <missing>
+135 "A (MM/DD)"
+136 "B (DD/MM)"
+137 "C (DD.MM)"
+138 "D (MM-DD)"
+; 139 <missing>
+140 "A (HH:MM)"
+141 "B (HH.MM)"
+142 "C (HH,MM)"
+143 "D (HHhMMm)"
+144 "(No interface available)"
+145 "80287"
+146 "80387"
+147 "Emulation"
+148 "Release: "
+149 " Version: "
+150 "Unknown System Type"
+
+=group 26, 22 bytes
+; 0 <missing>
+1 "SUN 386I"
+2 "Sun OS"
+
+=group 27, 35 bytes
+; 0 <missing>
+1 " REQUEST>"
+2 "HALREAL"
+3 "HAL"
+4 "RI"
+
+=group 28, 296 bytes
+0 "     Manufacturer                Driver                Version"
+1 "     ------------                --------              --------"
+2 "   Primary error code       Secondary error code    Records processed"
+3 "   ------------------       --------------------    -----------------"
+4 "LTSGAB"
+5 "LOTUS.BCF"
+
+=group 29, 17 bytes
+0 " -- Press HELP"
+
+=group 30, 1350 bytes
+; 0 <missing>
+1 "1-12    :"
+2 "SHIFT1  :"
+3 "SHIFT2  :"
+4 "SHIFT3  :"
+5 "13-24   :"
+6 "S  1-12 :"
+7 "S 13-24 :"
+8 "HELP EDIT ESC  | SHF1 SHF2 SHF3 | UP   DOWN PS   | LEFT RGHT NS"
+9 "HOME END  GOTO | ANCH SCRF MACR | PGUP PGDN UNDO | BIGL BIGR CALC"
+10 "QRY  NAME ANC: | ABS  KEYS GRPH | TABL WIND      | ZOOM RECD FILE"
+11 "HS   EXTD APP1 | APP2 APP3 RUN  | INS  DEL  BKSP | TAB"
+12 "HELP EDIT ESC  | SHFT NAME RUN  | UP   DOWN PS   | LEFT RGHT NS"
+13 "QRY       ANC: | ABS  KEYS GRPH | TABL WIND      | ZOOM RECD FILE"
+14 "HS   EXTD APP1 | APP2 APP3      | INS  DEL  BKSP | TAB"
+15 "vmcms"
+16 "mvstso"
+17 "370"
+; 18 <missing>
+19 "(Type RETURN and press [ENTER] to return to 1-2-3/M)"
+; 20 <missing>
+21 "Select an ICU chart format:"
+22 "Numbers too large/small were converted to ERR"
+23 "This file cannot be manually reserved in this system."
+; 24 <missing>
+; 25 <missing>
+; 26 <missing>
+; 27 <missing>
+; 28 <missing>
+; 29 <missing>
+; 30 <missing>
+; 31 <missing>
+; 32 <missing>
+; 33 <missing>
+; 34 <missing>
+; 35 <missing>
+; 36 <missing>
+; 37 <missing>
+; 38 <missing>
+; 39 <missing>
+; 40 <missing>
+; 41 <missing>
+; 42 <missing>
+; 43 <missing>
+44 "Colors"
+45 "Select colors for data ranges"
+46 "Text"
+47 "Select text attributes"
+48 "Hatches"
+49 "Select hatch patterns for data ranges"
+50 "ICU"
+51 "Invoke the Interactive Chart Utility"
+52 "Quit"
+53 "Return to previous menu"
+; 54 <missing>
+; 55 <missing>
+; 56 <missing>
+; 57 <missing>
+; 58 <missing>
+; 59 <missing>
+; 60 <missing>
+; 61 <missing>
+; 62 <missing>
+; 63 <missing>
+64 "Line"
+65 "Line graph"
+66 "Bar"
+67 "Bar graph      "
+68 "XY"
+69 "XY (scatter) graph      "
+70 "Stack-Bar"
+71 "Stacked bar graph"
+72 "Pie"
+73 "Pie chart       "
+74 "HLCO"
+75 "High-low-close-open (stock market) graph"
+76 "Mixed"
+77 "Combined bar and line graph"
+78 "Features"
+79 "Vertical  Horizontal  Stacked  100%  2Y-Ranges  Y-Ranges  Quit"
+80 "Extended"
+81 "Select an ICU chart format"
+
+=group 31, 47 bytes
+; 0 <missing>
+1 "pcdos"
+2 "pcos2"
+3 "pcxenix"
+; 4 <missing>
+5 " -- Press HELP"
+
+=group 32, 1561 bytes
+; 0 <missing>
+1 "vaxvms"
+2 "vaxultrix"
+3 "VAX"
+; 4 <missing>
+5 "ERROR LOG BUFFER"
+6 "D"
+7 "F"
+8 "G"
+9 "Float type:"
+; 10 <missing>
+; 11 <missing>
+; 12 <missing>
+; 13 <missing>
+; 14 <missing>
+; 15 <missing>
+16 "Warning: Float qualifier incorrect - using D "
+17 "Warning: Error qualifier incorrect - using FATAL"
+18 "err in macro cmd file"
+; 19 <missing>
+; 20 <missing>
+21 "Cannot load country driver"
+22 "Cannot load graph driver"
+23 "Cannot load floating point driver"
+24 "Cannot translate country driver logical"
+25 "Cannot translate sort sequence logical name"
+26 "Cannot translate graph logical name"
+27 "VAX/VMS"
+28 "Type LOGOUT and press [RETURN] to return to 1-2-3"
+29 "Enter number of decimal places (0..14)"
+30 "Enter number of decimal places (0..6)"
+31 "Error Log Buffer"
+32 "Error attempting to decode VMS status code"
+33 "Could not open error log file"
+34 "LOTUS123$CONFIG.CNF"
+35 "LOTUS123$DEREG.BCF"
+36 "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+37 "0123456789_-$"
+38 "ERROR - can't get keyboard, define SYS$INPUT SYS$COMMAND in DCL"
+39 "ERROR - in ERROR state, no keyboard assigned -> exit"
+40 "ERROR - the interactive macro not supported for noninteractive mode"
+41 "Normal completion of macro command file"
+42 "Logical for global printer name no longer defined "
+43 "Natural"
+44 "Recalculate in natural order"
+45 "Columnwise"
+46 "Recalculate column by column"
+47 "Rowwise"
+48 "Recalculate row by row"
+49 "Automatic"
+50 "Recalculate every time entries change"
+51 "Manual"
+52 "Press CALC to recalculate formulas"
+53 "Iteration"
+54 "Specify number of recalculation passes"
+55 "Country"
+56 "Set DEC Multinational Character Set (DEC MCS) for translating text files"
+57 "International"
+58 "Set PC international code page (CP850) for translating text files"
+59 "Are you repeating ^Y to abort 1-2-3? (Y/N)"
+60 "Y"
+
+=group 33, 33 bytes
+; 0 <missing>
+1 "macintosh2multifinder"
+2 "MAC2"
+
+=group 34, 2696 bytes
+0 "Display"
+1 "All   User   Printer   Quit"
+2 "Cancel"
+3 "Cancel a queued print job"
+4 "Suspend"
+5 "Suspend a queued print job"
+6 "Resume"
+7 "Resume a queued print job on hold"
+8 "Options"
+9 "After  Copies  Flag  Identify  Burst  Notify  More  Quit"
+10 "Quit"
+11 "Return to Print menu"
+; 12 <missing>
+; 13 <missing>
+; 14 <missing>
+; 15 <missing>
+; 16 <missing>
+; 17 <missing>
+; 18 <missing>
+; 19 <missing>
+20 "All"
+21 "Display all system queues"
+22 "User"
+23 "Display user job entries only"
+24 "Printer"
+25 "Display current printer's queue "
+26 "Quit"
+27 "Return to previous menu"
+; 28 <missing>
+; 29 <missing>
+; 30 <missing>
+; 31 <missing>
+; 32 <missing>
+; 33 <missing>
+; 34 <missing>
+; 35 <missing>
+; 36 <missing>
+; 37 <missing>
+; 38 <missing>
+; 39 <missing>
+40 "After"
+41 "Specify printing time"
+42 "Copies"
+43 "Specify number of copies"
+44 "Flag"
+45 "Yes   No"
+46 "Identify"
+47 "Specify job name"
+48 "Burst"
+49 "Yes   No"
+50 "Notify"
+51 "Yes   No"
+52 "More"
+53 "Message  Trailer  Form  Chars  JobHold  Oper  Priority  NoFeed  Quit"
+54 "Quit"
+55 "Return to Print menu"
+; 56 <missing>
+; 57 <missing>
+; 58 <missing>
+; 59 <missing>
+; 60 <missing>
+; 61 <missing>
+62 "Message"
+63 "Specify note for header page"
+64 "Trailer"
+65 "Yes   No"
+66 "Form"
+67 "Specify form"
+68 "Chars"
+69 "Specify job characteristics"
+70 "JobHold"
+71 "Yes   No"
+72 "Oper"
+73 "Send a message to the operator"
+74 "Priority"
+75 "Select print job priority in queue"
+76 "Quit"
+77 "Return to print menu"
+; 78 <missing>
+; 79 <missing>
+80 "Yes"
+81 "Include a flag page"
+82 "No"
+83 "Do not include a flag page"
+; 84 <missing>
+85 "Yes"
+86 "Include burst"
+87 "No"
+88 "Do not include burst"
+; 89 <missing>
+90 "Yes"
+91 "Notify when job completed"
+92 "No"
+93 "Do not notify when job completed"
+; 94 <missing>
+; 95 <missing>
+; 96 <missing>
+; 97 <missing>
+; 98 <missing>
+; 99 <missing>
+100 "Yes"
+101 "Include trailer page"
+102 "No"
+103 "Do not include trailer page"
+; 104 <missing>
+105 "Yes"
+106 "Do not print job until Resume selected"
+107 "No"
+108 "Print job immediately"
+; 109 <missing>
+110 "Yes"
+111 "Do not include automatic line feed"
+112 "No"
+113 "Include line feed"
+; 114 <missing>
+115 "Printing time:"
+116 "Job identification:"
+117 "Message:"
+118 "Clear"
+119 "Do not specify a form; erase Identifier and Number settings"
+120 "Identifier"
+121 "Specify form by name"
+122 "Number"
+123 "Specify form by number"
+; 124 <missing>
+; 125 <missing>
+; 126 <missing>
+127 "Clear"
+128 "Do not specify a characteristic; erase Identifier and Number settings"
+129 "Identifier"
+130 "Specify characteristic by name"
+131 "Number"
+132 "Specify characteristic by number"
+; 133 <missing>
+134 "Operator message:"
+135 "Priority:"
+136 "Copies:"
+137 "Form name:"
+138 "Form number:"
+139 "Characteristics name:"
+140 "Characteristics number:"
+141 "Printer"
+142 "Send print output directly to a printer"
+143 "File"
+144 "Send print output to a text file"
+145 "Encoded"
+146 "Send print output to an encoded file"
+147 "Suspend"
+148 "Menu option not available"
+149 "Resume"
+150 "Menu option not available"
+151 "Cancel"
+152 "Menu option not available"
+153 "Job"
+154 "Select job options"
+155 "Quit"
+156 "Return to ready mode"
+; 157 <missing>
+; 158 <missing>
+; 159 <missing>
+; 160 <missing>
+161 "Interface"
+162 "Menu option not available"
+163 "AutoLf"
+164 "Automatic linefeed at end of line"
+165 "Left"
+166 "Set left margin"
+167 "Right"
+168 "Set right margin"
+169 "Top"
+170 "Set top margin"
+171 "Bottom"
+172 "Set bottom margin"
+173 "Pg-Length"
+174 "Set number of lines per page"
+175 "Wait"
+176 "Wait for paper change at the end of each page"
+177 "Setup"
+178 "Specify default setup string"
+179 "Name"
+180 "Select default printer name and queue"
+181 "Job"
+182 "Set global job options"
+183 "Quit"
+184 "Return to previous menu"
+; 185 <missing>
+; 186 <missing>
+187 "After"
+188 "Specify printing time"
+189 "Copies"
+190 "Specify number of copies"
+191 "Flag"
+192 "Yes  No"
+193 "Identify"
+194 "Specify job name"
+195 "Burst"
+196 "Yes  No"
+197 "Notify"
+198 "Yes  No"
+199 "More"
+200 "Message  Trailer  Form  Chars  JobHold  Oper  Priority  Quit"
+201 "Quit"
+202 "Return to Worksheet Global Default Printer menu"
+; 203 <missing>
+; 204 <missing>
+; 205 <missing>
+; 206 <missing>
+207 "Message"
+208 "Specify note for header page"
+209 "Trailer"
+210 "Yes  No"
+211 "Form"
+212 "Specify special form"
+213 "Chars"
+214 "Specify special characteristics"
+215 "JobHold"
+216 "Yes  No"
+217 "Oper"
+218 "Send a message to the operator"
+219 "Priority"
+220 "Select print job priority in queue"
+221 "Quit"
+222 "Return to Worksheet Global Default Printer menu"
+; 223 <missing>
+; 224 <missing>
+; 225 <missing>
+; 226 <missing>
+; 227 <missing>
+; 228 <missing>
+; 229 <missing>
+; 230 <missing>
+; 231 <missing>
+; 232 <missing>
+; 233 <missing>
+; 234 <missing>
+; 235 <missing>
+; 236 <missing>
+; 237 <missing>
+; 238 <missing>
+; 239 <missing>
+; 240 <missing>
+; 241 <missing>
+242 "Error submiting job to print queue"
+
+=group 35, 8894 bytes
+0 ""
+1 "Data Table and Data Query commands are disabled"
+2 "Memory full"
+3 "Internal error - invalid command parameter"
+4 "External database data type not allowed in worksheet"
+5 "Invalid worksheet variable range"
+6 "Error loading driver file"
+7 "Invalid field name"
+8 "Cannot open database input range"
+9 "End of database input range reached"
+10 "Too many records for Output range"
+11 "Cannot locate driver registration file; LOTUS.BCF"
+12 "No input range specified"
+13 "No criteria range specified"
+14 "No output range specified"
+15 "Invalid number input"
+16 "Cannot hide all columns"
+17 "Column hidden"
+18 "Invalid matrix"
+19 "Matrices incompatible for multiplication"
+20 "Error reading file"
+21 "Error saving file"
+22 "File does not exist"
+23 "Matrices too large for multiplication"
+24 "No printers named in printcap file"
+25 "No printers named in system configuration directory"
+26 "Printcap file not found or not readable"
+27 "Printcap file corrupted"
+28 "Error opening print drivers"
+29 "All modified files must be reserved before saving"
+30 "Error writing CNF file"
+31 "Table results area not fully defined"
+32 "Display initialization failed"
+33 "Not enough memory to initialize display"
+34 "Not enough memory to load driver file "
+35 "Cannot invert matrix"
+36 "Matrix too large for inversion"
+37 "Formula label range cannot be blank"
+38 "Range name does not exist"
+39 "Cannot Move or Copy data beyond worksheet boundaries"
+40 "Number is too large"
+41 "Number is too small"
+42 "Directory does not exist"
+43 "No external databases are available"
+44 "No external databases are in use"
+45 "No external tables are available"
+46 "No external tables are in use"
+47 "Named field does not exist"
+48 "Named table does not exist"
+49 "Unable to locate the database"
+50 "Unable to locate the table"
+51 "Database name is not in the correct format"
+52 "Table name is not in the correct format"
+53 "Cannot reset database when tables are in use"
+54 "Hidden columns not allowed in title region"
+55 "Table definition range must contain six columns"
+56 "Unable to reserve file: it is already reserved"
+57 "Unable to reserve file: it has read-only access"
+58 "Backup file exists in memory"
+59 "Backup unsuccessful due to file error"
+60 "File and/or extension converted"
+61 "File name already exists on disk"
+62 "File contention prevented accessing the file"
+63 "Margins, header and footer equal or exceed page length"
+64 "No unprotected cells in Input range"
+65 "Unsupported database function call"
+66 "Database not correctly positioned"
+67 "Cannot convert extension. File already exists in memory."
+68 "Error accessing temporary file"
+69 "Temporary file record too long"
+70 "No external database drivers are available"
+71 "No external database drivers are loaded"
+72 "Cannot unload driver when databases are in use"
+73 "Data Query Find works only in active files"
+74 "Protected cell"
+75 "Not enough worksheets in TO range"
+76 "Invalid formula label range"
+77 "Not a valid worksheet file"
+78 "Invalid configuration file"
+79 "Cannot erase file. It is in use or has read-only access."
+80 "File is read/only"
+81 "Disk error"
+82 "Unrecognized key/range name"
+83 "Cannot import - file is in use"
+84 "Insert works only on databases with one table"
+85 "Invalid format line"
+86 "Syntax error in macro key/range"
+87 "Macro: Missing argument"
+88 "Invalid expression"
+89 "Cannot use ranges that are not in memory"
+90 "Invalid criteria range"
+91 "Out of macro argument memory"
+92 "Cannot delete all worksheets"
+93 "Cannot create a named range that spans files"
+94 "Incorrect file name or path syntax"
+95 "Invalid cell or range address"
+96 "More than one file has the same range name"
+97 "At least one variable range must be specified"
+98 "Range specified is outside variable range"
+99 "Formula range and formula label range are required"
+100 "Each variable must have an input cell"
+101 "Data Query Modify Extract canceled or not performed"
+102 "Invalid field name"
+103 "Cannot modify a range that is not in memory"
+104 "Invalid type"
+105 "Invalid string argument"
+106 "Invalid repeat key count"
+107 "Break"
+108 "Graph name does not exist"
+109 "Print settings name does not exist"
+110 "Must specify a down or across variable range"
+111 "Variable ranges and formula labels overlap"
+112 "A range name cannot begin with << >>"
+113 "Invalid range"
+114 "Invalid value"
+115 "Invalid FORBREAK"
+116 "Cannot delete a range that is not in memory"
+117 "Error replacing extracted records"
+118 "ERR values are not allowed in the output range"
+119 "Cannot create names from a range of labels that is not in memory"
+120 "Destination range full or invalid"
+121 "Too many arguments"
+122 "Printing was aborted"
+123 "Name too long"
+124 "Graph error - not enough memory to draw graph"
+125 "Error loading driver, file name - "
+126 "Graph aborted - open failure "
+127 "Graph driver loading error, file name - "
+128 "Justify range is full or line too long"
+129 "Output range must contain more than one row"
+130 "Invalid X range"
+131 "Invalid Y range"
+132 "Invalid output range"
+133 "Error reading print sample file"
+134 "Cannot justify text if Worksheet protection enabled"
+; 135 <missing>
+136 "Delete works only on databases with one table"
+137 "Left margin equals or exceeds right margin"
+138 "Too few observations for number of variables"
+139 "File close error"
+140 "File already exists in memory"
+141 "Incorrect password"
+142 "Error initializing keyboard driver"
+143 "Invalid \nnn code in Setup String"
+144 "Invalid use of Menu macro command"
+145 "Input line too long"
+146 "Cannot search range"
+147 "String not found"
+148 "Disk file has changed"
+149 "Invalid device"
+150 "Permission denied"
+151 "File is sealed"
+152 "File is already sealed"
+153 "No external table specified for creation"
+154 "No table definition range exists to create table"
+155 "Table definition range contains invalid information"
+156 "External table was not created"
+157 "Data-type mismatch on output"
+158 "Database has read-only access"
+159 "Null field values not allowed in this database"
+160 "Cannot update a database with a nonunique record"
+161 "Database is full"
+162 "Insufficient privilege to perform database operation"
+163 "Driver cannot perform this database operation"
+164 "No records found for this database operation"
+165 "Syntax error in LOTUS.BCF; see driver documentation"
+166 "Insufficient memory to invoke operating system"
+167 "Cannot invoke operating system"
+168 "External table was not deleted"
+169 "The worksheet file is already reserved"
+170 "The worksheet file has not been named"
+171 "Password required"
+172 "The worksheet file has no reservation"
+173 "Unable to get reservation for the worksheet file"
+174 "Invalid summary formula"
+175 "No printer driver loaded"
+176 "No interface available"
+177 "Invalid field name in criteria range"
+178 "LCF file access error"
+179 "Directory entry update error"
+180 "File is not sealed"
+181 "Cannot go to a range that is not in memory"
+182 "Formula reference overlaps split layer"
+183 "Range reference overlaps split layer"
+184 "Insert next sheet of paper and select Resume"
+185 "Print error - unable to print image"
+186 "Invalid extra sort-key number"
+187 "Criteria must contain field reference"
+188 "Range cannot span worksheets"
+189 "Cannot read Help file"
+190 "Cannot read Help file"
+191 "Cannot read Help file"
+192 "Only one input range is allowed"
+193 "Invalid formula in query"
+194 "Too many computed-column formulas in output range"
+195 "Invalid date"
+196 "Incompatibility with previous versions of 1-2-3"
+197 "No current 1-2-3 print job"
+198 "Spool error - file number overflow, print/graph aborted"
+199 "Spool error - file access error, print/graph aborted"
+200 "Print suspended - out of memory"
+201 "Print aborted - out of memory"
+202 "Too many graph names; cannot create new one"
+203 "Too many print settings names; cannot create new one"
+204 "No print range, image, or sample specified"
+205 "Parse input range must start with format line"
+206 "Cannot execute query with circular reference"
+207 "Not a square matrix"
+208 "Parse format line can be created only for labels"
+209 "Invalid file operation"
+210 "Disk is write-protected"
+211 "Disk drive not ready"
+212 "Disk full"
+213 "A network error has occurred"
+214 "No licenses are currently available"
+215 "No licenses were found"
+216 "No license directories were found"
+217 "Unable to write to log file"
+218 "Licenser internal error"
+219 "The stand-alone license is not currently available"
+220 "Need read-write-create-delete access to license directory"
+221 ""
+222 ""
+223 "Bin range cannot span worksheets"
+224 "Print job already queued to another device"
+225 "Missing sort key"
+226 "Key column outside of Sort range"
+227 "The file on disk is different from the one retrieved"
+228 "Invalid use of database @function in criteria"
+229 "Invalid disk name"
+230 "Unexpected error code from operating system"
+231 "Invalid or unsupported file search attribute"
+232 "More than 75 X variables"
+233 "Database @functions more than 8 levels deep in criteria"
+234 "Interval must be positive"
+235 "Cannot write over data with APPEND commands"
+236 "Field names must be unique within an input table"
+237 "Ambiguous field reference in query"
+238 "Input field names cannot be qualified"
+239 "Cannot use both undo and Data External Refresh Automatic"
+240 "Error reading keymap file"
+241 "Keymap file not found or not readable"
+242 "Wrong version of keymap file"
+243 "Keymap keyboard not supported"
+244 "Keymap file is not for this product"
+245 "Keymap file is corrupted"
+246 "Keymap file specified is not a keymap file"
+247 "Too many levels of symbolic links"
+248 "System file table is full"
+249 "Could not obtain a valid license"
+250 "Cannot redirect input"
+251 "Unknown terminal type"
+252 "Terminal has insufficient capabilities to run product"
+253 "Cannot access requested display device"
+254 "Cannot run -n without an autoretrieve file"
+
+=group 36, 3675 bytes
+0 ""
+1 "Cannot use computed columns with Data Query Modify"
+2 "Worksheet full"
+3 "Invalid /X command in macro"
+4 "Data Parse ranges cannot span worksheets"
+5 "No linked files in memory"
+6 "Worksheet full"
+7 "Internal print error - print aborted"
+8 "Input and output ranges cannot overlap"
+9 "Criteria and output ranges cannot overlap"
+10 "Cannot use offset number for field"
+11 "Criteria too complex"
+12 "External table ranges not allowed"
+13 "Worksheet Area has been disabled"
+14 "Panels Area has been disabled"
+15 "LEAF has already taken this area"
+; 16 <missing>
+17 "Range must contain at least one unhidden column"
+18 "Worksheet hidden"
+19 "Undo not enabled, or no operation to undo"
+20 "Cannot move data between files"
+21 "Incompatible database driver"
+22 "Cannot read or write long data"
+23 "Number too large/small to pass to external database"
+24 "Invalid input range specified"
+25 "Formula too complex"
+26 "Too many open files"
+27 "Cannot have more than 256 worksheets in memory"
+28 "Cannot load LCF file"
+29 "Cannot load DCF file - run Install"
+30 "Cannot load configuration information"
+31 "Cannot dump resource file"
+32 "Invalid character in file name"
+33 "No files of specified type on disk"
+34 "Part of combine file lost"
+35 "Part of file is missing"
+36 "Worksheet file revision is out of date"
+37 "Too many characters in file name"
+38 "Too many characters in path"
+39 "Too many characters in extension"
+40 "Input and output ranges must be different"
+41 "Invalid external database data type"
+42 "Cannot create file"
+43 "No active file to get reservation"
+44 "Cannot read locked Symphony worksheet files"
+45 "Internal memory manager error"
+46 "Internal memory manager error"
+47 "Internal memory manager error"
+48 "Internal memory manager error"
+49 "Internal memory manager error"
+50 "Internal memory manager error"
+51 "Internal memory manager error"
+52 "Internal memory manager error"
+53 "EMS software error encountered"
+54 "EMS hardware error encountered"
+55 "EMS function error encountered"
+56 "Cannot hide last visible worksheet"
+57 "Unsupported character set"
+58 "Cannot delete all visible worksheets"
+59 "Passwords do not match"
+60 "No more matching strings"
+61 "Cannot print ranges or named graphs not in memory"
+62 "Printing is suspended. Select Resume to continue."
+63 "Input range must be in an active file"
+64 "Criteria range must be in an active file"
+65 "File already exists"
+66 "Cannot undo this operation"
+67 "System error"
+68 "Device driver not installed"
+69 "Invalid character in extension"
+70 "Named range not found in worksheet file"
+71 "Incompatible worksheet information lost during saving"
+72 "Invalid sort range or key"
+73 "Data range and sort keys must be in memory"
+74 "Range name already exists"
+75 "Could not read YP printcap"
+76 "Could not obtain a valid license"
+77 "Could not find license directory"
+78 "User name does not match license"
+79 "License has expired"
+80 "Write permission to license file denied"
+81 "License file is in a read-only file system"
+82 "I/O error occurred while checking out license"
+83 "Unable to determine user name or host name"
+84 "License file is corrupt"
+85 "Excess characters in license file"
+86 "Host name does not match license"
+87 "License client file not found"
+88 "License client process failed"
+89 "Popen failed on license client"
+90 "The local file lock service is not responding"
+91 "The remote file lock service is not responding"
+92 "Could not read bundle file"
+93 "Could not read LMBCS display bundle file"
+94 "Error reading sheet font file"
+95 "Error opening keyboard device"
+96 "File open error"
+97 "No entries found"
+98 "Error: job is currently printing"
+99 "Error canceling job"
+100 "No privilege for attempted operation"
+101 "Bad time format"
+102 "Disk file too large"
+103 ""
+; 104 <missing>
+; 105 <missing>
+; 106 <missing>
+; 107 <missing>
+; 108 <missing>
+; 109 <missing>
+; 110 <missing>
+; 111 <missing>
+; 112 <missing>
+; 113 <missing>
+; 114 <missing>
+; 115 <missing>
+; 116 <missing>
+; 117 <missing>
+; 118 <missing>
+; 119 <missing>
+; 120 <missing>
+; 121 <missing>
+; 122 <missing>
+; 123 <missing>
+; 124 <missing>
+; 125 <missing>
+; 126 <missing>
+; 127 <missing>
+; 128 <missing>
+; 129 <missing>
+; 130 <missing>
+; 131 <missing>
+; 132 <missing>
+; 133 <missing>
+; 134 <missing>
+; 135 <missing>
+; 136 <missing>
+; 137 <missing>
+; 138 <missing>
+; 139 <missing>
+; 140 <missing>
+; 141 <missing>
+; 142 <missing>
+; 143 <missing>
+; 144 <missing>
+; 145 <missing>
+; 146 <missing>
+; 147 <missing>
+; 148 <missing>
+; 149 <missing>
+; 150 <missing>
+; 151 <missing>
+; 152 <missing>
+; 153 <missing>
+; 154 <missing>
+; 155 <missing>
+; 156 <missing>
+; 157 <missing>
+; 158 <missing>
+; 159 <missing>
+; 160 <missing>
+; 161 <missing>
+; 162 <missing>
+; 163 <missing>
+; 164 <missing>
+; 165 <missing>
+; 166 <missing>
+; 167 <missing>
+; 168 <missing>
+; 169 <missing>
+; 170 <missing>
+; 171 <missing>
+; 172 <missing>
+; 173 <missing>
+; 174 <missing>
+; 175 <missing>
+; 176 <missing>
+; 177 <missing>
+; 178 <missing>
+; 179 <missing>
+; 180 <missing>
+; 181 <missing>
+; 182 <missing>
+; 183 <missing>
+; 184 <missing>
+; 185 <missing>
+; 186 <missing>
+; 187 <missing>
+; 188 <missing>
+; 189 <missing>
+; 190 <missing>
+; 191 <missing>
+; 192 <missing>
+; 193 <missing>
+; 194 <missing>
+; 195 <missing>
+; 196 <missing>
+; 197 <missing>
+; 198 <missing>
+; 199 <missing>
+; 200 <missing>
+; 201 <missing>
+; 202 <missing>
+; 203 <missing>
+; 204 <missing>
+; 205 <missing>
+; 206 <missing>
+; 207 <missing>
+; 208 <missing>
+; 209 <missing>
+; 210 <missing>
+; 211 <missing>
+; 212 <missing>
+; 213 <missing>
+; 214 <missing>
+; 215 <missing>
+; 216 <missing>
+; 217 <missing>
+; 218 <missing>
+; 219 <missing>
+; 220 <missing>
+; 221 <missing>
+; 222 <missing>
+; 223 <missing>
+; 224 <missing>
+; 225 <missing>
+; 226 <missing>
+; 227 <missing>
+; 228 <missing>
+; 229 <missing>
+; 230 <missing>
+; 231 <missing>
+; 232 <missing>
+; 233 <missing>
+; 234 <missing>
+; 235 <missing>
+; 236 <missing>
+; 237 <missing>
+; 238 <missing>
+; 239 <missing>
+; 240 <missing>
+; 241 <missing>
+; 242 <missing>
+; 243 <missing>
+; 244 <missing>
+; 245 <missing>
+; 246 <missing>
+; 247 <missing>
+; 248 <missing>
+; 249 <missing>
+; 250 <missing>
+251 "Debug only - ERROR_INPMEM"
+252 "Debug only - ERROR_AID_OVERFLOW"
+253 "Debug only - ERROR_XMEMORY"
+254 "Debug only - ERROR_UNIMPLEMENTED"
+255 "Debug only - ERROR_NSUNDERFLOW"
+
+=group 37, 271 bytes
+0 "Error running add-in macro"
+1 "Add-in already in memory"
+; 2 <missing>
+; 3 <missing>
+4 "Settings sheet is empty"
+5 "Settings sheet is full"
+6 "No add-in application assigned"
+7 "No add-ins in memory"
+8 "Cannot load driver "LTSLEAF""
+9 "No add-in applications in memory"
+10 "Add-in not listed on settings sheet"
+
+=group 38, 252 bytes
+0 "Can't get resource file path "
+1 "Not enough memory to load Lotus HAL"
+2 "Can't find/initialize Lotus Hal's resource file (HAL.RI)"
+3 "Error accessing resource file (HAL.RI)"
+4 "Error initializing parser. Hal not loaded."
+5 "Can't find HAL help file (HAL.HLP)"
+
+=group 39, 1503 bytes
+0 "Driver could not be loaded"
+1 "Table does not exist"
+2 "Invalid collection node name"
+3 "Data returned from database has been truncated"
+4 "Invalid column specification"
+5 "Invalid table alteraction"
+6 "Invalid password"
+7 "Bad argument passed to driver"
+8 "Invalid name for field or table"
+9 "Database driver support system not initialized"
+10 "Unrecoverable network or IPC error"
+11 "Network connection not responding"
+12 "External database processing error"
+13 "Bad name for driver or database"
+14 "Invalid isolation level specification"
+15 "Invalid privilege specification"
+16 "An inserted record failed a view check"
+17 "Cursor storage is full"
+18 "Current database transaction aborted"
+19 "External database driver uses different memory model than 123"
+20 "Database could not be located"
+21 "Transfer error"
+22 "Backend database error"
+23 "External database driver-specific error"
+24 "Database system failure"
+25 "Last record already fetched"
+26 "First record has not arrived yet"
+27 "Insert query inserted no records"
+28 "Enter user ID for driver:"
+29 "Enter password for driver:"
+30 "Enter user ID for database:"
+31 "Enter password for database:"
+32 "Invalid user ID"
+33 "Invalid table name or table exists in database"
+; 34 <missing>
+35 "No alternate character sets are available"
+36 "Bad configuration string"
+37 "Codepage load error"
+38 "External database driver memory mapping error"
+39 "Error loading external database driver resource file"
+40 "Untranslatable LMBCS string passed to external database"
+41 "Collections are not supported"
+42 "Data too long to fit in column"
+43 "Numeric value out of range for data type"
+
+=group 40, 489 bytes
+0 "Unable to load native text codepage"
+1 "MVS & VM do not support {filesize}"
+2 "This type of file does not support macro i/o"
+3 "MVS & VM only support {getpos} in read-only files"
+4 "MVS & VM only support {setpos} in read-only files"
+5 "MVS & VM only support {readln} in read-only files"
+6 "MVS & VM only support {read} in read-only files"
+7 "MVS & VM do not support the modify access mode for {open}"
+8 "File open error"
+9 "File write error"
+10 "File access denied"
+11 "File security exit error - access denied"
+
+=group 41, 19 bytes
+; 0 <missing>
+1 "SUN 3"
+2 "Sun OS"
+
+=group 42, 36 bytes
+; 0 <missing>
+1 "80386"
+2 "systemv"
+3 "UNIX System V"
+
+=group 43, 19 bytes
+; 0 <missing>
+1 "SUN 4"
+2 "Sun OS"
+
+=group 44, 1805 bytes
+0 "Device"
+1 "Select printer name and queue"
+2 "Layout"
+3 "Pitch  Line-Spacing  Orientation  Quit"
+4 "Fonts"
+5 "Range  Header/Footer  Border  Frame  Quit"
+6 "Color"
+7 "Select color for range"
+8 "Image"
+9 "Rotate  Image-Sz  Density  Quit"
+10 "Priority"
+11 "Set priority for print job"
+12 "AutoLf"
+13 "Automatic linefeed at end of line"
+14 "Wait"
+15 "Menu option not available"
+16 "Quit"
+17 "Return to previous menu"
+; 18 <missing>
+19 "Name"
+20 "Change the current printer name and queue"
+21 "Interface"
+22 "Menu option not available"
+23 "Quit"
+24 "Return to previous menu"
+; 25 <missing>
+26 "All"
+27 "Return all printer settings to defaults"
+28 "Range"
+29 "Clear current print range"
+30 "Borders"
+31 "Clear all border settings"
+32 "Format"
+33 "Return Margins Pg-Length Fonts Color Setup Layout and Image to defaults"
+34 "Image"
+35 "Clear graphs selected for printing"
+36 "Device"
+37 "Reset printer name and queue to default"
+; 38 <missing>
+39 "Printer"
+40 "Select default printer settings"
+41 "Dir"
+42 "Specify default directory"
+43 "Status"
+44 "Display all default settings"
+45 "Update"
+46 "Save new default settings in configuration file"
+47 "Other"
+48 "International  Help  Clock  Undo  Beep"
+49 "Graph"
+50 "Specify default graph settings"
+51 "Temp"
+52 "Specify directory for temporary 1-2-3 files"
+53 "Ext"
+54 "Specify default extension for listing or saving files"
+55 "Autoexec"
+56 "Run autoexec macros when files are read into memory"
+57 "Quit"
+58 "Return to READY mode"
+; 59 <missing>
+60 "No Privilege"
+61 "Holding"
+62 "Holding until"
+63 "Aborting"
+64 "Executing"
+65 "Refused"
+66 "Retained"
+67 "Starting"
+68 "Suspended"
+69 "Pending"
+70 "Entry Jobname                  Username    Blocks Status"
+; 71 <missing>
+; 72 <missing>
+73 "Error reading queue"
+74 "No queues found"
+; 75 <missing>
+76 "Job entry does not exist"
+77 "Form name or number does not exist for this queue"
+78 "Characteristics name or number does not exist for this queue"
+; 79 <missing>
+80 "Queue does not exist"
+; 81 <missing>
+; 82 <missing>
+83 "Error suspending job"
+84 "Error resuming job"
+85 "Queue error"
+86 "Move cursor to job and press RETURN to cancel"
+87 "Move cursor to job and press RETURN to suspend"
+88 "Move cursor to job and press RETURN to resume"
+
+=group 45, 187 bytes
+0 "Do you really want to end without saving your change(s) [Y|N]?"
+1 "Copying screen to scratch pad"
+2 "Screen completed"
+3 "You do not have privilege to access DCL"
+4 "%p"
+5 "%[PASSWORD PROTECTED]"
+
+=group 46, 472 bytes
+0 "Lotus (R) 1-2-3 (R) for VAX/VMS"
+1 "Version 1.0"
+2 "  "
+3 "  "
+4 "The new dimension in spreadsheet power and"
+5 "performance, featuring 3-D worksheets, business"
+6 "graphics, and advanced database features."
+7 "  "
+8 "Copyright 1990 Lotus Development Corporation"
+9 "All Rights Reserved"
+10 "  "
+11 "Use, duplication or sale of this product, except as"
+12 "described in the applicable license agreement, is strictly"
+13 "prohibited. Violators may be prosecuted."
+14 " "
+; 15 <missing>
+16 "Lotus (R) 1-2-3 (R) for ALL-IN-1 (R)"
+
+=group 47, 0 bytes
+; 0 <missing>
+; 1 <missing>
+; 2 <missing>
+; 3 <missing>
+; 4 <missing>
+; 5 <missing>
+; 6 <missing>
+; 7 <missing>
+; 8 <missing>
+; 9 <missing>
+; 10 <missing>
+; 11 <missing>
+12 ""
+
+=group 48, 0 bytes
+; 0 <missing>
+; 1 <missing>
+; 2 <missing>
+; 3 <missing>
+; 4 <missing>
+; 5 <missing>
+; 6 <missing>
+; 7 <missing>
+; 8 <missing>
+; 9 <missing>
+; 10 <missing>
+; 11 <missing>
+12 ""
+
+=group 49, 0 bytes
+; 0 <missing>
+; 1 <missing>
+; 2 <missing>
+; 3 <missing>
+; 4 <missing>
+; 5 <missing>
+; 6 <missing>
+; 7 <missing>
+; 8 <missing>
+; 9 <missing>
+; 10 <missing>
+; 11 <missing>
+12 ""
+
+=group 50, 0 bytes
+; 0 <missing>
+; 1 <missing>
+; 2 <missing>
+; 3 <missing>
+; 4 <missing>
+; 5 <missing>
+; 6 <missing>
+; 7 <missing>
+; 8 <missing>
+; 9 <missing>
+; 10 <missing>
+; 11 <missing>
+12 ""
+
+=group 51, 0 bytes
+; 0 <missing>
+; 1 <missing>
+; 2 <missing>
+; 3 <missing>
+; 4 <missing>
+; 5 <missing>
+; 6 <missing>
+; 7 <missing>
+; 8 <missing>
+; 9 <missing>
+; 10 <missing>
+; 11 <missing>
+12 ""
+
+=group 52, 0 bytes
+; 0 <missing>
+; 1 <missing>
+; 2 <missing>
+; 3 <missing>
+; 4 <missing>
+; 5 <missing>
+; 6 <missing>
+; 7 <missing>
+; 8 <missing>
+; 9 <missing>
+; 10 <missing>
+; 11 <missing>
+12 ""
+
+=group 53, 125 bytes
+; 0 <missing>
+1 "memavail"
+2 "totmem"
+3 "recalc"
+4 "numfile"
+5 "mode"
+6 "directory"
+7 "system"
+8 "origin"
+9 "release"
+10 "osversion"
+11 "osreturncode"
+12 "memhist"
+
+=group 54, 110 bytes
+0 "Lotus 1-2-3 Graph View"
+1 "Lotus 1-2-3 Worksheet Window Graph"
+2 "Lotus 1-2-3 Help Window"
+3 "Lotus 1-2-3 for Sun"
+

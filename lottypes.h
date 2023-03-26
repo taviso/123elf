@@ -156,6 +156,8 @@ struct SYSHANDLE {
     uint16_t _pad;
 };
 
+typedef struct SYSHANDLE SYSHANDLE;
+
 struct RECT {
     uint16_t topleftrow;
     uint16_t topleftcol;
@@ -185,6 +187,15 @@ struct DISPLAYWINDOW {
     struct RECT regiond;
     uint16_t field_46;
 };
+
+struct RESHDR {
+    uint32_t magic;
+    uint16_t version;
+    uint16_t groups;
+    uint32_t data[0];
+};
+
+typedef struct RESHDR RESHDR;
 
 #pragma pack(pop)
 #endif
