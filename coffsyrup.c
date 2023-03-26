@@ -277,14 +277,19 @@ int main(int argc, char **argv)
                 errx(EXIT_FAILURE, "A relocation references a non-existent symbol %u.", rel->r_symndx);
             }
 
-            if (rel->r_vaddr < scn[i].s_vaddr || rel->r_vaddr > scn[i].s_vaddr + scn[i].s_size) {
-                errx(EXIT_FAILURE, "A relocation appears to be out of range.");
-            }
-
             // Figure out the symbol name.
             symname = symtab[rel->r_symndx].e.e.e_zeroes
                         ? strndupa(symtab[rel->r_symndx].e.e_name, sizeof symtab[rel->r_symndx].e.e_name)
                         : (strtab + symtab[rel->r_symndx].e.e.e_offset);
+
+            if (rel->r_vaddr < scn[i].s_vaddr || rel->r_vaddr > scn[i].s_vaddr + scn[i].s_size) {
+                warn("Relocation %#x -> %s appears to be out of range (%#x-%#x).",
+                     rel->r_vaddr,
+                     symname,
+                     scn[i].s_vaddr,
+                     scn[i].s_vaddr + scn[i].s_size);
+                continue;
+            }
 
             // See if we are supposed to be adjusting this symbol.
             for (int check = 3; check < argc; check++) {
