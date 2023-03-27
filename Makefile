@@ -4,7 +4,7 @@ OBJCOPY_FLAGS  = --wildcard --localize-symbols=localize.lst --globalize-symbols=
 OBJCOPY_FILES = localize.lst globalize.lst redefine.lst undefine.lst symbols.lst
 OPTFLAGS = -O2
 CFLAGS  = -freg-struct-return -W -Wall -m32 $(OPTFLAGS) -fno-stack-protector
-CPPFLAGS = -I. -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I ttydraw -Wno-unused-parameter
+CPPFLAGS = -I. -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -D_GNU_SOURCE -I atfuncs -I ttydraw -Wno-unused-parameter
 ASFLAGS = --32
 LDFLAGS = $(CFLAGS) -lc -B. -Wl,-b,$(BFD_OUT_TARGET) -no-pie
 LDLIBS = -lncurses -ltinfo -lm

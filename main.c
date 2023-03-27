@@ -13,6 +13,7 @@
 #include "lottypes.h"
 #include "lotdefs.h"
 #include "lotfuncs.h"
+#include "atfuncs.h"
 
 extern int __unix_main(int argc, char **argv, char **envp);
 extern int setchrclass(const char *class);
@@ -156,6 +157,9 @@ int main(int argc, char **argv, char **envp)
 
     // No need to close the printer driver, it is currently a noop.
     need_to_close = false;
+
+    // Setup any @functions here.
+    functions[AT_WEEKDAY] = at_weekday;
 
     // We always need at least two entries, for argv[0] and a terminator.
     lotargc = 2;
