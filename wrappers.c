@@ -302,17 +302,20 @@ int __unix_open(const char *pathname, int flags, mode_t mode)
     return -1;
 }
 
-#define UNIX_SYSNAME_LEN 48
-
-int __unix_uname(char *sysname)
+int __unix_uname(struct unixutsname *unixname)
 {
     struct utsname name;
+
     if (uname(&name) != 0) {
         return -1;
     }
 
-    strncpy(sysname, name.sysname, UNIX_SYSNAME_LEN);
-    sysname[UNIX_SYSNAME_LEN - 1] = 0;
+    memset(unixname, 0, sizeof(*unixname));
+
+    // This is used in @INFO("osversion")
+    strncpy(unixname->release, "Linux", 8);
+    strncpy(unixname->version, name.release, 8);
+
     return 0;
 }
 

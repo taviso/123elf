@@ -41,5 +41,13 @@ struct unixdirent {
     char        d_name[256];
 };
 
+struct unixutsname {
+    char sysname[9];
+    char nodename[9];
+    char release[9];
+    char version[9];
+    char machine[9];
+};
+
 #pragma pack(pop)
 #endif
