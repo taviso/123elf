@@ -3,6 +3,8 @@
 *.sw?
 *.deb
 *.IMG
+*.cmarkers
+*.idb
 .cache
 orig
 share
