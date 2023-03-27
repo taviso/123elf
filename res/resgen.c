@@ -9,6 +9,19 @@
 // ; Comment
 // =456 ; group
 // 123 "This is a message"
+//
+//
+//
+// file format:
+//
+// magic
+// version
+// numgroups
+// numgroups * uint16_t => each one is a size in bytes a group
+// groups {
+//      first word = 0
+//      uint16_t offsets of string
+// }
 
 static uint16_t find_max_resource(char **msgtable)
 {
@@ -90,7 +103,7 @@ int main(int argc, char **argv)
         grpsz = (maxid + 1) * sizeof(uint16_t);
 
         // And now the strings themselves.
-        for (int res = 1; res <= maxid; res++) {
+        for (int res = 0; res <= maxid; res++) {
             // If it does exist, add the size.
             if (msgtab[group][res]) {
 
@@ -113,15 +126,11 @@ int main(int argc, char **argv)
 
         fprintf(stderr, "There are %d messages in group %d\n", maxid, group);
 
-        // The first one is always 0.
-        grpsz = 0;
-        fwrite(&grpsz, sizeof(grpsz), 1, stdout);
-
         // We will need at least a word for each entry.
         grpsz = (maxid + 1) * sizeof(uint16_t);
 
         // And now the string sizes.
-        for (int res = 1; res <= maxid; res++) {
+        for (int res = 0; res <= maxid; res++) {
             // If it does exist, add the size.
             if (msgtab[group][res]) {
                 fwrite(&grpsz, sizeof(grpsz), 1, stdout);
@@ -138,7 +147,7 @@ int main(int argc, char **argv)
         }
 
         // And now the strings.
-        for (int res = 1; res <= maxid; res++) {
+        for (int res = 0; res <= maxid; res++) {
             if (msgtab[group][res]) {
                 fwrite(msgtab[group][res], strlen(msgtab[group][res]), 1, stdout);
 

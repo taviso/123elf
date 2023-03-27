@@ -47,7 +47,7 @@
 
 =group 1, 4400 bytes
 ; 0 <missing>
-1 "Porksheet"
+1 "Worksheet"
 2 "Global  Insert  Delete  Column  Erase  Titles  Window  Status  Page  Hide"
 3 "Range"
 4 "Format Label Erase Name Justify Prot Unprot Input Value Trans Search"
@@ -2717,7 +2717,7 @@
 80 "S"
 81 "N"
 82 "EXACT"
-83 "-CALL"
+83 "PRODUCT"
 84 "@"
 85 "RATE"
 86 "TERM"
@@ -2869,7 +2869,7 @@
 66 "Read a file into memory in front of the current file"
 67 "After"
 68 "Read a file into memory behind the current file"
-69 "Poopsheet"
+69 "Worksheet"
 70 "Erase a worksheet file "
 71 "Print"
 72 "Erase a print file "
@@ -2885,7 +2885,7 @@
 82 "Erase the file"
 ; 83 <missing>
 ; 84 <missing>
-85 "Porksheet"
+85 "Worksheet"
 86 "List worksheet files"
 87 "Print"
 88 "List print files"
