@@ -234,7 +234,6 @@ extern int import_outof_bounds(uint16_t maxcol, uint16_t maxrow);
 extern int16_t parse_number(char *num, int16_t len);
 extern int16_t make_number_cell(struct CELLCOORD cell);
 extern int file_finished_shell(struct SYSHANDLE **fd, uint16_t result);
-extern int drop_one();
 extern int sheet_modified(int16_t sheetnum);
 extern int erase_window_cellhighlight(struct DISPLAYWINDOW *dp);
 extern int set_dspcache(uint16_t size);
@@ -253,9 +252,16 @@ extern void display_scan_row(struct CELLCOORD start, int16_t numcols);
 extern int win_column_width(uint16_t, int16_t);
 extern void tty_disp_info(struct DISPLAYINFO *dpyinfo);
 extern void memdup(void *, uint32_t, uint32_t);
-extern void swap_TOS();
 extern int16_t date_valid(uint16_t dateval[3]);
+
 extern int16_t push_integer(uint16_t val);
+extern int16_t push_one();
+extern int16_t push_zero();
 extern void mod_real_d();
 extern void int_real_d();
+extern void drop_one();
+extern void swap_TOS();
+extern int16_t range_scan_tos(void (*op)());
+extern void op_add();
+extern void op_mul();
 #endif

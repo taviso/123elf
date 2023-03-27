@@ -703,6 +703,7 @@ function check_calculations()
     verify_result_contents '@TRIM(" h  e  l     l o ")' "h e l l o"
     verify_result_contents '@UPPER("hello")' "HELLO"
     verify_result_contents '@WEEKDAY(@DATE(2001,12,25))' "3"
+    verify_result_contents '@PRODUCT(1,2,3)' "6"
 }
 
 function check_crash_bugs()

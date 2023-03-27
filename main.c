@@ -160,6 +160,8 @@ int main(int argc, char **argv, char **envp)
 
     // Setup any @functions here.
     functions[AT_WEEKDAY] = at_weekday;
+    functions[AT_PRODUCT] = at_product;
+    fn_numargs[AT_PRODUCT] = 0x81;
 
     // We always need at least two entries, for argv[0] and a terminator.
     lotargc = 2;
