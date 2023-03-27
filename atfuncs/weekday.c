@@ -16,5 +16,6 @@ int16_t at_weekday()
 
     // Find the day number.
     mod_real_d();
+    int_real_d();
     return 1;
 }

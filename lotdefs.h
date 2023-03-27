@@ -257,4 +257,5 @@ extern void swap_TOS();
 extern int16_t date_valid(uint16_t dateval[3]);
 extern int16_t push_integer(uint16_t val);
 extern void mod_real_d();
+extern void int_real_d();
 #endif
