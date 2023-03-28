@@ -1,6 +1,6 @@
 Name:           lotus123r3
 Version:        1.0.0rc3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Create, modify, and process financial or scientific models.
 License:        Abandonware
 URL:            https://github.com/taviso/123elf
@@ -11,7 +11,7 @@ Requires:       ncurses-libs(x86-32) glibc(x86-32)
 
 %description
 The 123 command is a spreadsheet application for UNIX-based systems that can
-be used in interactive mode to create and modify financial and  scientific
+be used in interactive mode to create and modify financial and scientific
 models.
 
 %global debug_package %{nil}
