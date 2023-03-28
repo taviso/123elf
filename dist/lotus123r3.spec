@@ -1,6 +1,6 @@
 Name:           lotus123r3
 Version:        1.0.0rc3
-Release:        2%{?dist}
+Release:        4%{?dist}
 Summary:        Create, modify, and process financial or scientific models.
 License:        Abandonware
 URL:            https://github.com/taviso/123elf
