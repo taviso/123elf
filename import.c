@@ -12,6 +12,7 @@
 #include "lotdefs.h"
 #include "lotfuncs.h"
 #include "loterrs.h"
+#include "atfuncs.h"
 
 // This is a reimplementation of the /File Import code
 // with the line length limits removed.

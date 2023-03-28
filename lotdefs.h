@@ -132,10 +132,6 @@ extern int MapY(uint16_t);
 
 extern uint16_t banner_printed;
 
-extern int16_t encode_date(int16_t *datenums);
-extern int16_t get_integer();
-extern int16_t check_three_numbers();
-extern int16_t check_one_number();
 extern int undo_on_cmd();
 extern int undo_off_cmd();
 extern int reset_undo(int);
@@ -252,16 +248,4 @@ extern void display_scan_row(struct CELLCOORD start, int16_t numcols);
 extern int win_column_width(uint16_t, int16_t);
 extern void tty_disp_info(struct DISPLAYINFO *dpyinfo);
 extern void memdup(void *, uint32_t, uint32_t);
-extern int16_t date_valid(uint16_t dateval[3]);
-
-extern int16_t push_integer(uint16_t val);
-extern int16_t push_one();
-extern int16_t push_zero();
-extern void mod_real_d();
-extern void int_real_d();
-extern void drop_one();
-extern void swap_TOS();
-extern int16_t range_scan_tos(void (*op)());
-extern void op_add();
-extern void op_mul();
 #endif

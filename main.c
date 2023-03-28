@@ -158,10 +158,8 @@ int main(int argc, char **argv, char **envp)
     // No need to close the printer driver, it is currently a noop.
     need_to_close = false;
 
-    // Setup any @functions here.
-    functions[AT_WEEKDAY] = at_weekday;
-    functions[AT_PRODUCT] = at_product;
-    fn_numargs[AT_PRODUCT] = 0x81;
+    // Configure our @functions here.
+    init_at_funcs();
 
     // We always need at least two entries, for argv[0] and a terminator.
     lotargc = 2;

@@ -25,7 +25,7 @@ export BFD_TARGET_ERROR
 
 .PHONY: clean check distclean install uninstall
 
-all: check 123 keymaps
+all: check 123 keymaps resources
 	@size 123
 
 debug: OPTFLAGS=-ggdb3 -O0
@@ -73,6 +73,10 @@ $(sort $(KEYMAPS)): keymap/keymap
 
 keymaps: $(KEYMAPS)
 
+resources:
+	$(MAKE) -C res
+	@cp res/l123txt3.ri share/lotus/123.v10/ri/USA-English/
+
 clean:
 	$(RM) *.o src/*.o coffsyrup 123
 	$(RM) vgcore.* core.* core
@@ -80,8 +84,10 @@ clean:
 	$(MAKE) -C ttydraw clean
 	$(MAKE) -C atfuncs clean
 	$(MAKE) -C keymap clean
+	$(MAKE) -C res clean
 
 distclean: clean
+	$(MAKE) -C dist clean
 	./gzip.sh clean
 	./binutils.sh clean
 	./extract.sh clean

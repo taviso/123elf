@@ -7,7 +7,7 @@ LDLIBS=
 
 all: atfuncs.a
 
-atfuncs.a: date.o weekday.o product.o
+atfuncs.a: date.o weekday.o product.o atfuncs.o
 	$(AR) r $@ $^
 
 clean:

@@ -5,6 +5,7 @@
 #include "lottypes.h"
 #include "lotfuncs.h"
 #include "lotdefs.h"
+#include "atfuncs.h"
 
 int16_t at_weekday()
 {

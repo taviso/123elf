@@ -1,8 +1,16 @@
-CPPFLAGS=-I..
-CFLAGS=-ggdb3 -O0
+LDLIBS =
+CFLAGS = -ggdb3 -O0
+CPPFLAGS = -I.. -W -Wall -Wno-missing-field-initializers -Wno-sign-compare -Wno-unused-parameter -Wno-pointer-sign
+LDFLAGS = $(CFLAGS)
 
-all: hlp resgen
+.PHONY: clean
+
+all: resgen resources
+
+resources: l123txt3.ri
+
+%.ri: %.txt | resgen
+	./resgen < $< > $@
 
 clean:
-	rm -f *.o hlp resgen
-
+	$(RM) *.o *.ri hlp resgen

@@ -27,7 +27,7 @@ static uint16_t find_max_resource(char **msgtable)
 {
     uint16_t max = 0;
 
-    for (int i = 0; i < UINT8_MAX; i++) {
+    for (int i = 0; i <= UINT8_MAX; i++) {
         max = msgtable[i] ? i : max;
     }
 
@@ -38,7 +38,6 @@ int main(int argc, char **argv)
 {
     char *line = NULL;
     size_t n = 0;
-    char **msgs;
     uint16_t grpsz;
     struct RESHDR hdr = {
         .magic      = 0x1ad9c,
@@ -63,7 +62,7 @@ int main(int argc, char **argv)
             msgtab[hdr.groups] = calloc(sizeof(char *), 256);
 
             // The rest of the line is an ignored comment or name.
-            fprintf(stderr, "group %d\n", hdr.groups);
+            // fprintf(stderr, "Group %d, %s", hdr.groups, line + 1);
             continue;
         }
 
@@ -85,7 +84,7 @@ int main(int argc, char **argv)
         // Clear the suffix and prefix.
         *suffix = 0; msg = prefix + 1;
 
-        fprintf(stderr, "id = %d, found msg: %s\n", id, msg);
+        //fprintf(stderr, "id = %d, found msg: %s\n", id, msg);
 
         // Now add this to our table.
         msgtab[hdr.groups][id] = strdup(msg);
@@ -97,7 +96,7 @@ int main(int argc, char **argv)
     for (int group = 1; group <= hdr.groups; group++)  {
         uint16_t maxid = find_max_resource(msgtab[group]);
 
-        fprintf(stderr, "There are %d messages in group %d\n", maxid, group);
+        //fprintf(stderr, "There are %d messages in group %d\n", maxid, group);
 
         // We will need at least a word for each entry.
         grpsz = (maxid + 1) * sizeof(uint16_t);
@@ -123,8 +122,6 @@ int main(int argc, char **argv)
     // Now we need to write the strings themselves.
     for (int group = 1; group <= hdr.groups; group++)  {
         uint16_t maxid = find_max_resource(msgtab[group]);
-
-        fprintf(stderr, "There are %d messages in group %d\n", maxid, group);
 
         // We will need at least a word for each entry.
         grpsz = (maxid + 1) * sizeof(uint16_t);
@@ -154,8 +151,15 @@ int main(int argc, char **argv)
                 // And a terminating nul
                 fputc('\0', stdout);
             }
+            // No longer need the strings.
+            free(msgtab[group][res]);
         }
+
+        // Finished
+        free(msgtab[group]);
     }
+
+    fprintf(stderr, "Generated %d resource tables.\n", hdr.groups);
 
     free(line);
     return 0;
