@@ -1,6 +1,6 @@
 PKGNAME = lotus123r3
 VERSION = 1.0
-REV = 1
+REV = 2
 
 all: $(PKGNAME)_$(VERSION)-$(REV)_i386.deb
 
