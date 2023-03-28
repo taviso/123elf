@@ -1,4 +1,4 @@
-=group 0, 344 bytes
+=group 0, Indicators and orders of Magnitude
 ; 0 <missing>
 1 "WAIT"
 2 "READY"
@@ -45,7 +45,7 @@
 43 "Trillions"
 44 "Times"
 
-=group 1, 4400 bytes
+=group 1, Menu Options
 ; 0 <missing>
 1 "Worksheet"
 2 "Global  Insert  Delete  Column  Erase  Titles  Window  Status  Page  Hide"
