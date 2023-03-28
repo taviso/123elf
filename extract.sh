@@ -53,6 +53,7 @@ if ! cat "${LOTUS}"/sysV386/lib/123.o.z_1 "${LOTUS}"/sysV386/lib/123.o.z_2 | zca
 
     echo >&2 'If you see the message "code out of range", gzip is too old.'
     echo >&2 'You can try running ./gzip.sh to build a recent gzip that is known to work.'
+    rm -f "${ORIG}/123.o"
     exit 1
 fi
 
