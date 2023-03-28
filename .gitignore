@@ -5,6 +5,7 @@
 *.IMG
 *.cmarkers
 *.idb
+*.ri
 .cache
 orig
 share
@@ -18,4 +19,6 @@ drawtest
 binutils-*
 gzip-*
 keymap/keymap
+res/resgen
+dist/lotus123r3_*_i386/
 compile_commands.json
