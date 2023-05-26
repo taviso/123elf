@@ -704,6 +704,10 @@ function check_calculations()
     verify_result_contents '@UPPER("hello")' "HELLO"
     verify_result_contents '@WEEKDAY(@DATE(2001,12,25))' "3"
     verify_result_contents '@PRODUCT(1,2,3)' "6"
+    verify_result_contents '@ISERR(@SYSTEM("false"))' "1"
+    verify_result_contents '@ISERR(@SYSTEM("true"))' "0"
+    verify_result_contents '@SYSTEM("printf XyZzY")' "XyZzY"
+    verify_result_contents '@VALUE(@SYSTEM("echo 32+6 | bc"))' "38"
 }
 
 function check_crash_bugs()

@@ -83,3 +83,5 @@ display_filename
 filename_length
 mac_nobreak
 mac_str
+drop_one_push_stack_string
+drop_one_push_err

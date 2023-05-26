@@ -16,17 +16,22 @@ extern int16_t encode_date(int16_t *datenums);
 
 extern int16_t check_three_numbers();
 extern int16_t check_one_number();
+extern int16_t check_one_string();
 extern int16_t get_integer();
 extern int16_t push_integer(uint16_t val);
 extern int16_t push_one();
 extern int16_t push_zero();
+extern int16_t drop_one_push_err();
+extern int16_t drop_one_push_stack_string(char *str);
+extern char * peek_string(int16_t n);
 extern void mod_real_d();
 extern void int_real_d();
 extern void drop_one();
 extern void swap_TOS();
 
-// @PRODUCT replaced the previously unimplemented @CALL
+// Replaced previously unimplemented functions
 #define AT_CALL AT_PRODUCT
+#define AT_TERM2 AT_SYSTEM
 
 enum {
     AT_NA,
@@ -162,7 +167,7 @@ enum {
     AT_PMT2,
     AT_PV2,
     AT_FV2,
-    AT_TERM2,
+    AT_SYSTEM,
     AT_NUM_FUNCS,
 };
 
@@ -173,6 +178,7 @@ extern int8_t fn_numargs[AT_NUM_FUNCS];
 
 int16_t at_date();
 int16_t at_weekday();
+int16_t at_system();
 int16_t at_product(int16_t cnt);
 
 void init_at_funcs();
