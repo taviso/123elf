@@ -163,7 +163,7 @@ int __unix_fcntl(int fd, int cmd, void *arg)
             // I think these are the only flags you can change.
             if (unixflags & 4)
                 linuxflags |= O_NONBLOCK;
-            if (linuxflags & 8)
+            if (unixflags & 8)
                 linuxflags |= O_APPEND;
 
             if (fcntl(fd, cmd, &linuxflags) == 0) {
