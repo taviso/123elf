@@ -347,7 +347,7 @@ int main(int argc, char **argv)
             // with a jmp, and then add a new RELOC. This really only makes sense
             // if this is a function, so it should begin with push ebp.
             if (patch->opcode != OPCODE_PUSH_EBP) {
-                errx(EXIT_FAILURE, "Text symbol is missing a function prologue.");
+                warnx("Text symbol is missing a function prologue.");
             }
 
             // Now patch it with a JMP, is this right??
