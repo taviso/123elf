@@ -18,6 +18,13 @@ int16_t at_system()
         return 0;
     }
 
+    // @SYSTEM() is only permitted when autoexec is enabled.
+    if (get_allow_autoexec() == false) {
+        drop_one();
+        push_na();
+        return 1;
+    }
+
     cmd = popen(peek_string(0), "r");
 
     if (cmd == NULL) {

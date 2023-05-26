@@ -248,4 +248,5 @@ extern void display_scan_row(struct CELLCOORD start, int16_t numcols);
 extern int win_column_width(uint16_t, int16_t);
 extern void tty_disp_info(struct DISPLAYINFO *dpyinfo);
 extern void memdup(void *, uint32_t, uint32_t);
+extern int16_t get_allow_autoexec();
 #endif

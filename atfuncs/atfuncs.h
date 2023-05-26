@@ -21,6 +21,7 @@ extern int16_t get_integer();
 extern int16_t push_integer(uint16_t val);
 extern int16_t push_one();
 extern int16_t push_zero();
+extern int16_t push_na();
 extern int16_t drop_one_push_err();
 extern int16_t drop_one_push_stack_string(char *str);
 extern char * peek_string(int16_t n);
