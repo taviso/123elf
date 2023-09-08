@@ -82,7 +82,7 @@ int unset_raw_mode()
 uint32_t fmt_cpy(uint32_t *dst, uint32_t *src, uint16_t src_len)
 {
     static const uint32_t dst_max = 256;
-    uint32_t *dptr, *dst_end = dst + dst_max / 4;
+    uint32_t *dptr, *dst_end = dst + dst_max;
 
     for (dptr = dst; src_len >= 4 && dptr < dst_end; dptr++) {
         *dptr = *src++;

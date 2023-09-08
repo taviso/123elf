@@ -716,6 +716,28 @@ function check_crash_bugs()
         runmacro "~$(quit)" "testcases/bug103.wk3"
         endtest
     }
+    starttest "Large Range Combine" && {
+        local protect=$(mktemp -u)
+        local presave=$(mktemp -u)
+        local pstsave=$(mktemp -u)
+        local savewks=$(mktemp -u XXXXXXXXXX.wk3)
+        macro=$(sendkeys '/dfA1..BM1~~~64~')
+        macro+=$(goto A2)
+        macro+=$(writerange "${protect}" '@STRING(@CELL("protect",BM1),0)')
+        macro+=$(sendkeys '/ruA1..BM1~')
+        macro+=$(writerange "${presave}" '@STRING(@CELL("protect",BM1),0)')
+        macro+=$(saveas "${savewks}")
+        macro+=$(retrieve "${savewks}")
+        macro+=$(writerange "${pstsave}" '@STRING(@CELL("protect",BM1),0)')
+        macro+=$(quit)
+        runmacro "${macro}"
+
+        verifycontents "${protect}" "1"
+        verifycontents "${presave}" "0"
+        verifycontents "${pstsave}" "0"
+        endtest "${savewks}" "${protect}" "${presave}" "${pstsave}"
+    }
+
 }
 
 function run_all_tests()
