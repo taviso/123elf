@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  123r3:
+    build:
+      context: . 
+    volumes:
+      - .:/work
+    stdin_open: true
+    tty: true
+    command: "123"
