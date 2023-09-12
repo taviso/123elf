@@ -111,6 +111,9 @@ static void print_help()
     if (printed++)
         return;
 
+    // move cursor to the beginning of the previous line
+    printf("\033[F");
+
     printf("        -b                      to enable banner\n");
     printf("        -u                      to disable undo support\n");
     printf("        -e macro                to evaluate a macro\n");
