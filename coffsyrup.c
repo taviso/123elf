@@ -188,7 +188,12 @@ int main(int argc, char **argv)
                         errx(EXIT_FAILURE, "The static symbol %s did not have a section number.", symname);
                     }
 
-                    pmkrelocs = realloc(pmkrelocs, ++nmkrelocs * sizeof(*pmkrelocs));
+                    void *tmp = realloc(pmkrelocs, (nmkrelocs + 1) * sizeof(*pmkrelocs));
+                    if (!tmp) {
+                        err(EXIT_FAILURE, "Failed to allocate relocation entry");
+                    }
+                    pmkrelocs = tmp;
+                    nmkrelocs++;
                     pmkrelocs[nmkrelocs - 1].e_value = symtab[i].e_value;
                     pmkrelocs[nmkrelocs - 1].r_symndx = i;
 
