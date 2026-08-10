@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
@@ -108,6 +109,7 @@ int __unix_ioctl(int fd, unsigned long request, struct unixtermios *argp)
 int __unix_fcntl(int fd, int cmd, void *arg)
 {
     static int unix_cmd_table[32] = {
+        [0 ... 31] = -1,
         [0] = F_DUPFD,
         [1] = F_GETFD,
         [2] = F_SETFD,
@@ -128,19 +130,30 @@ int __unix_fcntl(int fd, int cmd, void *arg)
         [F_UNLCK] = 3,
     };
 
+    // Bounds-check before table lookup.
+    if (cmd < 0 || cmd >= (int)(sizeof(unix_cmd_table) / sizeof(unix_cmd_table[0]))) {
+        __unix_errno = EINVAL;
+        return -1;
+    }
+
     // Translate command from UNIX to Linux.
     cmd = unix_cmd_table[cmd];
+
+    // Reject unmapped commands (sentinel value -1).
+    if (cmd == -1) {
+        __unix_errno = EINVAL;
+        return -1;
+    }
 
     switch (cmd) {
         case F_GETFL: {
             int linuxflags = fcntl(fd, cmd);
             int unixflags  = 0;
 
-            // Pass through errno.
-            __unix_errno = errno;
-
-            if (linuxflags == -1)
+            if (linuxflags == -1) {
+                __unix_errno = errno;
                 return -1;
+            }
 
             // I think these are all the flags 123 uses.
             if (linuxflags & O_WRONLY)
@@ -157,7 +170,7 @@ int __unix_fcntl(int fd, int cmd, void *arg)
             return unixflags;
         }
         case F_SETFL: {
-            int unixflags  = cmd;
+            int unixflags  = (int)(intptr_t)arg;
             int linuxflags = 0;
 
             // I think these are the only flags you can change.
@@ -166,7 +179,7 @@ int __unix_fcntl(int fd, int cmd, void *arg)
             if (unixflags & 8)
                 linuxflags |= O_APPEND;
 
-            if (fcntl(fd, cmd, &linuxflags) == 0) {
+            if (fcntl(fd, cmd, linuxflags) == 0) {
                 return 0;
             }
 
@@ -174,6 +187,7 @@ int __unix_fcntl(int fd, int cmd, void *arg)
 
             return -1;
         }
+        case F_SETLKW:
         case F_SETLK: {
             struct unixflock *ufl = arg;
             struct flock lfl = {0};
@@ -194,6 +208,12 @@ int __unix_fcntl(int fd, int cmd, void *arg)
             struct unixflock *ufl = arg;
             struct flock lfl = {0};
 
+            // Populate input lock region for the kernel to test.
+            lfl.l_type = unix_lck_table[ufl->l_type];
+            lfl.l_start = ufl->l_start;
+            lfl.l_len = ufl->l_len;
+            lfl.l_whence = ufl->l_whence;
+
             // Check if there is a lock.
             if (fcntl(fd, cmd, &lfl) == -1) {
                 __unix_errno = errno;
@@ -209,16 +229,32 @@ int __unix_fcntl(int fd, int cmd, void *arg)
             return 0;
         }
         case F_DUPFD: {
-            if (fcntl(fd, cmd, (int) arg) == -1) {
+            int res = fcntl(fd, cmd, (int)(intptr_t)arg);
+            if (res == -1) {
+                __unix_errno = errno;
+                return -1;
+            }
+            return res;
+        }
+        case F_GETFD: {
+            int res = fcntl(fd, cmd);
+            if (res == -1) {
+                __unix_errno = errno;
+                return -1;
+            }
+            return res;
+        }
+        case F_SETFD: {
+            if (fcntl(fd, cmd, (int)(intptr_t)arg) == -1) {
                 __unix_errno = errno;
                 return -1;
             }
             return 0;
         }
         default:
-            err(EXIT_FAILURE, "fcntl: unknown cmd %u requested.", cmd);
+            __unix_errno = EINVAL;
+            return -1;
     }
-    return -1;
 }
 
 static int translate_linux_stat(const struct stat *linuxstat, struct unixstat *unixstat)
