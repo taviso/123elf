@@ -82,6 +82,8 @@ void clear_showme(int16_t sheet, int16_t row, int16_t numrows)
 {
     do {
         if (find_row(sheet, row) == &showme_data.rowdata) {
+            if (showme_data.count >= MAX_SHOWME)
+                break;
             showme_data.rowindex[showme_data.count] = row;
             showme_data.sheetindex[showme_data.count] = sheet;
             memset(&showme_data.rows[showme_data.count], 0, sizeof(SHOWMEROW));

@@ -29,7 +29,7 @@ static inline bool compare_cell(struct CELLCOORD a, struct CELLCOORD b)
 
 int mr_step_wait()
 {
-    char stpstatus[64];
+    char stpstatus[256];
     uint32_t key  = input_key();
     uint16_t wkey = key;
     char *p;
@@ -52,19 +52,17 @@ int mr_step_wait()
     // If possible, give a snippet of the macro.
     if (cmdhandle) {
         char *cmdname = access_resource(cmdhandle);
-        strcat(stpstatus, ": {");
-        strcat(stpstatus, cmdname);
-        strcat(stpstatus, "}");
+        size_t prefix_len = strlen(stpstatus);
+        size_t remain = sizeof(stpstatus) - prefix_len;
 
         if (mac_str) {
-            strcat(stpstatus, " (");
-            strncat(stpstatus, mac_str, 16);
-
-            // If the string is very long, truncate it.
-            if (strlen(mac_str) > 16)
-                strcat(stpstatus, "...");
-
-            strcat(stpstatus, ")");
+            snprintf(stpstatus + prefix_len, remain,
+                     ": {%s} (%.16s%s)",
+                     cmdname, mac_str,
+                     strlen(mac_str) > 16 ? "..." : "");
+        } else {
+            snprintf(stpstatus + prefix_len, remain,
+                     ": {%s}", cmdname);
         }
     }
 

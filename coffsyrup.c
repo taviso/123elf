@@ -273,7 +273,7 @@ int main(int argc, char **argv)
                 errx(EXIT_FAILURE, "Unsupported relocation type %u", rel->r_type);
             }
 
-            if (rel->r_symndx > hdr.f_nsyms) {
+            if (rel->r_symndx >= hdr.f_nsyms) {
                 errx(EXIT_FAILURE, "A relocation references a non-existent symbol %u.", rel->r_symndx);
             }
 
@@ -282,7 +282,7 @@ int main(int argc, char **argv)
                         ? strndupa(symtab[rel->r_symndx].e.e_name, sizeof symtab[rel->r_symndx].e.e_name)
                         : (strtab + symtab[rel->r_symndx].e.e.e_offset);
 
-            if (rel->r_vaddr < scn[i].s_vaddr || rel->r_vaddr > scn[i].s_vaddr + scn[i].s_size) {
+            if (rel->r_vaddr < scn[i].s_vaddr || rel->r_vaddr + sizeof(uint32_t) > scn[i].s_vaddr + scn[i].s_size) {
                 warn("Relocation %#x -> %s appears to be out of range (%#x-%#x).",
                      rel->r_vaddr,
                      symname,

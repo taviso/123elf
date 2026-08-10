@@ -161,26 +161,19 @@ int main(int argc, char **argv, char **envp)
     // Configure our @functions here.
     init_at_funcs();
 
-    // We always need at least two entries, for argv[0] and a terminator.
+    // Count the maximum number of lotargv entries needed.
+    // Each getopt iteration can produce up to 2 entries (flag + optarg).
     lotargc = 2;
 
-    // We need to do a first pass through the options to see how many there
-    // are.
     while ((opt = getopt(argc, argv, optstring)) != -1)
-        lotargc++;
+        lotargc += 2;
 
-    // If there was a non-option parameter, we will inject a synthetic
-    // parameter.
     if (argv[optind] != NULL)
         lotargc += 2;
 
-    // Allocate the argument vector we're going to pass through to lotus.
     lotargv = alloca(lotargc * sizeof(*argv));
 
-    // Now reset and copy the options over.
     lotargc = 0;
-
-    // Reset optind to restart getopt();
     optind = 1;
 
     // The first argument is the same.
