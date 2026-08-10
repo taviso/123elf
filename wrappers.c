@@ -400,7 +400,7 @@ sighandler_t __unix_signal(int signum, sighandler_t handler)
         [10] = SIGBUS,
         [12] = SIGSYS,
         [16] = SIGUSR1,
-        [17] = -1,   // SIGUSR2, Reserved
+        [17] = SIGUSR2,
         [18] = SIGCHLD,
         [19] = SIGPWR,
         [20] = SIGWINCH,
@@ -417,13 +417,29 @@ sighandler_t __unix_signal(int signum, sighandler_t handler)
         [31] = SIGXFSZ,
         [32] = -1, // SIGWAITING
         [33] = -1, // SIGLWP
-        [34] = -1, // SIGAIO
+        [34] = -1, // SIGFREEZE
     };
+
+    // Bounds check: reject invalid signal numbers.
+    if (signum < 0 || signum >= (int)(sizeof(unix_sig_table) / sizeof(unix_sig_table[0]))) {
+        __unix_errno = EINVAL;
+        return SIG_ERR;
+    }
 
     // Translate the signal number, 0 means no translation necessary.
     if (unix_sig_table[signum] != 0) {
         signum = unix_sig_table[signum];
     }
 
-    return signal(signum, handler);
+    // Reject signals that have no Linux equivalent (mapped to -1).
+    if (signum == -1) {
+        __unix_errno = EINVAL;
+        return SIG_ERR;
+    }
+
+    sighandler_t ret = signal(signum, handler);
+    if (ret == SIG_ERR) {
+        __unix_errno = errno;
+    }
+    return ret;
 }
