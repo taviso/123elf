@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-linux:
+    strategy:
+      # Don't abort runners if a single one fails
+      fail-fast: false
+      matrix:
+        ## ubuntu-18.04 does not work because of a gzip decompression issue
+        os: [ubuntu-20.04, ubuntu-22.04]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: |
+          DEPS=lib32ncurses-dev
+          if [[ "${{ matrix.os }}" = "ubuntu-18.04" ]]; then
+            DEPS=lib32ncurses5-dev
+          fi
+          sudo apt-get install -y build-essential gcc-multilib $DEPS cpio file wget texinfo
+
+      - name: Cache downloaded Lotus 1-2-3 IMG files
+        uses: actions/cache@v3
+        with:
+          key: l123-archive
+          path: |
+            ~/*.IMG
+
+      - name: Cache built binutils files
+        uses: actions/cache@v3
+        with:
+          key: ${{ matrix.os }}-binutils
+          path: |
+            ~/ld
+            ~/objdump
+            ~/objcopy
+
+      - name: Build
+        run: docker/build-from-container.sh
