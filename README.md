@@ -96,4 +96,8 @@ See the full [FAQ](https://github.com/taviso/123elf/wiki/FAQ) for more.
 - There is limited i18n support (We're working on it, see [#73](https://github.com/taviso/123elf/issues/73)).
 - File an issue if you notice something, there are probably lots of minor issues that can be fixed!
 
+## Running the docker-compose image
 
+```
+docker compose run -i 123r3
+```
