@@ -6,6 +6,7 @@
 *.cmarkers
 *.idb
 *.ri
+*.md
 .cache
 orig
 share
@@ -25,3 +26,5 @@ compile_commands.json
 gunzip
 gzip
 zcat
+!SECURITY.md
+!README.md
