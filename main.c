@@ -167,7 +167,7 @@ int main(int argc, char **argv, char **envp)
     // We need to do a first pass through the options to see how many there
     // are.
     while ((opt = getopt(argc, argv, optstring)) != -1)
-        lotargc++;
+        lotargc += 1 + !!optarg;
 
     // If there was a non-option parameter, we will inject a synthetic
     // parameter.
