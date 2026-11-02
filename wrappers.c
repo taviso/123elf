@@ -157,7 +157,7 @@ int __unix_fcntl(int fd, int cmd, void *arg)
             return unixflags;
         }
         case F_SETFL: {
-            int unixflags  = cmd;
+            int unixflags  = (intptr_t) arg;
             int linuxflags = 0;
 
             // I think these are the only flags you can change.
@@ -166,7 +166,7 @@ int __unix_fcntl(int fd, int cmd, void *arg)
             if (unixflags & 8)
                 linuxflags |= O_APPEND;
 
-            if (fcntl(fd, cmd, &linuxflags) == 0) {
+            if (fcntl(fd, cmd, linuxflags) == 0) {
                 return 0;
             }
 
@@ -193,6 +193,11 @@ int __unix_fcntl(int fd, int cmd, void *arg)
         case F_GETLK: {
             struct unixflock *ufl = arg;
             struct flock lfl = {0};
+
+            lfl.l_type = unix_lck_table[ufl->l_type];
+            lfl.l_start = ufl->l_start;
+            lfl.l_len = ufl->l_len;
+            lfl.l_whence = ufl->l_whence;
 
             // Check if there is a lock.
             if (fcntl(fd, cmd, &lfl) == -1) {
