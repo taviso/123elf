@@ -290,21 +290,81 @@ int __unix_fstat(int fd, struct unixstat *statbuf)
 
 int __unix_open(const char *pathname, int flags, mode_t mode)
 {
+    int fd;
+
     // This routine can change filenames to make them more suitable for Linux.
     pathname = map_unix_pathname(pathname);
 
     switch (flags) {
-        case 0x000: return open(pathname, O_RDONLY);
-        case 0x001: return open(pathname, O_WRONLY);
-        case 0x002: return open(pathname, O_RDWR);
-        case 0x102: return open(pathname, O_CREAT | O_RDWR, mode);
-        case 0x101: return open(pathname, O_CREAT | O_WRONLY, mode);
-        case 0x109: return open(pathname, O_CREAT | O_WRONLY | O_APPEND, mode);
-        case 0x302: return open(pathname, O_CREAT | O_TRUNC | O_RDWR, mode);
+        case 0x000: fd = open(pathname, O_RDONLY); break;
+        case 0x001: fd = open(pathname, O_WRONLY); break;
+        case 0x002: fd = open(pathname, O_RDWR); break;
+        case 0x102: fd = open(pathname, O_CREAT | O_RDWR, mode); break;
+        case 0x101: fd = open(pathname, O_CREAT | O_WRONLY, mode); break;
+        case 0x109: fd = open(pathname, O_CREAT | O_WRONLY | O_APPEND, mode); break;
+        case 0x302: fd = open(pathname, O_CREAT | O_TRUNC | O_RDWR, mode); break;
         default:
             errx(EXIT_FAILURE, "open() was called with unrecognized flags %#x", flags);
     }
-    return -1;
+
+    if (fd == -1) {
+        __unix_errno = errno;
+    }
+    return fd;
+}
+
+int __unix_chdir(const char *pathname)
+{
+    int ret = chdir(map_unix_pathname(pathname));
+    if (ret == -1) {
+        __unix_errno = errno;
+    }
+    return ret;
+}
+
+int __unix_close(int fd)
+{
+    int ret = close(fd);
+    if (ret == -1) {
+        __unix_errno = errno;
+    }
+    return ret;
+}
+
+int __unix_unlink(const char *pathname)
+{
+    int ret = unlink(map_unix_pathname(pathname));
+    if (ret == -1) {
+        __unix_errno = errno;
+    }
+    return ret;
+}
+
+int __unix_link(const char *oldpath, const char *newpath)
+{
+    int ret = link(oldpath, newpath);
+    if (ret == -1) {
+        __unix_errno = errno;
+    }
+    return ret;
+}
+
+ssize_t __unix_write(int fd, const void *buf, size_t count)
+{
+    ssize_t ret = write(fd, buf, count);
+    if (ret == -1) {
+        __unix_errno = errno;
+    }
+    return ret;
+}
+
+long __unix_lseek(int fd, long offset, int whence)
+{
+    long ret = lseek(fd, offset, whence);
+    if (ret == -1) {
+        __unix_errno = errno;
+    }
+    return ret;
 }
 
 int __unix_uname(struct unixutsname *unixname)

@@ -11,6 +11,12 @@ __unix_sysi86
 __unix_access
 __unix_readdir
 __unix_signal
+__unix_chdir
+__unix_close
+__unix_unlink
+__unix_link
+__unix_write
+__unix_lseek
 a64l
 abort
 abs
