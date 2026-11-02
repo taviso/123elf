@@ -347,6 +347,36 @@ function verify_file_ops()
         verifycontents "${result}" "245"
         endtest "${result}" "${output}"
     }
+    starttest "/File Erase Shared Lock" python3 && {
+        touch "${output}"
+        python3 -c 'import fcntl,time,sys; f=open(sys.argv[1],"r"); fcntl.lockf(f,fcntl.LOCK_SH); time.sleep(5)' "${output}" &
+        local lpid=$!
+        sleep 0.1
+        macro=$(sendkeys "{{}ONERROR A3,B1{}}/few{{}CE{}}${output}{~}y{~}~{D}^/qyy~")
+        macro+=$(goto A3)
+        macro+=$(sendkeys "{{}OPEN \"${result}\",\"w\"{}}~{D}{{}WRITE B1{}}~{D}{{}CLOSE{}}~{D}^/qyy~")
+        macro+=$(sendkeys "/rnc{CE}\\1~{HOME}~")
+        macro+=$(system "kill -USR2 \${PPID}")
+        runmacro "${macro}"
+        kill "${lpid}" 2>/dev/null || true
+        wait "${lpid}" 2>/dev/null || true
+        verifyexist "${output}"
+        verifycontents "${result}" "Cannot erase file. It is in use or has read-only access."
+        endtest "${result}" "${output}"
+    }
+    starttest "/File Retrieve Error Reporting" && {
+        touch "${output}"
+        chmod 0 "${output}"
+        macro=$(sendkeys "{{}ONERROR A3,B1{}}/fr{{}CE{}}${output}{~}~{D}^/qyy~")
+        macro+=$(goto A3)
+        macro+=$(sendkeys "{{}OPEN \"${result}\",\"w\"{}}~{D}{{}WRITE B1{}}~{D}{{}CLOSE{}}~{D}^/qyy~")
+        macro+=$(sendkeys "/rnc{CE}\\1~{HOME}~")
+        macro+=$(system "kill -USR2 \${PPID}")
+        runmacro "${macro}"
+        chmod 600 "${output}"
+        verifycontents "${result}" "Permission denied"
+        endtest "${result}" "${output}"
+    }
     # Cleanup
     rm -rf "${output}" "${result}" "${lotdir}"
 }
@@ -736,6 +766,10 @@ function check_crash_bugs()
         verifycontents "${presave}" "0"
         verifycontents "${pstsave}" "0"
         endtest "${savewks}" "${protect}" "${presave}" "${pstsave}"
+    }
+    starttest "Option Argument Allocation" && {
+        runmacro $(printf -- "-f unix %.0s" {1..32}) "$(quit)"
+        endtest
     }
 
 }
