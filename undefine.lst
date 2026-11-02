@@ -254,7 +254,7 @@ at_date
 sin
 cos
 tan
-tan2
+atan2
 asin
 acos
 remainder
