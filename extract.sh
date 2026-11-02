@@ -9,9 +9,6 @@ ORIG="${BASE}/orig"
 ETC="${ROOT}/lotus/etc"
 LOTUS="${ROOT}/lotus/123.v10"
 
-CPIO="$(command -v cpio)"
-TAR="$(command -v tar)"
-
 if [ "$1" = 'clean' ]; then
     rm -rfv "${ROOT}" "${ORIG}" "${ETC}"
     exit
@@ -19,6 +16,16 @@ fi
 
 # Use any tools placed in this directory first.
 export PATH="${BASE}:$PATH"
+
+if ! CPIO="$(command -v cpio)"; then
+    echo >&2 'You need to install cpio to extract the IMG files.'
+    exit 1
+fi
+
+if ! TAR="$(command -v tar)"; then
+    echo >&2 'You need to install tar to extract the IMG files.'
+    exit 1
+fi
 
 if ! test -f "${IMG}/123UNIX1.IMG"   \
        -a -f "${IMG}/123UNIX2.IMG"   \
